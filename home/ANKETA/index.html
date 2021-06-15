@@ -8,11 +8,17 @@
 </head>
 <body>
     <script>
-        var surname = prompt ("Введите вашy фамилию");
-        var name = prompt ("Введите ваше имя");
-        var secondname = prompt ("Введите ваше отчество");
-        var age = parseInt (prompt ("Введите Ваш возраст"));
-        var gender = confirm ("Ваш пол - мужской?");
+        let surname = prompt ("Введите вашy фамилию:");
+            if (surname="") prompt ("Введите вашy фамилию:");
+            else if (surname.length>15) prompt ("Введите вашy фамилию:");
+            else console.log ("Успешно")
+
+        let name = prompt ("Введите ваше имя:");
+        let secondname = prompt ("Введите ваше отчество:");
+
+
+        let age = parseInt (prompt ("Введите Ваш возраст:"));
+        let gender = confirm ("Ваш пол - мужской?");
         if (true) gender = "мужской"
          else gender = "женский" ;
         var pension;
