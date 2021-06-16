@@ -32,15 +32,11 @@
             age = parseInt(prompt ("Вы ввели некорректное значение. Введите ваш возраст:"));
             else break;
         }
-        let gender = confirm ("Ваш пол - мужской?");
-        gender = (true) ? "мужской" : "женский" ;
-        
-        let pension;
-        if (gender=true && age>=60) pension = "да";
-        else if (gender=false && age>=55) pension = "да";
-        else pension = "нет" ;
+        let answer = confirm ("Ваш пол - мужской?");
+        let gender = (answer === true) ? 'мужской':'женский' ;
+        let pension = ((answer === true && age>=60) || (answer === false && age>=55)) ? 'да' : 'нет' ;
 
-        alert (`Ваше ФИО: ${surname} ${name} ${secondname}\n
+        alert (`  Ваше ФИО: ${surname} ${name} ${secondname}\n
                 Ваш возраст в годах: ${age}\n
                 Ваш возраст в днях: ${age*365}\n
                 Через 5 лет вам будет: ${age+5}\n
