@@ -10,19 +10,19 @@
     <script>
         let surname = prompt ("Введите вашy фамилию:");
         while (true) {
-            surname ="";
-            surname = prompt ("Вы не ввели значение. Введите вашy фамилию:");
-            if (surname!="") break;
+            if (surname.length<=1 || surname.length>10) 
+            surname = prompt ("Вы ввели некорректное значение. Введите вашу фамилию:");
+            else break;
         }
         let name = prompt ("Введите ваше имя:");
         while (true) {
-            if (name<=1 && name>10) 
+            if (name.length<=1 || name.length>10) 
             name = prompt ("Вы ввели некорректное значение. Введите ваше имя:");
             else break;
         }
         let secondname = prompt ("Введите ваше отчество:");
         while (true) {
-            if (secondname<=1 && secondname>15) 
+            if (secondname.length<=5 || secondname.length>15) 
             secondname = prompt ("Вы ввели некорректное значение. Введите ваше отчество:");
             else break;
         }
