@@ -9,28 +9,43 @@
 <body>
     <script>
         let surname = prompt ("Введите вашy фамилию:");
-            if (surname="") prompt ("Введите вашy фамилию:");
-            else if (surname.length>15) prompt ("Введите вашy фамилию:");
-            else console.log ("Успешно")
-
+        while (true) {
+            surname ="";
+            surname = prompt ("Вы не ввели значение. Введите вашy фамилию:");
+            if (surname!="") break;
+        }
         let name = prompt ("Введите ваше имя:");
+        while (true) {
+            if (name<=1 && name>10) 
+            name = prompt ("Вы ввели некорректное значение. Введите ваше имя:");
+            else break;
+        }
         let secondname = prompt ("Введите ваше отчество:");
-
-
-        let age = parseInt (prompt ("Введите Ваш возраст:"));
+        while (true) {
+            if (secondname<=1 && secondname>15) 
+            secondname = prompt ("Вы ввели некорректное значение. Введите ваше отчество:");
+            else break;
+        }
+        let age = parseInt (prompt ("Введите ваш возраст:"));
+        while (true) {
+            if (isNaN(age)) 
+            age = parseInt(prompt ("Вы ввели некорректное значение. Введите ваш возраст:"));
+            else break;
+        }
         let gender = confirm ("Ваш пол - мужской?");
-        if (true) gender = "мужской"
-         else gender = "женский" ;
-        var pension;
-         if (age>65) pension = "да"
-         else pension = "нет" ;
+        gender = (true) ? "мужской" : "женский" ;
+        
+        let pension;
+        if (gender=true && age>=60) pension = "да";
+        else if (gender=false && age>=55) pension = "да";
+        else pension = "нет" ;
 
-        alert ("Ваше ФИО: " + surname +" "+ name +" "+ secondname + " " +"\n "+
-                "Ваш возраст в годах: " + age +"\n "+
-                "Ваш возраст в днях: " + (age*365) +"\n "+
-                "Через 5 лет вам будет: " + ( age + 5)  +"\n "+
-                "Ваш пол: " + gender  +"\n "+
-                "Вы на пенсии: " + pension);
+        alert (`Ваше ФИО: ${surname} ${name} ${secondname}\n
+                Ваш возраст в годах: ${age}\n
+                Ваш возраст в днях: ${age*365}\n
+                Через 5 лет вам будет: ${age+5}\n
+                Ваш пол: ${gender}\n
+                Вы на пенсии: ${pension}`);
     </script>
 </body>
 </html>
