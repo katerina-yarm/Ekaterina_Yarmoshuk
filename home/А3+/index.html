@@ -7,11 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <script> 
+    <script>
     let palyndrom = palyndromCheck(prompt ("Введите палиндром. Палиндром - это фраза, которая слева направо читается также как и справа налево."))
+    
+    if (palyndrom === "yes") alert("Фраза, которую вы ввели, является палиндромом.");
+        else alert("Фраза, которую вы ввели, не является палиндромом.");
+    
     function palyndromCheck (text){
         let result;
-        for (let i; i<text.length; i++ ){
+        for (let i=0; i<text.length; i++ ){
             if (text[i]===text[text.length-1-i]) result =  "yes";
             else {
                 result =  "no";
@@ -19,7 +23,7 @@
             }
         }
         return result;
-      }
+    }
     </script>
     
 </body>
