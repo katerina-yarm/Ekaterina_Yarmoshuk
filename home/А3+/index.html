@@ -8,15 +8,18 @@
 </head>
 <body>
     <script> 
-    let palyndrom = palyndromCheck(prompt ("Введите палиндром. Палиндром - это фарза, которая слева направо читается также как и справа налево."))
+    let palyndrom = palyndromCheck(prompt ("Введите палиндром. Палиндром - это фраза, которая слева направо читается также как и справа налево."))
     function palyndromCheck (text){
+        let result;
         for (let i; i<text.length; i++ ){
-            for (let j=text.length-1; j>=0; j--){
-                if (text.charAt(i)==text.charAt(j)) console.log(`${i}=${j}`) 
-                else alert("Вы ввели не палиндром.")
+            if (text[i]===text[text.length-1-i]) result =  "yes";
+            else {
+                result =  "no";
+                return result;
             }
         }
-    }
+        return result;
+      }
     </script>
     
 </body>
