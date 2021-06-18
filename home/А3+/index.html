@@ -7,6 +7,17 @@
     <title>Document</title>
 </head>
 <body>
+    <script> 
+    let palyndrom = palyndromCheck(prompt ("Введите палиндром. Палиндром - это фарза, которая слева направо читается также как и справа налево."))
+    function palyndromCheck (text){
+        for (let i; i<text.length; i++ ){
+            for (let j=text.length-1; j>=0; j--){
+                if (text.charAt(i)==text.charAt(j)) console.log(`${i}=${j}`) 
+                else alert("Вы ввели не палиндром.")
+            }
+        }
+    }
+    </script>
     
 </body>
 </html>
