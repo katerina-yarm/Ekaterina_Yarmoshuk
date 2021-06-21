@@ -12,15 +12,17 @@
     //перевела все в нижний ргистр, => при введении текста регистр будет игнорироваться
     let lowerCasePalyndrom = palyndrom.toLowerCase(); 
 
-    //все буквы ё меняем на е;
+    //все буквы ё меняем на е + игнорирует ь и ъ
     let changedOnEPolyndrom = changeOnE(lowerCasePalyndrom); 
     function changeOnE(oldString) {
         let newString='';
         for (let i = 0; i < oldString.length; i++) {
             if (oldString[i]==='ё') newString +='е';
+            else if (oldString[i]==='ь') newString +='';
+            else if (oldString[i]==='ъ') newString +='';
             else newString += oldString[i];
-        }
-        return newString
+        };
+        return newString;
     }
         
     //использовала функцию из А2+, чтобы убрать пробелы вначале и вконце фразы
