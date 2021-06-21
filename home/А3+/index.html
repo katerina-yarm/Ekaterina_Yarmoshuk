@@ -9,10 +9,10 @@
 <body>
     <script>
     let palyndrom = prompt ("Введите палиндром. Палиндром - это фраза, которая слева направо читается также как и справа налево.")
-    //перевела все в нижний ргистр, => при введении текста регистр будет игнорироваться
+    //перевела все в нижний регистр, => при введении текста регистр будет игнорироваться
     let lowerCasePalyndrom = palyndrom.toLowerCase(); 
 
-    //все буквы ё меняем на е + игнорирует ь и ъ
+    //все буквы ё меняем на е + игнорирует ь и ъ + игнорирует знаки препинания
     let changedOnEPolyndrom = changeOnE(lowerCasePalyndrom); 
     function changeOnE(oldString) {
         let newString='';
@@ -20,6 +20,18 @@
             if (oldString[i]==='ё') newString +='е';
             else if (oldString[i]==='ь') newString +='';
             else if (oldString[i]==='ъ') newString +='';
+            else if (oldString[i]==='?') newString +='';
+            else if (oldString[i]==='.') newString +='';
+            else if (oldString[i]===',') newString +='';
+            else if (oldString[i]===':') newString +='';
+            else if (oldString[i]===';') newString +='';
+            else if (oldString[i]==='!') newString +='';
+            else if (oldString[i]==='-') newString +='';
+            else if (oldString[i]==='"') newString +='';
+            else if (oldString[i]==='(') newString +='';
+            else if (oldString[i]===')') newString +='';
+            else if (oldString[i]===']') newString +='';
+            else if (oldString[i]==='[') newString +='';
             else newString += oldString[i];
         };
         return newString;
