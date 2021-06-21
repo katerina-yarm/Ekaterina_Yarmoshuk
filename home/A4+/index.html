@@ -46,12 +46,6 @@
             return text;
         };
 
-
-    palyndrom=palyndromCheck(deleteSpacePalyndrom);
-
-    if (palyndrom === "yes") alert("Фраза, которую вы ввели, является палиндромом.");
-        else alert("Фраза, которую вы ввели, не является палиндромом.");
-
     let n = 0;
     function palyndromCheck (text){
         let result;
@@ -64,6 +58,11 @@
         if (n < text.length) palyndromCheck(text);
         return result;
     }
+    
+    palyndrom=palyndromCheck(deleteSpacePalyndrom);
+
+    if (palyndrom === "yes") alert("Фраза, которую вы ввели, является палиндромом.");
+        else alert("Фраза, которую вы ввели, не является палиндромом.");
     </script>
     
 </body>
