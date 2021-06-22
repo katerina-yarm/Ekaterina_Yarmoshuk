@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //[5,7,[4,[2],8,[1,3],2],[9,[]],1,8];
+
+        let treeSumArray = JSON.parse (prompt ('Введите массив, сумму всех числовых элементов которого вы хотите узнать:'));
+
+        let sum=0;
+        function arrayValuesSum (treeSum){
+            for (let i=0; i<treeSum.length; i++){
+                if (Array.isArray(treeSum[i])){
+                    arrayValuesSum (treeSum[i]);
+                } else sum += treeSum[i];
+            } return sum;
+        }
+
+        alert (`Cумма всех числовых элементов массива, который вы ввели составила ${arrayValuesSum(treeSumArray)}`);
+    </script>
+
+</body>
+</html>
