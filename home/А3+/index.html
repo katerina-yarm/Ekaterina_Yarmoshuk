@@ -32,22 +32,13 @@
             else if (oldString[i]===')') newString +='';
             else if (oldString[i]===']') newString +='';
             else if (oldString[i]==='[') newString +='';
+            else if (oldString[i]===' ') newString +='';
             else newString += oldString[i];
         };
         return newString;
     }
-        
-    //использовала функцию из А2+, чтобы убрать пробелы вначале и вконце фразы
-    let deleteSpacePalyndrom = deleteSpace(changedOnEPolyndrom);
-    function deleteSpace (text){
-            let space = " ";
-            while (text.charAt(0)==space) text=text.substr(1);
-            while (text.charAt(text.length-1) ==space) text=text.substr(0,text.length-1);
-            return text;
-        };
 
-
-    palyndrom=palyndromCheck(deleteSpacePalyndrom);
+    palyndrom=palyndromCheck(changedOnEPolyndrom);
 
     if (palyndrom === "yes") alert("Фраза, которую вы ввели, является палиндромом.");
         else alert("Фраза, которую вы ввели, не является палиндромом.");
