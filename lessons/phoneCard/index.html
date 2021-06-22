@@ -8,46 +8,44 @@
     <title>Document</title>
 </head>
 <body>
-    <div id=app>
-       
-    </div>
+    <div id=app style="display: flex; margin: 20px;"></div>
   
     <script> 
         const phone = [
-        {   model: "Samsung Galaxy A21s 64GB синий",
+        {   model: "Samsung Galaxy A21s 64GB",
             imgUrl:"blue.jpg",
-            color: "blue",
-            descriptions: "Яркая глянцевая панель Galaxy A21s приковывает взгляд. Плавные линии корпуса позволяют легко и комфортно держать смартфон в руке. Выбирай один из уникальных оттенков Черного, Синего или Красного цветов, чтобы подчеркнуть свой неповторимый стиль.",
-            price: 100,
+            color: "синий",
+            descriptions: "Плавные линии корпуса позволяют легко и комфортно держать смартфон в руке.",
+            price: 650,
+            sale: false 
+        },
+        {   model: "Samsung Galaxy A21s 64GB",
+            imgUrl:"red.jpg",
+            color: "красный",
+            descriptions: "Выбирай один из уникальных оттенков Черного, Синего или Красного цветов, чтобы подчеркнуть свой неповторимый стиль.",
+            price: 580,
             sale: true 
         },
-        {   model: "Samsung Galaxy A21s 64GB красный",
-            imgUrl:"red.jpeg",
-            color: "red",
-            descriptions: "Яркая глянцевая панель Galaxy A21s приковывает взгляд. Плавные линии корпуса позволяют легко и комфортно держать смартфон в руке. Выбирай один из уникальных оттенков Черного, Синего или Красного цветов, чтобы подчеркнуть свой неповторимый стиль.",
-            price: 100,
-            sale: true 
-        },
-        {   model: "Samsung Galaxy A21s 64GB серый",
+        {   model: "Samsung Galaxy A12 64GB",
             imgUrl:"grey.jpeg",
-            color: "grey",
-            descriptions: "Яркая глянцевая панель Galaxy A21s приковывает взгляд. Плавные линии корпуса позволяют легко и комфортно держать смартфон в руке. Выбирай один из уникальных оттенков Черного, Синего или Красного цветов, чтобы подчеркнуть свой неповторимый стиль.",
-            price: 100,
+            color: "черный",
+            descriptions: "Яркая глянцевая панель Galaxy A12 приковывает взгляд.",
+            price: 580,
             sale: true 
         }
     ];
 
     let html = '';
     for (let i=0; i<phone.length; i++){
-       html+= `<div class="card" style="width: 18rem;">
-                    <img src="${phone[i].imgUrl}" class="card-img-top" alt="...">
-                    <div class="card-body">
+       html+= `<div class="card" style="width: 18rem; margin: 20px;">
+                    <img src="${phone[i].imgUrl}" class="card-img-top" alt="..." style="height: 400px;">
+                    <div class="card-body" style="position: relative;">
                         <h5 class="card-title">${phone[i].model}</h5>
-                        <p class="card-text">${phone[i].descriptions}</p>
                         <p class="card-text">${phone[i].color}</p>
-                        <p class="card-text">${phone[i].price}</p>
-                        ${phone[i].sale} <p> SALE </p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <p class="card-text">${phone[i].price} бел.руб.</p>
+                        <p class="card-text">${phone[i].descriptions}</p>`
+                        html+= phone[i].sale ? "<p style='color:red; margin-bottom: 40px;'> SALE </p>":"<p></p>"
+                        html+= `<a href="#" class="btn btn-primary" style="position:absolute; bottom:5px;">Купить</a>
                     </div>
                 </div>`
     }
