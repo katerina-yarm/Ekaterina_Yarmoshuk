@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let year = parseInt(prompt('Введите любой год:'));
+
+        function transformYearToCentury (year) {
+            let inkrement = 100;
+            let i =0;
+            let century = 1;
+            function convertYearToCentury (year) {
+                while (year>i && year<=(i+inkrement)) {
+                    return century;
+                }
+                i+=100;
+                century++;
+                return convertYearToCentury (year);
+            }
+            return convertYearToCentury (year);
+        }
+        
+        alert(`Год, который вы ввели относится к ${transformYearToCentury(year)} веку.`)
+    </script>
+</body>
+</html>
