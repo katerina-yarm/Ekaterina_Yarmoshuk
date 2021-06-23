@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        "use strict";
+    
+        var values=[55,77,55,66,77];
+        var used={}; // ключ хэша - число, которое уже встречалось
+        for ( var i=0; i<values.length; i++ ) {
+            var value=values[i]; // очередное значение
+            if ( value in used ) // встречалось ли оно?
+                continue; // если да - всё, берём следующее
+            used[value]=true; // если нет - запоминаем, что это значение уже встречалось
+            console.log(value); // выводим его в консоль
+        }
+    
+    </script>
+</body>
+</html>
