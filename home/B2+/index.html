@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let usersString = prompt ("Введите строку, которую хотите перевернуть задам наперёд:");
+        function flipBackwards (string) {
+            let splitString = string.split(''); //Метод split() принимает на вход строку и преобразует в массив, разбивая ее по разделителю.
+            let reverseArray = splitString.reverse();//Метод reverse() переворачивает элементы массива. Первый элемент становится последним, последний — первым.
+            let joinString = reverseArray.join(''); //Метод join() соединяет все элементы массива в строку.
+            return joinString;
+        }
+        alert (`Вы ввели строку: "${usersString}". Она имеет перевернутый вид: "${flipBackwards(usersString)}".`)
+    </script>
+</body>
+</html>
