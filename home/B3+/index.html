@@ -25,49 +25,84 @@
     <div id = "res" class="btn input-field"></div>
     <div style="width: 400px; display: flex;">
         <div style="width: 200px;">
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(1)">1</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(2)">2</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(3)">3</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(4)">4</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(5)">5</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(6)">6</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(7)">7</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(8)">8</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(9)">9</button>
-            <button type="button" class="btn btn-outline-info" onclick="getNumber(0)">0</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(1)">1</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(2)">2</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(3)">3</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(4)">4</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(5)">5</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(6)">6</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(7)">7</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(8)">8</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(9)">9</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(0)">0</button>
         </div>
         <div style="width: 150px;">
-            <button type="button" class="btn btn-outline-info" onclick="getOperation('*')">*</button>
-            <button type="button" class="btn btn-outline-info" onclick="getOperation('/')">/</button>
-            <button type="button" class="btn btn-outline-info" onclick="getOperation('+')">+</button>
-            <button type="button" class="btn btn-outline-info" onclick="getOperation('-')">-</button>
-            <button type="button" class="btn btn-outline-info" onclick="getOperation(')')">)</button>
-            <button type="button" class="btn btn-outline-info" onclick="getOperation('(')">(</button>
-            <button type="button" class="btn btn-outline-info" style="width: 115px;" onclick="getResult()">Result</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar('*')">*</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar('/')">/</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar('+')">+</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar('-')">-</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar(')')">)</button>
+            <button type="button" class="btn btn-outline-info" onclick="getChar('(')">(</button>
+            <button type="button" class="btn btn-outline-info" style="width: 115px;" onclick="getResult(getExpression(expression))">Result</button>
         </div>
     </div>
 
     <script>
-        let operation;
-        let number;
+        let char;
+        let expression;
 
-        function getOperation (oper) {
-            operation = oper;
-            document.getElementById('res').innerHTML+=operation;
-            return operation;
-        }
-
-        function getNumber (num) {
-            number = num;
-            document.getElementById('res').innerHTML+=number;
-            return number;
+        function getChar (ch) { //получаем введенные символы
+            char = ch;
+            document.getElementById('res').innerHTML+=char;
+            return char;
         }
         
-       function getResult () {
-           document.getElementById('res').innerHTML+='=';
-           let expression= document.getElementById('res').innerHTML;
-           
+       function getExpression () { //записываем их в результирующую строку
+           expression= document.getElementById('res').innerHTML;
+           return expression;  
        }
+
+       function getResult (expres) {
+            let expr = expres;
+            let charsArray = expr.split(''); //разделили наше выражение на элементы
+            let numbersArray = [];
+            let index = 0; 
+            numbersArray[index] = '';
+
+            let operationsArray = [];
+
+            for (let i = 0; i < charsArray.length; i++) { //разделяем в разные массивы цифры и операторы
+                if (isNaN(parseInt(charsArray[i]))) {
+                    operationsArray[index] = charsArray[i];
+                    index++;
+                    numbersArray[index] ='';
+                } else {
+                    numbersArray[index] += charsArray[i];
+                }
+            }
+
+            expr = parseFloat(numbersArray[0]); //получаем результат исходного выражения
+            for (let j = 0; j < operationsArray.length; j++) {
+                let num = parseFloat(numbersArray[j+1]);
+                switch (operationsArray[j]) {
+                    case "+":
+                        expr = expr + num;
+                        break;
+                    case "-":
+                        expr = expr - num;
+                        break;
+                    case "*":
+                        expr = expr * num;
+                        break;
+                    case "/":
+                        expr = expr / num;
+                        break;
+                    }
+                }
+                console.log(expr);
+                return expr;
+            //expr= document.getElementById('res').innerHTML;
+        }
 
         
 
