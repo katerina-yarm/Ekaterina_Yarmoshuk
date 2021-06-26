@@ -18,6 +18,7 @@
             border-color: #0dcaf0;
             height: 50px;
             margin: 5px;
+            font-size: 2em;
         }
     </style>
 </head>
@@ -36,6 +37,7 @@
             <button type="button" class="btn btn-outline-info" onclick="getChar(9)">9</button>
             <button type="button" class="btn btn-outline-info" onclick="getChar(0)">0</button>
             <button type="button" class="btn btn-outline-info" onclick="getChar('.')">.</button>
+            <button type="button" class="btn btn-outline-info" onclick="clean()">С</button>
         </div>
         <div style="width: 150px;">
             <button type="button" class="btn btn-outline-info" onclick="getChar('*')">*</button>
@@ -44,7 +46,7 @@
             <button type="button" class="btn btn-outline-info" onclick="getChar('-')">-</button>
             <button type="button" class="btn btn-outline-info" onclick="getChar(')')">)</button>
             <button type="button" class="btn btn-outline-info" onclick="getChar('(')">(</button>
-            <button type="button" class="btn btn-outline-info" style="width: 115px;" onclick="getResult(getExpression(expression))">Result</button>
+            <button type="button" class="btn btn-outline-info" style="width: 115px;" onclick="calculate(getPostfixExpression(getInfixExpression(expression)))">Result</button>
         </div>
     </div>
 
@@ -57,67 +59,48 @@
             document.getElementById('res').innerHTML+=char;
             return char;
         }
+
+        function clean () { //функция для кнопки очистки
+            document.getElementById('res').innerHTML ='';
+        }
         
-       function getExpression () { //записываем их в результирующую строку
+       function getInfixExpression () { //записываем их в результирующую строку и получием выражение в формате Infix
            expression= document.getElementById('res').innerHTML;
            return expression;  
        }
 
-       function getResult (expres) {
-            let expr = expres;
-            let charsArray = expr.split(''); //разделили наше выражение на элементы
-            let numbersArray = [];
-            let index = 0; 
-            numbersArray[index] = '';
+       function getPostfixExpression (){ //нужно написать функцию, которая будет переводить выражение из Infix в Postfix формат 
+           //let infixExpression = "(1+((2+3)*(4*5)))";
+           let postfixExpression = "123+45**+";// output: 101
+           return postfixExpression;
+       }
 
-            let operationsArray = [];
-            let lastOperation =true;
-
-            for (let i = 0; i < charsArray.length; i++) { //разделяем в разные массивы цифры и операторы
-                if (isNaN(parseInt(charsArray[i])) && charsArray[i] !== "." && !lastOperation) {
-                    operationsArray[index] = charsArray[i];
-                    index++;
-                    numbersArray[index] ='';
-                    lastOperation =true;
-                } else {
-                    numbersArray[index] += charsArray[i];
-                    lastOperation=false;
-                }
-            }
-
-            expr = parseFloat(numbersArray[0]); //получаем результат исходного выражения
-            for (let j = 0; j < operationsArray.length; j++) {
-                let num = parseFloat(numbersArray[j+1]);
-                switch (operationsArray[j]) {
+        function calculate(expression){ //рассчет выражения, преобразованного по Postfix методу
+            const stack = [];
+            const expArray = expression.split('');
+            for (let i = 0; i < expArray.length; i++){
+                switch (expArray[i]){
                     case "+":
-                        expr = expr + num;
+                        stack.push(stack.pop()+stack.pop());
                         break;
                     case "-":
-                        expr = expr - num;
+                        stack.push(stack.pop()-stack.pop());
                         break;
                     case "*":
-                        expr = expr * num;
+                        stack.push(stack.pop()*stack.pop());
                         break;
                     case "/":
-                        expr = expr / num;
+                        stack.push(stack.pop()/stack.pop());
                         break;
-                    }
+                    default:
+                        stack.push(parseInt(expArray[i]));
                 }
-                console.log(expr);
-                return expr;
-            //expr= document.getElementById('res').innerHTML;
+            }
+            document.getElementById('res').innerHTML = stack.pop();
+            return stack.pop();
         }
 
-        
-
     </script>
-
-
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   
 </body>

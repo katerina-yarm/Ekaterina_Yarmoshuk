@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //реализация стека «последний пришел — первым ушел»
+        let stackNumbers = [];//создаем новые массивы для СТЕКОВ с числами и со знаками;
+        let stackOperations = [];
+
+        const pushNumbers = (item) => stackNumbers.push(item); //функция получает элемент в качестве аргумента и добавляет элемент в наш stack.
+        const pushOperations = (item) => stackOperations.push(item);
+
+        const popNumbers = () => stackNumbers.pop(); //удаляет последний элемент, добавленный в стек. Поскольку мы не знаем точно, какой элемент может быть последним в стеке, то функция не получает никаких аргументов.
+        const popOperations = () => stackOperations.pop();
+
+        //реализация очереди «первым пришел — первым вышел» 
+        let queueNumbers = []; //создаем новые массивы ОЧЕРЕДЕЙ для чисел и знаков;
+        let queueOperations = [];
+
+        const enqueueNumbers = (item) => queueNumbers.push(item);//enqueue — эта операция отвечает за вставку или отправку нового элемента в очередь.
+        const enqueueOperations = (item) => queueOperations.push(item);
+
+        const dequeueNumbers = () => queueNumbers.shift(); //dequeue — эта операция отвечает за удаление самого старого элемента из очереди.
+        const dequeueOperations = () => queueOperations.shift();
+
+        
+
+        
+    </script>
+</body>
+</html>
