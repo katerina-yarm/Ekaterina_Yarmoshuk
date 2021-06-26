@@ -1,50 +1,96 @@
-console.log("INFIX to POSTFIX");
-var in1 = infixToPostfix("2+3*4"); //234*+
-console.log("Postfix 2+3*4 ==> "+in1.getPostfix());
-var in2 = infixToPostfix("2*3-4^2"); //23*42^-
-console.log("Postfix 2*3-4^2 ==> "+in2.getPostfix());
-var in3 = infixToPostfix("3+4*5/6"); //345*6/+
-console.log("Postfix 3+4*5/6 ==> "+in3.getPostfix());
-var in4 = infixToPostfix("4+8*6-5/3-2*2+2"); // 486*+53/-22*-2+    
-console.log("Postfix 4+8*6-5/3-2*2+2 ==> " +in4.getPostfix());
+function InfixConverter(operators) {
+    var expressionValidationRegex = /^([0-9]|\+|-|\(|\)|\*|\/|d)*$/;
 
-function infixToPostfix (expression) {
-        var pfixString = "";
-        new LinkedStack();
-        var infixStack = new LinkedStack();
+    var symbolToOperatorMap = operators.reduce(function (map, obj) {
+        map[obj.symbol] = obj;
+        return map;
+    }, {});
 
-        // Helper function to get the precedence of the operator
-        var precedence = function (operator) {
-            switch (operator) {
-                case "^":
-                    return 3;
-                case "*":
-                case "/":
-                    return 2;
-                case "+":
-                case "-":
-                    return 1;
-                default:
-                    return 0;
-            }
-        };
+    this.toPostfix = function (expression) {
+
+        if (!isExpressionValid(expression)) { throw "Expression is invalid."; }
+
+        var operatorsStack = [], result = [];
 
         for (var i = 0; i < expression.length; i++) {
-            var c = expression.charAt(i);
-            if (!isNaN(parseInt(c))) {
-                pfixString += c;
-            } else if (c === "+" || c === "-" || c === "*" || c === "/" || c === "^") {
-                while (c != "^" && !infixStack.isStackEmpty() && (precedence(c) <= precedence(infixStack.stackTop()))) {
-                    pfixString += infixStack.popFromStack().item;
+
+            var symbol = expression[i];
+
+            if (isNumber(symbol)) {
+                result.push(symbol);
+                continue;
+            }
+
+            var operator = symbolToOperatorMap[symbol];
+            var precedentOperator = peek(operatorsStack);
+
+            if (precedentOperator === null) {
+                operatorsStack.push(operator);
+            } else if (operator.symbol === ')') {
+                while (peek(operatorsStack).symbol !== '(') {
+                    result.push(operatorsStack.pop().symbol);
                 }
-                infixStack.pushToStack(c);
+
+                //Remove the left parenthesis from the stack
+                operatorsStack.pop();
+            } else if (precedentOperator.symbol === '(' || operator.symbol === '(') {
+                operatorsStack.push(operator);
+
+            } else if (operator.priority > precedentOperator.priority) {
+                operatorsStack.push(operator);
+
+            } else if (operator.priority < precedentOperator.priority) {
+                while (operatorsStack.length !== 0 && peek(operatorsStack).priority > operator.priority) {
+                    result.push(operatorsStack.pop().symbol); }
+                operatorsStack.push(operator);
+
+            } else {
+                if (operator.association === Associations.LeftToRight) {
+                    result.push(operatorsStack.pop().symbol);
+                    operatorsStack.push(operator);
+                } else if (operator.association === Associations.RightToLeft) {
+                    operatorsStack.push(operator);
+                }
             }
         }
-        while (!infixStack.isStackEmpty()) {
-            pfixString += infixStack.popFromStack().item;
+
+        while (operatorsStack.length !== 0) {
+            result.push(operatorsStack.pop().symbol);
         }
 
-        this.getPostfix = function () {
-            return pfixString;
-        };
+        return result;
+    };
+
+    function isExpressionValid(expression) {
+        return typeof (expression) === "string" && expressionValidationRegex.test(expression);
+    }
+
+    function peek(stack) {
+        if (stack.length === 0) {
+            return null;
+        }
+
+        return stack[stack.length - 1];
+    }
+
+    function isNumber(str) {
+        return !isNaN(parseInt(str));
+    }
 }
+
+var Associations = { None: '0', LeftToRight: '1', RightToLeft: '2' };
+
+//Example of use
+
+var operators = [
+    { name: "PLUS", priority: 1, symbol: '+', association: Associations.LeftToRight },
+    { name: "SUBSTRACT", priority: 1, symbol: '-', association: Associations.LeftToRight },
+    { name: "MULT", priority: 2, symbol: '*', association: Associations.LeftToRight },
+    { name: "DIV", priority: 2, symbol: '/', association: Associations.LeftToRight },
+    { name: "DICE", priority: 3, symbol: 'd', association: Associations.LeftToRight },
+    { name: "LEFT_PAR", priority: 0, symbol: '(', association: Associations.None },
+    { name: "RIGHT_PAR", priority: 0, symbol: ')', association: Associations.None }
+];
+
+var infixConverter = new InfixConverter(operators);
+//infixConverter.toPostfix("1*(2+3d2*2)");

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="fromInfixtoPostfix.js"></script>
     <title>Document</title>
     <style>
         .btn-outline-info {
@@ -46,7 +47,7 @@
             <button type="button" class="btn btn-outline-info" onclick="getChar('-')">-</button>
             <button type="button" class="btn btn-outline-info" onclick="getChar(')')">)</button>
             <button type="button" class="btn btn-outline-info" onclick="getChar('(')">(</button>
-            <button type="button" class="btn btn-outline-info" style="width: 115px;" onclick="calculate(getPostfixExpression(getInfixExpression(expression)))">Result</button>
+            <button type="button" class="btn btn-outline-info" style="width: 115px;" onclick="calculate(getInfixExpression(expression))">Result</button>
         </div>
     </div>
 
@@ -64,20 +65,35 @@
             document.getElementById('res').innerHTML ='';
         }
         
-       function getInfixExpression () { //записываем их в результирующую строку и получием выражение в формате Infix
+       function getInfixExpression () { //записываем их в результирующую строку и получaем выражение в формате Infix
            expression= document.getElementById('res').innerHTML;
            return expression;  
        }
+       
+       //let expr = getInfixExpression(expression);
+       //let charsArray = expr.split(''); //разделили наше выражение на элементы
+       //let expressionArray = [];
+      // let index = 0; 
+       //expressionArray [index] = '';
+      // let lastOperation =true;
+       
+      // for (let i = 0; i < charsArray.length; i++) { //разделяем цифры и операторы
+       // if (isNaN(parseInt(charsArray[i]))) {
+      //      if (isNaN(parseInt(charsArray[i])) && charsArray[i] !== "." && !lastOperation) {
+      //          expressionArray[index] = charsArray[i];
+      //          index++;
+      //          lastOperation =true;
+      //      } else {
+      //          expressionArray[index] += charsArray[i];
+      //          lastOperation=false;
+      //      }
+      //  }
 
-       function getPostfixExpression (){ //нужно написать функцию, которая будет переводить выражение из Infix в Postfix формат 
-           //let infixExpression = "(1+((2+3)*(4*5)))";
-           let postfixExpression = "123+45**+";// output: 101
-           return postfixExpression;
-       }
-
-        function calculate(expression){ //рассчет выражения, преобразованного по Postfix методу
+        function calculate(expression){ //рассчитываем результат полученного выражения
             const stack = [];
-            const expArray = expression.split('');
+            //const expArray = expressionArray;
+            //const expArray = expression.split('');
+            const expArray = infixConverter.toPostfix(expression);//преобразовываем в формат Postfix, вызывая скрипт
             for (let i = 0; i < expArray.length; i++){
                 switch (expArray[i]){
                     case "+":
@@ -99,8 +115,9 @@
             document.getElementById('res').innerHTML = stack.pop();
             return stack.pop();
         }
-
     </script>
+
+    <script src="fromInfixtoPostfix.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>   
 </body>
