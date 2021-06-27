@@ -1,127 +1,102 @@
-let expr = '(11+-1.2)*13';
-let charsArray = expr.split(''); //разделили наше выражение на элементы
-let expressionArray = [];
-let index = 0; 
-expressionArray [index] = '';
-let lastOperation =true;
-       
-for (let i = 0; i < charsArray.length; i++) { //разделяем цифры и операторы
-    if (charsArray[i] === ")" || charsArray[i] === "(") {
-        index++;
-        expressionArray[index] = charsArray[i];
-        index++;
-        expressionArray[index] ='';
-        lastOperation=false;
+function separateNumbersFromOperations (expression) {
+    let charsArray = expression.split(''); //разделили наше выражение на элементы
+    let expressionArray = [];
+    let index = 0; 
+    expressionArray [index] = '';
+    let lastOperation =true;
+        
+    for (let i = 0; i < charsArray.length; i++) { //разделяем цифры и операторы
+        if (charsArray[i] === ")" || charsArray[i] === "(") {
+            index++;
+            expressionArray[index] = charsArray[i];
+            index++;
+            expressionArray[index] ='';
+            lastOperation=false;
+        }
+        else if (isNaN(parseInt(charsArray[i])) && charsArray[i] !== "." && !lastOperation) {
+            index++;
+            expressionArray[index] = charsArray[i];
+            index++;
+            expressionArray[index] ='';
+            lastOperation =true;
+        } else {
+            expressionArray[index] += charsArray[i];
+            lastOperation=false;
+        }
     }
-    else if (isNaN(parseInt(charsArray[i])) && charsArray[i] !== "." && !lastOperation) {
-        index++;
-        expressionArray[index] = charsArray[i];
-        index++;
-        expressionArray[index] ='';
-        lastOperation =true;
-    } else {
-        expressionArray[index] += charsArray[i];
-        lastOperation=false;
-    }
+
+    let expressionArrayFiltered = [];
+    expressionArrayFiltered = expressionArray.filter(element => element !== '');
+    return expressionArrayFiltered;
 }
 
-let expressionArrayFiltered = expressionArray.filter(element => element !== '');
 
+function fromInfixToPostfix (infixExpr) {
+    let stack = [];
+    let postfix = [];
+    let enter = true; 
+    //let infixExpr =  ["(", "13", "+", "3.4", ")", "*", "-12", "+", "1.2"]; 
 
+    for(let i = 0; i<infixExpr.length ;i++){
+        if (!isNaN(parseFloat(infixExpr[i]))){
+            postfix.push(infixExpr[i]);
+        }
+        else if (infixExpr[i] == '('){
+            stack.push(infixExpr[i]);
+        }
+        else if (infixExpr[i] == ')'){
+            stack.push(infixExpr[i]);
+        }
 
-function InfixConverter(operators) {
-    var expressionValidationRegex = /^([0-9]|\+|-|\(|\)|\*|\/|d)*$/;
-
-    var symbolToOperatorMap = operators.reduce(function (map, obj) {
-        map[obj.symbol] = obj;
-        return map;
-    }, {});
-
-    this.toPostfix = function (expression) {
-
-        if (!isExpressionValid(expression)) { throw "Expression is invalid."; }
-
-        var operatorsStack = [], result = [];
-
-        for (var i = 0; i < expression.length; i++) {
-
-            var symbol = expression[i];
-
-            if (isNumber(symbol)) {
-                result.push(symbol);
-                continue;
+        else if (infixExpr[i] == '+' || infixExpr[i] == '-') {
+            if (stack.length == 0) {
+                stack.push(infixExpr[i]);
             }
-
-            var operator = symbolToOperatorMap[symbol];
-            var precedentOperator = peek(operatorsStack);
-
-            if (precedentOperator === null) {
-                operatorsStack.push(operator);
-            } else if (operator.symbol === ')') {
-                while (peek(operatorsStack).symbol !== '(') {
-                    result.push(operatorsStack.pop().symbol);
+            else {
+                if (stack[stack.length-1]=='*' ||stack[stack.length-1]=='/' || stack[stack.length-1]=='+' || stack[stack.length-1]=='-'){
+                    postfix.push(stack.pop());
+                    stack.push(infixExpr[i]);
                 }
-
-                //Remove the left parenthesis from the stack
-                operatorsStack.pop();
-            } else if (precedentOperator.symbol === '(' || operator.symbol === '(') {
-                operatorsStack.push(operator);
-
-            } else if (operator.priority > precedentOperator.priority) {
-                operatorsStack.push(operator);
-
-            } else if (operator.priority < precedentOperator.priority) {
-                while (operatorsStack.length !== 0 && peek(operatorsStack).priority > operator.priority) {
-                    result.push(operatorsStack.pop().symbol); }
-                operatorsStack.push(operator);
-
-            } else {
-                if (operator.association === Associations.LeftToRight) {
-                    result.push(operatorsStack.pop().symbol);
-                    operatorsStack.push(operator);
-                } else if (operator.association === Associations.RightToLeft) {
-                    operatorsStack.push(operator);
+                else {
+                    stack.push(infixExpr[i]);
                 }
             }
         }
-
-        while (operatorsStack.length !== 0) {
-            result.push(operatorsStack.pop().symbol);
+        else if (infixExpr[i] == '*' || infixExpr[i] == '/'){
+            if (stack.length == 0) {
+                stack.push(infixExpr[i]);
+            }
+            else if (stack[stack.length-1] == '('){
+                stack.push(infixExpr[i]); 
+            }
+            else if (stack[stack.length-1]  == ')'){
+                stack.pop();
+                while(enter){
+                    if(stack[stack.length-1] == '('){
+                        stack.pop();
+                        enter = false;
+                    }
+                    else {
+                        postfix.push(stack.pop());
+                    }
+                }
+                stack.push(infixExpr[i]);
+            }
+            else {
+                if (stack[stack.length-1]=='+' ||stack[stack.length-1]=='-' || stack[stack.length-1]=='('){
+                    stack.push(infixExpr[i]); 
+                }
+                else if (stack[stack.length-1]=='*' ||stack[stack.length-1]=='/') {
+                    while (stack.length == 0){
+                        postfix.push(stack.pop());
+                    }
+                    stack.push(infixExpr[i]);
+                }
+            }  
         }
-
-        return result;
-    };
-
-    function isExpressionValid(expression) {
-        return typeof (expression) === "string" && expressionValidationRegex.test(expression);
     }
-
-    function peek(stack) {
-        if (stack.length === 0) {
-            return null;
-        }
-
-        return stack[stack.length - 1];
+    if (stack.length != 0) {
+        postfix.push(stack.pop());
     }
-
-    function isNumber(str) {
-        return !isNaN(parseInt(str));
-    }
+    return postfix;
 }
-
-var Associations = { None: '0', LeftToRight: '1', RightToLeft: '2' };
-
-//Example of use
-
-var operators = [
-    { name: "PLUS", priority: 1, symbol: '+', association: Associations.LeftToRight },
-    { name: "SUBSTRACT", priority: 1, symbol: '-', association: Associations.LeftToRight },
-    { name: "MULT", priority: 2, symbol: '*', association: Associations.LeftToRight },
-    { name: "DIV", priority: 2, symbol: '/', association: Associations.LeftToRight },
-    { name: "DICE", priority: 3, symbol: 'd', association: Associations.LeftToRight },
-    { name: "LEFT_PAR", priority: 0, symbol: '(', association: Associations.None },
-    { name: "RIGHT_PAR", priority: 0, symbol: ')', association: Associations.None }
-];
-
-var infixConverter = new InfixConverter(operators);
-//infixConverter.toPostfix("1*(2+3d2*2)");
