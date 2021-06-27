@@ -1,3 +1,34 @@
+let expr = '(11+-1.2)*13';
+let charsArray = expr.split(''); //разделили наше выражение на элементы
+let expressionArray = [];
+let index = 0; 
+expressionArray [index] = '';
+let lastOperation =true;
+       
+for (let i = 0; i < charsArray.length; i++) { //разделяем цифры и операторы
+    if (charsArray[i] === ")" || charsArray[i] === "(") {
+        index++;
+        expressionArray[index] = charsArray[i];
+        index++;
+        expressionArray[index] ='';
+        lastOperation=false;
+    }
+    else if (isNaN(parseInt(charsArray[i])) && charsArray[i] !== "." && !lastOperation) {
+        index++;
+        expressionArray[index] = charsArray[i];
+        index++;
+        expressionArray[index] ='';
+        lastOperation =true;
+    } else {
+        expressionArray[index] += charsArray[i];
+        lastOperation=false;
+    }
+}
+
+let expressionArrayFiltered = expressionArray.filter(element => element !== '');
+
+
+
 function InfixConverter(operators) {
     var expressionValidationRegex = /^([0-9]|\+|-|\(|\)|\*|\/|d)*$/;
 

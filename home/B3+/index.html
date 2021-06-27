@@ -69,25 +69,6 @@
            expression= document.getElementById('res').innerHTML;
            return expression;  
        }
-       
-       //let expr = getInfixExpression(expression);
-       //let charsArray = expr.split(''); //разделили наше выражение на элементы
-       //let expressionArray = [];
-      // let index = 0; 
-       //expressionArray [index] = '';
-      // let lastOperation =true;
-       
-      // for (let i = 0; i < charsArray.length; i++) { //разделяем цифры и операторы
-       // if (isNaN(parseInt(charsArray[i]))) {
-      //      if (isNaN(parseInt(charsArray[i])) && charsArray[i] !== "." && !lastOperation) {
-      //          expressionArray[index] = charsArray[i];
-      //          index++;
-      //          lastOperation =true;
-      //      } else {
-      //          expressionArray[index] += charsArray[i];
-      //          lastOperation=false;
-      //      }
-      //  }
 
         function calculate(expression){ //рассчитываем результат полученного выражения
             const stack = [];
