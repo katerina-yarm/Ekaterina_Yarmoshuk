@@ -1,5 +1,5 @@
 function separateNumbersFromOperations (expression) { //функция возвращает массив цифр и операторов в infix-ном виде
-    //let expr = '(6-3)*2';
+    //let expr = '1.1+(-3+2)*-3';
     let charsArray = expression.split(''); //разделили наше выражение на элементы
     let expressionArray = [];
     let index = 0; 
@@ -43,7 +43,7 @@ function fromInfixToPostfix (infixExpr) { //функция преобразов�
     let stack = [];
     let postfix = [];
     let enter = true; 
-    //let infixExpr =  ["(", "6", "-", "3", ")", "*", "2"]
+    //let infixExpr =  ["1.1", "+", "(", "-3", "+", "2", ")", "*", "-3"];
 
     for(let i = 0; i<infixExpr.length ;i++){
         if (!isNaN(parseFloat(infixExpr[i]))){
@@ -107,6 +107,9 @@ function fromInfixToPostfix (infixExpr) { //функция преобразов�
         }
     }
 
-    if (stack.length != 0) postfix.push(stack.pop());
+    while(stack.length != 0){
+        postfix.push(stack.pop());
+    }
+
     return postfix;
 }
