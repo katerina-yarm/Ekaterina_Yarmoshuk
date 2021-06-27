@@ -71,28 +71,29 @@
        }
 
         function calculate(expression){ //рассчитываем результат полученного выражения
-            const stack = [];
-            const expArray = fromInfixToPostfix(expression);//преобразовываем в формат Postfix, вызывая скрипт
+            let result = [];
+            let expArray = fromInfixToPostfix(expression);//преобразовываем в формат Postfix, вызывая скрипт
+            //let expArray = ["2", "-3", "1", "+", "*"];
             for (let i = 0; i < expArray.length; i++){
                 switch (expArray[i]){
                     case "+":
-                        stack.push(stack.pop()+stack.pop());
+                        result.push(result.pop()+result.pop());
                         break;
                     case "-":
-                        stack.push(stack.pop()-stack.pop());
+                        result.push(result.pop()-result.pop());
                         break;
                     case "*":
-                        stack.push(stack.pop()*stack.pop());
+                        result.push(result.pop()*result.pop());
                         break;
                     case "/":
-                        stack.push(stack.pop()/stack.pop());
+                        result.push(result.pop()/result.pop());
                         break;
                     default:
-                        stack.push(parseInt(expArray[i]));
+                        result.push(parseFloat(expArray[i]));
                 }
             }
-            document.getElementById('res').innerHTML = stack.pop();
-            return stack.pop();
+            document.getElementById('res').innerHTML = result.pop();
+            return result.pop();
         }
     </script>
 
