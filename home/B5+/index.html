@@ -16,7 +16,7 @@
                 let result = '';
                 result += `<${teg}`
                 for (let k in obj)
-                result += ` ${k}='${obj[k]}'`
+                result += ` ${k}="${obj[k]}"`
                 result += `> ${newString} </${teg}>`;
                 return result;
             }
