@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //Каррирование
+        //Это процесс, при котором мы можем трансформировать функцию с несколькими аргументами в упорядоченную последовательность 
+        //вложенных друг в друга уже других функций. Она возвращает новую функцию, которая ожидает уже следующий аргумент.
+        //Она будет отдавать новую функцию до тех пор, пока не закончится количество аргументов. 
+        //Аргументы остаются доступными в области видимости и используются при запуске кода, когда завершающая функция 
+        //в цепочке каррирования отдаётся и запускается.
+    
+        function buildWrapper (teg){
+            return function (string) {
+                let newString = string.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;').split("'").join('&apos;');
+                let result = `<${teg}> ${newString} </${teg}>`;
+                return result;
+            }
+        }
+
+        let wrapH1 = buildWrapper('h1');
+        let wrapP = buildWrapper('p');
+
+        console.log(wrapH1('Стихи'));
+        console.log(wrapP('Однажды в <студёную> зимнюю пору'));
+        console.log(wrapP("Вкусные М&М's"));
+
+    </script>
+</body>
+</html>
