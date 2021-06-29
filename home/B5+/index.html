@@ -12,12 +12,15 @@
 
         function buildWrapper (teg){
             return function (string, obj) {
-                let newString = string.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;').split("'").join('&apos;');
+                function replacement (str) {
+                    let newString = str.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;').split("'").join('&apos;');
+                    return newString;
+                }
                 let result = '';
-                result += `<${teg}`
+                result += `<${replacement(teg)}`
                 for (let k in obj)
-                result += ` ${k}="${obj[k]}"`
-                result += `> ${newString} </${teg}>`;
+                result += ` ${k}="${replacement(obj[k])}"`
+                result += `> ${replacement(string)} </${replacement(teg)}>`;
                 return result;
             }
         }
