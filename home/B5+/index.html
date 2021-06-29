@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         alert('Чтобы просмотреть результат работы функции,пожалуйста, откройте консоль браузера!')
+
+        function buildWrapper (teg){
+            return function (string, obj) {
+                let newString = string.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;').split("'").join('&apos;');
+                let result = '';
+                result += `<${teg}`
+                for (let k in obj)
+                result += ` ${k}='${obj[k]}'`
+                result += `> ${newString} </${teg}>`;
+                return result;
+            }
+        }
+
+        let wrapP = buildWrapper('p');
+        console.log(wrapP('Однажды в студёную зимнюю пору'));
+        console.log(wrapP('Однажды в студёную зимнюю пору',{lang:'ru'}));
+        console.log(wrapP('Однажды в <студёную> зимнюю пору'));
+
+        let wrapH1 = buildWrapper('h1');
+        console.log(wrapH1('Стихи',{align:'center', title:"M&M's"}));
+    
+    </script>
+</body>
+</html>
