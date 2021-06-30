@@ -8,18 +8,23 @@
 </head>
 <body>
     <script>
+        alert('Чтобы просмотреть результат работы функции,пожалуйста, откройте консоль браузера!')
+
         function formatNumber (num, format){
-            let fixedNumber=String(num.toFixed(2));
-            let formatIndex = format.indexOf('.'); // находим номер, под которым находится .
-            let a = format.slice(0,formatIndex - format.length);
-            let b =a.split(''); //отрезаем часть строки после точки, а оставшуюся строку разбиваем на массив 
-            let numberIndex = fixedNumber.indexOf('.');
-            let numberArray = fixedNumber.split('');
+            let fixedNumber=String(num.toFixed(2));//преобразуем в число, содержащее 2 знака после десятичной точки + формат строки (так как дальше мы будем работать со строкой)
+            let formatIndex = format.indexOf('.'); // находим номер, под которым находится . в строке с форматированием
+            let formatPart = (format.slice(0,formatIndex - format.length));//отрезаем часть строки после точки
+            let formatArray = formatPart.split(''); //оставшуюся строку разбиваем на массив 
+            let numberIndex = fixedNumber.indexOf('.'); //находим номер, под которым находится . в строке с числом
+            let numberArray = fixedNumber.split(''); //разбиваем нашу строку с числом на массив
             let n = numberIndex-1; //5-1=4
-            for (let i = 0; i<numberIndex; i++){
-                if (b[b.length-1-i] == " ") { //b[8-0]="#"
-                numberArray.splice(n+1,0,' ');
-                n--;   
+            let counter=0;
+            for (let i = 0; i<formatArray.length; i++){
+                if (formatArray[formatArray.length-1-i] == " ") { //b[8-0]="#"
+                numberArray.splice(n+1+counter,0,' ');//вставляем пустой элемент на место n+1, при этом ничего не удаляем
+                n--;
+                counter++; 
+                if(n<=0) break;
                 } else {
                     n--;
                 } 
@@ -28,10 +33,7 @@
             return number;
         }
 
-        console.log(formatNumber(12345.368,'# ### ###.##'));
-    
-
-        //12 345.37
+        console.log(formatNumber(12345.368,'# ### ## #.##')); //12 345.37
 
     </script>
 </body>
