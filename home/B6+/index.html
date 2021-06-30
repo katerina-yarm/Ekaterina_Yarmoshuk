@@ -21,10 +21,10 @@
             let counter=0;
             for (let i = 0; i<formatArray.length; i++){
                 if (formatArray[formatArray.length-1-i] == " ") { //b[8-0]="#"
-                numberArray.splice(n+1+counter,0,' ');//вставляем пустой элемент на место n+1, при этом ничего не удаляем
+                numberArray.splice(n+1+counter,0,' ');//вставляем пустой элемент на место n+1+counter, при этом ничего не удаляем
                 n--;
                 counter++; 
-                if(n<=0) break;
+                if(n<=0) break; //если числа слева от "." заканчиваются, то мы прекращаем работу цикла
                 } else {
                     n--;
                 } 
