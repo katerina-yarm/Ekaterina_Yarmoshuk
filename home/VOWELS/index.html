@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let userExpression = prompt ('Введите строку,количество русских гласных букв в которой вы хотите узнать:');
+
+        function vowelLettersCounter (expression){
+            let count=0;
+            let vowelsCharCodeArray = [1040,1072,1054,1086,1045,1077,1025,1105,1059,1091,1070,1102,1069,1101,1071,1103,1048,1080,1067,1099];
+            for (let i=0; i<expression.length; i++){
+                if (vowelsCharCodeArray.includes(expression.charCodeAt(i))) count++;
+            }
+            return count;
+        }
+
+        alert ('Для просмотра результата откройте консоль браузера!')
+    
+        console.log(vowelLettersCounter(userExpression));
+    </script>
+</body>
+</html>
