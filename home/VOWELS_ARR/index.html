@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let userExpression = prompt ('Введите строку,количество русских гласных букв в которой вы хотите узнать:');
+        alert ('Для просмотра результата откройте консоль браузера!')
+    
+        //1 способ forEach
+        function vowelLettersCounterForEach (expression){
+            let vowelsCharCodeArray = [1040,1072,1054,1086,1045,1077,1025,1105,1059,1091,1070,1102,1069,1101,1071,1103,1048,1080,1067,1099];
+            let elementArray = expression.split('');
+            let count=0;
+        
+            function ff (v, i, elementArray){
+                if (vowelsCharCodeArray.includes(elementArray[i].charCodeAt())) count++;
+                return count;
+            }
+            elementArray.forEach(ff);
+            return count;
+        }
+        console.log('Количество русских гласных в строке, которую вы ввели (метод forEach): '+ vowelLettersCounterForEach(userExpression));
+
+
+        //2 способ filter
+        function vowelLettersCounterFilter (expression){
+            let vowelsCharCodeArray = [1040,1072,1054,1086,1045,1077,1025,1105,1059,1091,1070,1102,1069,1101,1071,1103,1048,1080,1067,1099];
+            let elementArray = expression.split('');
+        
+            function ff (v, i, elementArray){
+                return vowelsCharCodeArray.includes(elementArray[i].charCodeAt());
+            }
+        
+            return elementArray.filter(ff).length;
+        }
+        console.log('Количество русских гласных в строке, которую вы ввели (метод filter): '+ vowelLettersCounterFilter(userExpression));
+
+
+        //3 способ reduce
+        function vowelLettersCounterReduce (expression){
+            let vowelsCharCodeArray = [1040,1072,1054,1086,1045,1077,1025,1105,1059,1091,1070,1102,1069,1101,1071,1103,1048,1080,1067,1099];
+            let elementArray = expression.split('');
+            let count=0;
+        
+            function fff (r, v, i, elementArray){
+                if (vowelsCharCodeArray.includes(elementArray[i].charCodeAt())) count++;
+                return count;
+            }
+            elementArray.reduce(fff, 0);
+            return count;
+        }
+        console.log('Количество русских гласных в строке, которую вы ввели (метод reduce): '+ vowelLettersCounterReduce(userExpression));
+    </script>
+</body>
+</html>
