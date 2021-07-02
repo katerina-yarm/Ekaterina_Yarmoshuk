@@ -20,14 +20,14 @@
             console.log( 'цветов: ' + colorsCount );
 
             let colorsObj={};
-            while ( Object.keys(colorsObj).length<colorsCount) {
+            while ( Object.keys(colorsObj).length<colorsCount) { //продолжать цикл пока количество ключей в объекте не станет равным числу, которое задал пользователь 
                 if (colorsCount>7) { 
                     alert ('В радуге только 7 цветов!');
                     break;
                 } else {
                     let n=randomDiap(1,7);
                     let colorName=colors[n];
-                    if ( !(colorName in colorsObj) ) colorsObj[colorName] = colorName;
+                    if ( !(colorName in colorsObj) ) colorsObj[colorName] = colorName; //если такого цвета в объекте еще нет, то добавляем его
                 }  
             }
             console.log( colorsObj );
