@@ -16,28 +16,25 @@
         }
     
         function mood(colorsCount) {
-            var colors=[ '', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
-    
+            let colors=[ '', 'красный', 'оранжевый', 'жёлтый', 'зелёный', 'голубой', 'синий', 'фиолетовый' ];
             console.log( 'цветов: ' + colorsCount );
-            for ( var i=1; i<=colorsCount; i++ ) {
-                var n=randomDiap(1,7);
-                var colorName=colors[n];
-                console.log( colorName );
-            }
-        }
-    
-        mood(3);
 
-        var count={}; // ключ - животное, значение - сколько раз оно встретилось
-        for ( var i=0; i<animals.length; i++ ) {
-            var animal=animals[i];
-            if ( !(animal in count) )
-                count[animal]=0;
-            count[animal]++;
+            let colorsObj={};
+            while ( Object.keys(colorsObj).length<colorsCount) {
+                if (colorsCount>7) { 
+                    alert ('В радуге только 7 цветов!');
+                    break;
+                } else {
+                    let n=randomDiap(1,7);
+                    let colorName=colors[n];
+                    if ( !(colorName in colorsObj) ) colorsObj[colorName] = colorName;
+                }  
+            }
+            console.log( colorsObj );
         }
     
-        console.log( count );
-    
+        mood(parseInt(prompt('Выборка случайных цветов радуги. Введите число от 1 до 7!')));
+        alert('Для просмотра резельтата откройте консоль браузера!');
     
     </script>
 </body>
