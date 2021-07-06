@@ -41,7 +41,7 @@
     <div id=app style="margin: 10px;"></div>
 
     
-    <script>
+    <script> //класс, содержащий данные по напиткам
             function HashStorageFunc (_foto,_name,_obj,_arr) {
                 this.foto=_foto;
                 this.name=_name;
@@ -50,7 +50,7 @@
                 this.recipe=_arr
             }
                 
-            let drinkStorage=[]; 
+            let drinkStorage=[]; //создаем массив для хранения рецептов напитков
             drinkStorage[0]= new HashStorageFunc ( "B-52.jpg", "B-52", 
                 [
                     {ingredient:'Кофейный ликер De Kuyper', quantity:'15'},
@@ -109,7 +109,7 @@
                 'Укрась веточкой мяты и долькой лайма'] 
             );
 
-        function showListOfAllCoctails () {
+        function showListOfAllCoctails () { //функция выдает в информационном окне перечень всех напитков из хранилища
             let list=[];
             for (let i=0; i<drinkStorage.length; i++) {
                 list += `\n ${drinkStorage[i].name} `;
@@ -117,7 +117,7 @@
             alert(`Список напитков, с составим и рецептами которых вы можете ознакомиться: ${list}`);
         }
 
-        function deleteCoctail () {
+        function deleteCoctail () { //функция спрашивает название напитка и удаляет его из хранилища
             let userCoctail = prompt('Введите название коктейля, информацию по которому вы хотите удалить:');
             for (let i = 0; i<drinkStorage.length; i++){
                 if(drinkStorage[i].name == userCoctail){
@@ -127,7 +127,7 @@
             } 
         }
 
-        function getInformation () {
+        function getInformation () { //функция спрашивает название напитка и если такой есть в хранилище, то выводит информацию по нему
             let userCoctail = prompt('Введите название коктейля, информацию по которому вы хотите получить:');
             let html = '';
             for (let i = 0; i<drinkStorage.length; i++){
@@ -156,12 +156,11 @@
                             }
                     html+=`</div> </div>`
                 } 
-            // alert (`Информация по коктейлю "${userCoctail}" отсутствует!`);
             }
             return html;
         }
 
-        function informationForm (){
+        function informationForm (){ //функция выводит форму, которая должна быть заполнена, для того чтобы добавить новый напиток в хранилище
             let htmlForm = '';
             htmlForm += `<div class="form">
                 <div class="container">
@@ -194,14 +193,13 @@
             return htmlForm;
         }
 
-        function setInformation () {
+        function setInformation () { //функция получает информацию из формы, преобразует ее и создает новый объект
             let foto = document.getElementById('foto');
             let name = document.getElementById('name');
-            let alcohol = document.getElementById('alcohol');
+            //let alcohol = document.getElementById('alcohol');
 
-            let ingredients = document.getElementById('ingredients');
-            //let ingredients = 'Кофейный ликер De Kuyper:15/Айриш крим:15/Трипл сек De Kuyper:15';
-            let ingredientsArray = ingredients.value.split('/');
+            let ingredients = document.getElementById('ingredients'); // получаем строку из поля Ингредиенты
+            let ingredientsArray = ingredients.value.split('/'); //разделяем ее на элементы
             let finalIngredientsArray = [];
             let element;
             let ingredient;
@@ -222,19 +220,13 @@
             ingredientsArray.forEach(ff);
             
 
-            let recipe = document.getElementById('recipe');
-            let recipeArray = recipe.value.split('/');
+           // let recipe = document.getElementById('recipe'); //получаем строку из поля рецепт
+            let recipe = 'kkkkkkkkkkk/ggggggggg/ggggggggg';
+            let recipeArray = recipe.split('/'); // и разделяем ее по '/',=> получаем массив строк
 
-            let userNewCoctail = new hashStorageClass ( foto.value, name.value, alcohol.value, finalIngredientsArray, recipeArray);
+            let userNewCoctail = new HashStorageFunc ( foto.value, name.value, finalIngredientsArray, recipeArray);
             drinkStorage.push(userNewCoctail);
         }
-
-
-      
-       
-       
-
-
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
