@@ -12,85 +12,103 @@
             width: 350px;
             margin: 10px;
         }
+        .form {
+            border-width: .5px;
+            border-style: solid;
+            border-radius: 5px;
+            padding: 20px;
+            width: 900px;
+            border-color: rgb(192, 189, 189);
+        }
+        .col-form-label{
+            width: 800px;
+        }
+        .form-control{
+            width: 850px;
+        }
+        label {
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
     <div>
-        <button class="btn btn-primary" type="submit" onclick="">Ввод информации о напитке</button>
+        <button class="btn btn-primary" type="submit" onclick="document.getElementById('app').innerHTML=informationForm()">Ввод информации о напитке</button>
         <button class="btn btn-primary" type="submit" onclick="document.getElementById('app').innerHTML=getInformation()">Получение информации о напитке</button>
         <button class="btn btn-primary" type="submit" onclick="deleteCoctail()">Удаление информации о напитке</button>
         <button class="btn btn-primary" type="submit" onclick="showListOfAllCoctails()">Перечень всех напитков</button>
     </div>
-    <div id=app style="display: flex; margin: 20px;"></div>
+    <div id=app style="margin: 10px;"></div>
+
     
     <script>
-        function hashStorageClass (_foto,_name,_obj,_arr) {
-            this.foto=_foto;
-            this.name=_name;
-            this.alcohol=true;
-            this.ingredients=_obj;
-            this.recipe=_arr
-        }
-            
-        const drinkStorage=[]; 
-        drinkStorage[0] = new hashStorageClass ( "B-52.jpg", "B-52", 
-                        [
-                            {ingredient:'Кофейный ликер De Kuyper', quantity:'15'},
-                            {ingredient:'Айриш крим', quantity:'15'},
-                            {ingredient:'Трипл сек De Kuyper', quantity:'15'}
-                        ],
-                        ['Налей в стопку кофейный ликер 15 мл',
-                        'Используя коктейльную ложку, уложи слой айриш крим 15 мл и слой ликера трипл сек 15 мл', 
-                        'Поджигай, вооружайся трубочками и угощай!']
-        );    
-        drinkStorage[1]= new hashStorageClass ("Blue_lagoon.jpg", "Голубая лагуна", 
-                        [
-                            {ingredient:'Водка Finlandia', quantity:'50'},
-                            {ingredient:'Ликер блю кюрасао De Kuyper', quantity:'20'},
-                            {ingredient:'Спрайт', quantity:'150'},
-                            {ingredient:'Ананас', quantity:'30'},
-                            {ingredient:'Лед в кубиках', quantity:'200'}
-                        ],
-                        ['Наполни харрикейн кубиками льда доверху',
-                        'Налей ликер блю кюрасао 20 мл и водку 50 мл', 
-                        'Долей спрайт доверху и аккуратно размешай коктейльной ложкой',
-                        'Укрась долькой ананаса'] 
-        );  
-        drinkStorage[2]= new hashStorageClass ("Sex_on_the_beach.jpg", "Секс на пляже", 
-                        [
-                            {ingredient:'Водка Finlandia', quantity:'50'},
-                            {ingredient:'Персиковый ликер De Kuyper', quantity:'25'},
-                            {ingredient:'Клюквенный сок', quantity:'40'},
-                            {ingredient:'Ананасовый сок', quantity:'40'},
-                            {ingredient:'Ананас', quantity:'15'},
-                            {ingredient:'Малина', quantity:'5'},
-                            {ingredient:'Лед в кубиках', quantity:'350'}
-                        ],
-                        ['Наполни слинг кубиками льда доверху',
-                        'Налей в шейкер клюквенный сок 40 мл, ананасовый сок 40 мл, персиковый ликер 25 мл и водку 50 мл', 
-                        'Наполни шейкер кубиками льда и взбей',
-                        'Перелей через стрейнер в слинг',
-                        'Укрась кусочком ананаса и ягодой малины на коктейльной шпажке'] 
-        );
-        drinkStorage[3]= new hashStorageClass ( "Mohito.jpg", "Мохито", 
-                        [
-                            {ingredient:'Белый ром', quantity:'50'},
-                            {ingredient:'Сахарный сироп', quantity:'15'},
-                            {ingredient:'Содовая', quantity:'100'},
-                            {ingredient:'Лайм', quantity:'80'},
-                            {ingredient:'Мята', quantity:'3'},
-                            {ingredient:'Дробленый лед', quantity:'200'}
-                        ],
-                        ['Положи в хайбол лайм 3 дольки и подави мадлером',
-                        'Возьми мяту 10 листиков в одну руку и хлопни по ним другой рукой', 
-                        'Положи мяту в хайбол',
-                        'Наполни бокал дробленым льдом доверху',
-                        'Добавь сахарный сироп 15 мл и белый ром 50 мл',
-                        'Долей содовую доверху и аккуратно размешай коктейльной ложкой',
-                        'Досыпь немного дробленого льда',
-                        'Укрась веточкой мяты и долькой лайма'] 
-        );
-      
+            function HashStorageFunc (_foto,_name,_obj,_arr) {
+                this.foto=_foto;
+                this.name=_name;
+                this.alcohol=true;
+                this.ingredients=_obj;
+                this.recipe=_arr
+            }
+                
+            let drinkStorage=[]; 
+            drinkStorage[0]= new HashStorageFunc ( "B-52.jpg", "B-52", 
+                [
+                    {ingredient:'Кофейный ликер De Kuyper', quantity:'15'},
+                    {ingredient:'Айриш крим', quantity:'15'},
+                    {ingredient:'Трипл сек De Kuyper', quantity:'15'}
+                ],
+                ['Налей в стопку кофейный ликер 15 мл',
+                'Используя коктейльную ложку, уложи слой айриш крим 15 мл и слой ликера трипл сек 15 мл', 
+                'Поджигай, вооружайся трубочками и угощай!']
+            );    
+            drinkStorage[1]= new HashStorageFunc ("Blue_lagoon.jpg", "Голубая лагуна", 
+                [
+                    {ingredient:'Водка Finlandia', quantity:'50'},
+                    {ingredient:'Ликер блю кюрасао De Kuyper', quantity:'20'},
+                    {ingredient:'Спрайт', quantity:'150'},
+                    {ingredient:'Ананас', quantity:'30'},
+                    {ingredient:'Лед в кубиках', quantity:'200'}
+                ],
+                ['Наполни харрикейн кубиками льда доверху',
+                'Налей ликер блю кюрасао 20 мл и водку 50 мл', 
+                'Долей спрайт доверху и аккуратно размешай коктейльной ложкой',
+                'Укрась долькой ананаса'] 
+            );  
+            drinkStorage[2]= new HashStorageFunc ("Sex_on_the_beach.jpg", "Секс на пляже", 
+                [
+                    {ingredient:'Водка Finlandia', quantity:'50'},
+                    {ingredient:'Персиковый ликер De Kuyper', quantity:'25'},
+                    {ingredient:'Клюквенный сок', quantity:'40'},
+                    {ingredient:'Ананасовый сок', quantity:'40'},
+                    {ingredient:'Ананас', quantity:'15'},
+                    {ingredient:'Малина', quantity:'5'},
+                    {ingredient:'Лед в кубиках', quantity:'350'}
+                ],
+                ['Наполни слинг кубиками льда доверху',
+                'Налей в шейкер клюквенный сок 40 мл, ананасовый сок 40 мл, персиковый ликер 25 мл и водку 50 мл', 
+                'Наполни шейкер кубиками льда и взбей',
+                'Перелей через стрейнер в слинг',
+                'Укрась кусочком ананаса и ягодой малины на коктейльной шпажке'] 
+            );
+            drinkStorage[3] = new HashStorageFunc ( "Mohito.jpg", "Мохито", 
+                [
+                    {ingredient:'Белый ром', quantity:'50'},
+                    {ingredient:'Сахарный сироп', quantity:'15'},
+                    {ingredient:'Содовая', quantity:'100'},
+                    {ingredient:'Лайм', quantity:'80'},
+                    {ingredient:'Мята', quantity:'3'},
+                    {ingredient:'Дробленый лед', quantity:'200'}
+                ],
+                ['Положи в хайбол лайм 3 дольки и подави мадлером',
+                'Возьми мяту 10 листиков в одну руку и хлопни по ним другой рукой', 
+                'Положи мяту в хайбол',
+                'Наполни бокал дробленым льдом доверху',
+                'Добавь сахарный сироп 15 мл и белый ром 50 мл',
+                'Долей содовую доверху и аккуратно размешай коктейльной ложкой',
+                'Досыпь немного дробленого льда',
+                'Укрась веточкой мяты и долькой лайма'] 
+            );
+
         function showListOfAllCoctails () {
             let list=[];
             for (let i=0; i<drinkStorage.length; i++) {
@@ -143,7 +161,75 @@
             return html;
         }
 
-        
+        function informationForm (){
+            let htmlForm = '';
+            htmlForm += `<div class="form">
+                <div class="container">
+                    <h4 style="margin-bottom: 20px">Форма для заполнения информации по новому коктейлю</h4>
+                    <div class="row">
+                        <label>Изображение коктейля</label>
+                        <input class="form-control" id=foto placeholder="Mohito.jpg">
+                    </div>
+                    <div class="row">
+                        <label>Наименование</label>
+                        <input class="form-control" id=name placeholder="Мохито">
+                    </div>
+                    <div class="row">
+                        <label>Наличие алкоголя </label>
+                        <input class="form-control" id=alcohol placeholder="true">
+                    </div>
+                    <div class="row">
+                        <label>Ингредиенты и их количество <span style='font-size:10px; margin-left: 250px'>** Пример записи: ' Ингредиент1:количество1/Ингредиент2:количество2 '  **</span></label>
+                        <textarea class="form-control" style='height:100px' id=ingredients placeholder="Кофейный ликер De Kuyper:15"></textarea>
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label">Рецепт коктейля <span style='font-size:10px; margin-left: 380px'>** Просьба разделять каждый новый пункт знаком '/ '  **</span></label>
+                        <textarea class="form-control" style='height:100px' id=recipe></textarea>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-primary" style='margin-left:0' type="submit" onclick="setInformation()">Добавить коктейль</button>
+                 </div>
+            </div>`
+            return htmlForm;
+        }
+
+        function setInformation () {
+            let foto = document.getElementById('foto');
+            let name = document.getElementById('name');
+            let alcohol = document.getElementById('alcohol');
+
+            let ingredients = document.getElementById('ingredients');
+            //let ingredients = 'Кофейный ликер De Kuyper:15/Айриш крим:15/Трипл сек De Kuyper:15';
+            let ingredientsArray = ingredients.value.split('/');
+            let finalIngredientsArray = [];
+            let element;
+            let ingredient;
+            let quantaty;
+            let obj;
+            let i = 0;
+
+            function ff (v,i,a){
+                element = ingredientsArray[i].split(':');
+                ingredient = element[0];
+                quantaty = element[1];
+                obj = {
+                    ingredient: ingredient, 
+                    quantaty: quantaty
+                };
+                finalIngredientsArray.push(obj);
+            }
+            ingredientsArray.forEach(ff);
+            
+
+            let recipe = document.getElementById('recipe');
+            let recipeArray = recipe.value.split('/');
+
+            let userNewCoctail = new hashStorageClass ( foto.value, name.value, alcohol.value, finalIngredientsArray, recipeArray);
+            drinkStorage.push(userNewCoctail);
+        }
+
+
       
        
        
