@@ -23,8 +23,8 @@
     </div>
     <script>
         class HashStorageClass {
-            constructor (key,value) {
-                this[key]=value;
+            constructor (value) {
+                this.value;
             }
             addValue(key,value){
                 return this.key=this.value;
@@ -37,17 +37,14 @@
             }
             getKeys(){
                 let kArray=[];
-                for (let k in this.HashStorageClass){
-                    return k;
+                for (let k in this){
+                kArray.push(this[k].value);
                 }
-                kArray +=k;
-                return kArray;
             }
         }
 
-        let drinkStorage = [];
-        let key1 = 'B-52';
-        let information1 = {
+        let drinkStorage = new HashStorageClass();
+        drinkStorage.B52 = {
             алкогольный: 'да',
             ингредиенты:[
                     {ingredient:'Кофейный ликер De Kuyper', quantity:'15'},
@@ -60,10 +57,8 @@
                 'Поджигай, вооружайся трубочками и угощай!'
             ]
         };
-        drinkStorage.push(new HashStorageClass(key1, information1));
 
-        let key2 = 'Голубая_лагуна';
-        let information2 = {
+        drinkStorage.Голубая_лагуна = {
             алкогольный: 'да',
             ингредиенты: [
                     {ingredient:'Водка Finlandia', quantity:'50'},
@@ -78,10 +73,8 @@
                 'Укрась долькой ананаса'
             ] 
         };
-        drinkStorage.push(new HashStorageClass(key2, information2));
 
-        let key3 = 'Секс_на_пляже';
-        let information3 ={
+        drinkStorage.Секс_на_пляже = {
             алкогольный: 'да',
             ингредиенты:[
                     {ingredient:'Водка Finlandia', quantity:'50'},
@@ -99,10 +92,9 @@
                 'Укрась кусочком ананаса и ягодой малины на коктейльной шпажке'
             ] 
         };
-        drinkStorage.push(new HashStorageClass(key3, information3));
 
 
-    
+
 
         function showListOfAllCoctails (){
             alert(drinkStorage.getKeys);
@@ -114,7 +106,7 @@
         }
         function getInformation () {
             let userCoctail = prompt(`Введите название коктейля, информацию по которому вы хотите получить:`);
-            console.log(drinkStorage[1].userCoctail);
+            console.log(drinkStorage.userCoctail);
         }
        
 
