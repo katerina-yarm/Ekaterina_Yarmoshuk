@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .btn{
+            display: flex;
+            width: 350px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button class="btn btn-primary" type="submit" onclick="">Ввод информации о напитке</button>
+        <button class="btn btn-primary" type="submit" onclick="getInformation ()">Получение информации о напитке</button>
+        <button class="btn btn-primary" type="submit" onclick="deleteCoctail ()">Удаление информации о напитке</button>
+        <button class="btn btn-primary" type="submit" onclick="showListOfAllCoctails ()">Перечень всех напитков</button>
+    </div>
+    <script>
+        class HashStorageClass {
+            constructor (key,value) {
+                this[key]=value;
+            }
+            addValue(key,value){
+                return this.key=this.value;
+            }
+            getValue(key){
+                return this.key;
+            }
+            deleteValue(key){
+                return delete this.key;
+            }
+            getKeys(){
+                let kArray=[];
+                for (let k in this.HashStorageClass){
+                    return k;
+                }
+                kArray +=k;
+                return kArray;
+            }
+        }
+
+        let drinkStorage = [];
+        let key1 = 'B-52';
+        let information1 = {
+            алкогольный: 'да',
+            ингредиенты:[
+                    {ingredient:'Кофейный ликер De Kuyper', quantity:'15'},
+                    {ingredient:'Айриш крим', quantity:'15'},
+                    {ingredient:'Трипл сек De Kuyper', quantity:'15'}
+                ], 
+            рецепт_приготовления: [
+                'Налей в стопку кофейный ликер 15 мл',
+                'Используя коктейльную ложку, уложи слой айриш крим 15 мл и слой ликера трипл сек 15 мл', 
+                'Поджигай, вооружайся трубочками и угощай!'
+            ]
+        };
+        drinkStorage.push(new HashStorageClass(key1, information1));
+
+        let key2 = 'Голубая_лагуна';
+        let information2 = {
+            алкогольный: 'да',
+            ингредиенты: [
+                    {ingredient:'Водка Finlandia', quantity:'50'},
+                    {ingredient:'Ликер блю кюрасао De Kuyper', quantity:'20'},
+                    {ingredient:'Спрайт', quantity:'150'},
+                    {ingredient:'Ананас', quantity:'30'},
+                    {ingredient:'Лед в кубиках', quantity:'200'}
+                ],
+            рецепт_приготовления: ['Наполни харрикейн кубиками льда доверху',
+                'Налей ликер блю кюрасао 20 мл и водку 50 мл', 
+                'Долей спрайт доверху и аккуратно размешай коктейльной ложкой',
+                'Укрась долькой ананаса'
+            ] 
+        };
+        drinkStorage.push(new HashStorageClass(key2, information2));
+
+        let key3 = 'Секс_на_пляже';
+        let information3 ={
+            алкогольный: 'да',
+            ингредиенты:[
+                    {ingredient:'Водка Finlandia', quantity:'50'},
+                    {ingredient:'Персиковый ликер De Kuyper', quantity:'25'},
+                    {ingredient:'Клюквенный сок', quantity:'40'},
+                    {ingredient:'Ананасовый сок', quantity:'40'},
+                    {ingredient:'Ананас', quantity:'15'},
+                    {ingredient:'Малина', quantity:'5'},
+                    {ingredient:'Лед в кубиках', quantity:'350'}
+                ],
+            рецепт_приготовления:['Наполни слинг кубиками льда доверху',
+                'Налей в шейкер клюквенный сок 40 мл, ананасовый сок 40 мл, персиковый ликер 25 мл и водку 50 мл', 
+                'Наполни шейкер кубиками льда и взбей',
+                'Перелей через стрейнер в слинг',
+                'Укрась кусочком ананаса и ягодой малины на коктейльной шпажке'
+            ] 
+        };
+        drinkStorage.push(new HashStorageClass(key3, information3));
+
+
+    
+
+        function showListOfAllCoctails (){
+            alert(drinkStorage.getKeys);
+        }
+        function deleteCoctail () {
+            let userCoctail = prompt('Введите название коктейля, информацию по которому вы хотите удалить:');
+            alert (`Информация по коктейлю "${userCoctail}" удалена!`);
+            return deleteValue(userCoctail);
+        }
+        function getInformation () {
+            let userCoctail = prompt(`Введите название коктейля, информацию по которому вы хотите получить:`);
+            console.log(drinkStorage[1].userCoctail);
+        }
+       
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
