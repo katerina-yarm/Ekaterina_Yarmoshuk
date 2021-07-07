@@ -42,16 +42,16 @@
 
     
     <script> //класс, содержащий данные по напиткам
-            function HashStorageFunc (_foto,_name,_obj,_arr) {
+            function HashStorageFunc (_foto,_name,_alcohol,_obj,_arr) {
                 this.foto=_foto;
                 this.name=_name;
-                this.alcohol=true;
+                this.alcohol=_alcohol;
                 this.ingredients=_obj;
                 this.recipe=_arr
             }
                 
             let drinkStorage=[]; //создаем массив для хранения рецептов напитков
-            drinkStorage[0]= new HashStorageFunc ( "B-52.jpg", "B-52", 
+            drinkStorage[0]= new HashStorageFunc ( "B-52.jpg", "B-52", true,
                 [
                     {ingredient:'Кофейный ликер De Kuyper', quantity:'15'},
                     {ingredient:'Айриш крим', quantity:'15'},
@@ -61,7 +61,7 @@
                 'Используя коктейльную ложку, уложи слой айриш крим 15 мл и слой ликера трипл сек 15 мл', 
                 'Поджигай, вооружайся трубочками и угощай!']
             );    
-            drinkStorage[1]= new HashStorageFunc ("Blue_lagoon.jpg", "Голубая лагуна", 
+            drinkStorage[1]= new HashStorageFunc ("Blue_lagoon.jpg", "Голубая лагуна", true,
                 [
                     {ingredient:'Водка Finlandia', quantity:'50'},
                     {ingredient:'Ликер блю кюрасао De Kuyper', quantity:'20'},
@@ -74,7 +74,7 @@
                 'Долей спрайт доверху и аккуратно размешай коктейльной ложкой',
                 'Укрась долькой ананаса'] 
             );  
-            drinkStorage[2]= new HashStorageFunc ("Sex_on_the_beach.jpg", "Секс на пляже", 
+            drinkStorage[2]= new HashStorageFunc ("Sex_on_the_beach.jpg", "Секс на пляже", true,
                 [
                     {ingredient:'Водка Finlandia', quantity:'50'},
                     {ingredient:'Персиковый ликер De Kuyper', quantity:'25'},
@@ -90,7 +90,7 @@
                 'Перелей через стрейнер в слинг',
                 'Укрась кусочком ананаса и ягодой малины на коктейльной шпажке'] 
             );
-            drinkStorage[3] = new HashStorageFunc ( "Mohito.jpg", "Мохито", 
+            drinkStorage[3] = new HashStorageFunc ( "Mohito.jpg", "Мохито", true,
                 [
                     {ingredient:'Белый ром', quantity:'50'},
                     {ingredient:'Сахарный сироп', quantity:'15'},
@@ -114,7 +114,7 @@
             for (let i=0; i<drinkStorage.length; i++) {
                 list += `\n ${drinkStorage[i].name} `;
             }
-            alert(`Список напитков, с составим и рецептами которых вы можете ознакомиться: ${list}`);
+            alert(`Список напитков, с составом и рецептами которых вы можете ознакомиться: ${list}`);
         }
 
         function deleteCoctail () { //функция спрашивает название напитка и удаляет его из хранилища
@@ -128,7 +128,7 @@
         }
 
         function getInformation () { //функция спрашивает название напитка и если такой есть в хранилище, то выводит информацию по нему
-            let userCoctail = prompt('Введите название коктейля, информацию по которому вы хотите получить:');
+            let userCoctail = prompt(`Введите название коктейля, информацию по которому вы хотите получить: \n**Если конкретный напиток не будет выбран,то отобразятся карточки всех доступных напитков**`);
             let html = '';
             for (let i = 0; i<drinkStorage.length; i++){
                 if (drinkStorage[i].name.includes(userCoctail)) {
@@ -167,11 +167,11 @@
                     <h4 style="margin-bottom: 20px">Форма для заполнения информации по новому коктейлю</h4>
                     <div class="row">
                         <label>Изображение коктейля</label>
-                        <input class="form-control" id=foto placeholder="Mohito.jpg">
+                        <input class="form-control" id=foto placeholder="Hot_orange.jpg">
                     </div>
                     <div class="row">
                         <label>Наименование</label>
-                        <input class="form-control" id=name placeholder="Мохито">
+                        <input class="form-control" id=name placeholder="Горячий апельсин">
                     </div>
                     <div class="row">
                         <label>Наличие алкоголя </label>
@@ -179,11 +179,11 @@
                     </div>
                     <div class="row">
                         <label>Ингредиенты и их количество <span style='font-size:10px; margin-left: 250px'>** Пример записи: ' Ингредиент1:количество1/Ингредиент2:количество2 '  **</span></label>
-                        <textarea class="form-control" style='height:100px' id=ingredients placeholder="Кофейный ликер De Kuyper:15"></textarea>
+                        <textarea class="form-control" style='height:100px' id=ingredients placeholder="Кофейный ликер De Kuyper:15">Белый ром:50/Клубничный сироп:30/Апельсиновый сок:100/Клубничное пюре:50/Клубника:20</textarea>
                     </div>
                     <div class="row">
                         <label class="col-form-label">Рецепт коктейля <span style='font-size:10px; margin-left: 380px'>** Просьба разделять каждый новый пункт знаком '/ '  **</span></label>
-                        <textarea class="form-control" style='height:100px' id=recipe></textarea>
+                        <textarea class="form-control" style='height:100px' id=recipe>Положи в питчер клубничное пюре 10 к. ложек/Добавь клубничный сироп 30 мл, апельсиновый сок 100 мл и белый ром 50 мл/Помешивая, нагрей, не доводя до кипения/Перелей в бокал для ирландского кофе/Укрась нарезанной клубникой</textarea>
                     </div>
                 </div>
                 <div class="buttons">
@@ -196,35 +196,32 @@
         function setInformation () { //функция получает информацию из формы, преобразует ее и создает новый объект
             let foto = document.getElementById('foto');
             let name = document.getElementById('name');
-            //let alcohol = document.getElementById('alcohol');
+            let alcohol = document.getElementById('alcohol');
+
+            alert (`Информация по напитку ${name.value} добавлена в список коктейлей, доступных для просмотра!`)
 
             let ingredients = document.getElementById('ingredients'); // получаем строку из поля Ингредиенты
             let ingredientsArray = ingredients.value.split('/'); //разделяем ее на элементы
             let finalIngredientsArray = [];
             let element;
-            let ingredient;
-            let quantaty;
             let obj;
             let i = 0;
 
             function ff (v,i,a){
                 element = ingredientsArray[i].split(':');
-                ingredient = element[0];
-                quantaty = element[1];
                 obj = {
-                    ingredient: ingredient, 
-                    quantaty: quantaty
+                    quantity: element[1],  //разделяем каждый элемент на ингредиент и количество
+                    ingredient: element[0],  // и создаем объект с получеными значениями
                 };
-                finalIngredientsArray.push(obj);
+                finalIngredientsArray.push(obj); // добавляем новую пару в массив с ингредиентами
             }
-            ingredientsArray.forEach(ff);
+            ingredientsArray.forEach(ff);//так делаем для каждой итерации
             
 
-           // let recipe = document.getElementById('recipe'); //получаем строку из поля рецепт
-            let recipe = 'kkkkkkkkkkk/ggggggggg/ggggggggg';
-            let recipeArray = recipe.split('/'); // и разделяем ее по '/',=> получаем массив строк
+            let recipe = document.getElementById('recipe'); //получаем строку из поля рецепт
+            let recipeArray = recipe.value.split('/'); // и разделяем ее по '/',=> получаем массив строк
 
-            let userNewCoctail = new HashStorageFunc ( foto.value, name.value, finalIngredientsArray, recipeArray);
+            let userNewCoctail = new HashStorageFunc ( foto.value, name.value,alcohol.value, finalIngredientsArray, recipeArray);
             drinkStorage.push(userNewCoctail);
         }
 
