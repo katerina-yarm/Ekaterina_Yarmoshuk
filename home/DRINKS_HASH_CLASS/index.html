@@ -22,28 +22,30 @@
         <button class="btn btn-primary" type="submit" onclick="showListOfAllCoctails ()">Перечень всех напитков</button>
     </div>
     <script>
+        alert('Пожалуйста, откройте консоль браузера!')
         class HashStorageClass {
-            constructor (value) {
-                this.value=value;
+            constructor (key,value) {
+                this.value;
             }
             addValue(key,value){
                 return this.key=this.value;
             }
-            getValue(key){
-                return this.key;
+            getValue(value){
+                console.log(this[value]);
             }
             deleteValue(key){
-                return delete this.key;
+               delete this[key];
             }
             getKeys(){
                 let kArray=[];
                 for (let k in this){
-                kArray.push(this[k].value);
+                    kArray.push(k);
                 }
+                return kArray;
             }
         }
 
-        let drinkStorage = new HashStorageClass;
+        let drinkStorage = new HashStorageClass();
         drinkStorage.B52 = {
             алкогольный: 'да',
             ингредиенты:[
@@ -92,22 +94,18 @@
         };
 
         function showListOfAllCoctails (){
-            let kArray=[];
-            for (let k in drinkStorage){
-                kArray.push(k);
-            }
-            alert(`Список напитков, с составом и рецептами которых вы можете ознакомиться: ${kArray}`);
+            alert(`Список напитков, с составом и рецептами которых вы можете ознакомиться: ${drinkStorage.getKeys()}`);
         }
         function deleteCoctail () {
             let userCoctail = prompt('Введите название коктейля, информацию по которому вы хотите удалить:');
             alert (`Информация по коктейлю "${userCoctail}" удалена!`);
-            return delete drinkStorage[userCoctail];
+            drinkStorage.deleteValue(userCoctail);
         }
         function getInformation () {
             let userCoctail = prompt(`Введите название коктейля, информацию по которому вы хотите получить:`);
             for (let key in drinkStorage) {
                 if (userCoctail in drinkStorage) {
-                    console.log(drinkStorage[userCoctail]);
+                    drinkStorage.getValue(userCoctail);
                     break;
                 } else alert (`Информации по коктейлю "${userCoctail}" в хранилище отсутствует!`);
                 break; 
@@ -116,12 +114,30 @@
         function enterInformation () {
             let name = prompt ('Введите назнание коктейля:');
             let alcohol = prompt ('Этот коктейль алкогольный? Да или нет');
-            let ingredients = prompt ('Из каких ингредиентов он состоит?');
-            let recipe = prompt ('Опишите процесс приготовления:')
+
+            let ingredients = prompt (`Из каких ингредиентов он состоит? \n** Пример записи: ' Ингредиент1:количество1/Ингредиент2:количество2 '  **`);
+            let ingredientsArray = ingredients.split('/'); //разделяем ее на элементы
+            let finalIngredientsArray = [];
+            let element;
+            let obj;
+            let i = 0;
+            function ff (v,i,a){
+                element = ingredientsArray[i].split(':');
+                obj = {
+                    ingredient: element[0],//разделяем каждый элемент на ингредиент и количество
+                    quantity: element[1]   // и создаем объект с получеными значениями
+                };
+                finalIngredientsArray.push(obj); // добавляем новую пару в массив с ингредиентами
+            }
+            ingredientsArray.forEach(ff);//так делаем для каждой итерации
+            
+            
+            let recipe = prompt (`Опишите процесс приготовления: \n** Просьба разделять каждый новый пункт знаком '/ '  **`)
+            let recipeArray = recipe.split('/'); // и разделяем ее по '/',=> получаем массив строк
             drinkStorage[name] = {
                 алкогольный: alcohol,
-                ингредиенты:[ingredients], 
-                рецепт_приготовления: [recipe]
+                ингредиенты:[finalIngredientsArray], 
+                рецепт_приготовления: [recipeArray]
             };
         }
        
