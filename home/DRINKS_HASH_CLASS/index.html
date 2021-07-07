@@ -16,7 +16,7 @@
 </head>
 <body>
     <div>
-        <button class="btn btn-primary" type="submit" onclick="">Ввод информации о напитке</button>
+        <button class="btn btn-primary" type="submit" onclick="enterInformation ()">Ввод информации о напитке</button>
         <button class="btn btn-primary" type="submit" onclick="getInformation ()">Получение информации о напитке</button>
         <button class="btn btn-primary" type="submit" onclick="deleteCoctail ()">Удаление информации о напитке</button>
         <button class="btn btn-primary" type="submit" onclick="showListOfAllCoctails ()">Перечень всех напитков</button>
@@ -24,7 +24,7 @@
     <script>
         class HashStorageClass {
             constructor (value) {
-                this.value;
+                this.value=value;
             }
             addValue(key,value){
                 return this.key=this.value;
@@ -43,7 +43,7 @@
             }
         }
 
-        let drinkStorage = new HashStorageClass();
+        let drinkStorage = new HashStorageClass;
         drinkStorage.B52 = {
             алкогольный: 'да',
             ингредиенты:[
@@ -57,7 +57,6 @@
                 'Поджигай, вооружайся трубочками и угощай!'
             ]
         };
-
         drinkStorage.Голубая_лагуна = {
             алкогольный: 'да',
             ингредиенты: [
@@ -73,7 +72,6 @@
                 'Укрась долькой ананаса'
             ] 
         };
-
         drinkStorage.Секс_на_пляже = {
             алкогольный: 'да',
             ингредиенты:[
@@ -93,20 +91,38 @@
             ] 
         };
 
-
-
-
         function showListOfAllCoctails (){
-            alert(drinkStorage.getKeys);
+            let kArray=[];
+            for (let k in drinkStorage){
+                kArray.push(k);
+            }
+            alert(`Список напитков, с составом и рецептами которых вы можете ознакомиться: ${kArray}`);
         }
         function deleteCoctail () {
             let userCoctail = prompt('Введите название коктейля, информацию по которому вы хотите удалить:');
             alert (`Информация по коктейлю "${userCoctail}" удалена!`);
-            return deleteValue(userCoctail);
+            return delete drinkStorage[userCoctail];
         }
         function getInformation () {
             let userCoctail = prompt(`Введите название коктейля, информацию по которому вы хотите получить:`);
-            console.log(drinkStorage.userCoctail);
+            for (let key in drinkStorage) {
+                if (userCoctail in drinkStorage) {
+                    console.log(drinkStorage[userCoctail]);
+                    break;
+                } else alert (`Информации по коктейлю "${userCoctail}" в хранилище отсутствует!`);
+                break; 
+            }
+        }
+        function enterInformation () {
+            let name = prompt ('Введите назнание коктейля:');
+            let alcohol = prompt ('Этот коктейль алкогольный? Да или нет');
+            let ingredients = prompt ('Из каких ингредиентов он состоит?');
+            let recipe = prompt ('Опишите процесс приготовления:')
+            drinkStorage[name] = {
+                алкогольный: alcohol,
+                ингредиенты:[ingredients], 
+                рецепт_приготовления: [recipe]
+            };
         }
        
 
