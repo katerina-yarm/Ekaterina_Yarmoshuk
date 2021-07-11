@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        body{
+            padding: 10px;
+        }
+        h2{
+            padding-bottom: 20px;
+        }
+        .form {
+            border-width: .5px;
+            border-style: solid;
+            border-radius: 5px;
+            padding: 20px;
+            width: 560px;
+            border-color: rgb(192, 189, 189);
+            margin: auto;
+        }
+        .buttons{
+            width: 378px;
+            margin-left: auto;
+            margin-right: 0;
+        }
+        .btn-outline-secondary{
+            width: 186px;
+        }
+        .col-form-label{
+            width: 90px;
+        }
+    </style>
+</head>
+<body>
+    <div id=app style="display: flex; margin: 20px;"></div>
+      
+
+  <script> 
+        class Phone {
+            constructor () {
+                //this.phoneArray = [];
+            }
+
+            deleteValue(key){
+               delete this[key];
+            }
+        }
+
+        const phones = new Phone ();
+        phones.id1 = { 
+        model: "Samsung Galaxy A21s 64GB",
+        id: 1,
+        imgUrl:"blue.jpg",
+        color: "синий",
+        description: "Плавные линии корпуса позволяют легко и комфортно держать смартфон в руке.",
+        price: 650,
+        sale: false 
+    };
+        phones.id2 = { 
+        model: "Samsung Galaxy A21s 64GB",
+        id: 2,
+        imgUrl:"red.jpg",
+        color: "красный",
+        description: "Выбирай один из уникальных оттенков Черного, Синего или Красного цветов, чтобы подчеркнуть свой неповторимый стиль.",
+        price: 580,
+        sale: true 
+    };
+        phones.id3 = { 
+        model: "Samsung Galaxy A12 64GB",
+        id: 3,
+        imgUrl:"grey.jpeg",
+        color: "черный",
+        description: "Яркая глянцевая панель Galaxy A12 приковывает взгляд.",
+        price: 580,
+        sale: true 
+    };
+
+     //отображаем все экземпляры класса Phone, которые находятся в хранилище phones
+        function render (){
+            let html = '';
+            for (let key in phones){
+            html+= `<div class="card" style="width: 18rem; margin: 20px;">
+                            <img src="${phones[key].imgUrl}" class="card-img-top" alt="..." style="height: 400px;">
+                            <div class="card-body" style="position: relative;">
+                                <h5 class="card-title">${phones[key].model}</h5>
+                                <p class="card-text">${phones[key].color}</p>
+                                <p class="card-text">${phones[key].price} бел.руб.</p>
+                                <p class="card-text">${phones[key].description}</p>`
+                                html+= phones[key].sale ? "<p style='color:red; margin-bottom: 120px;'> SALE </p>":"<p></p>"
+                                html+= `<div style="position:absolute; bottom:5px"> 
+                                    <button type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Add</button>
+                                    <button data-phoneId=${phones[key].id} onclick="deleteInformation ()" type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
+                                    <button type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Update</button>
+                                </div>
+                            </div>
+                        </div>`
+            }
+            return html;
+        }
+  
+    
+        function deleteInformation () {
+           
+        }
+           
+        const app = document.getElementById('app');
+        app.innerHTML=render();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
