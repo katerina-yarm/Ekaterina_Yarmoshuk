@@ -36,7 +36,7 @@
     </style>
 </head>
 <body>
-    <button type="button" class="btn btn-outline-secondary" style="margin: 40px" onclick="showPhoneList ()">Show list of phones</button>
+    <button type="button" class="btn btn-outline-secondary" style="margin: 40px" onclick="showPhoneCards ()">Show list of phones</button>
     <form name="form" class="form">
         <h2>Product card filling in form</h2>
         <div class="mb-3 row">
@@ -89,6 +89,7 @@
       
 
   <script> 
+        const app = document.getElementById('app');
         class Phone {
             constructor () {
                 //this.phoneArray = [];
@@ -97,8 +98,10 @@
             deleteValue(key){
                delete this[key];
             }
+       
         }
 
+        //создаем хранилище для моделей телефонов
         const phones = new Phone ();
         phones.id1 = { 
         model: "Samsung Galaxy A21s 64GB",
@@ -128,8 +131,7 @@
         sale: true 
         };
 
-        const app = document.getElementById('app');
-     //отображаем все экземпляры класса Phone, которые находятся в хранилище phones
+        //прорисовываем интерфейс отображения всех элементов, которые находятся в хранилище phones
         function render (){
             let html = '';
             for (let key in phones){
@@ -142,7 +144,7 @@
                                 <p class="card-text">${phones[key].description}</p>`
                                 html+= phones[key].sale ? "<p style='color:red; margin-bottom: 120px;'> SALE </p>":"<p></p>"
                                 html+= `<div style="position:absolute; bottom:5px"> 
-                                    <button data-phoneid=${phones[key].id} type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
+                                    <button data-phoneid=${phones[key].id} type="button" class="btn-del btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
                                     <button type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Update</button>
                                 </div>
                             </div>
@@ -150,11 +152,24 @@
             }
             return html;
         }
-       // app.innerHTML=render();
     
-           
-        function showPhoneList () {
-            return app.innerHTML=render();  
+        // отображает все карточки телефонов + позволяет работать с ними (т.е. внутри функция для удаления карточек)
+        function showPhoneCards () {
+            app.innerHTML=render();
+            let buttons = document.querySelectorAll('.btn-del'); //выбирает в массив все кнопки класса '.btn-del'
+
+            buttons.forEach ((btn,indx) => {// назначим обработчик по кнопке, он будет вызван когда кликнут на любую кнопку
+                btn.addEventListener('click', function(e){
+                    //e.target ссылается на кликнутый элемент
+                    let buttonId = e.target.dataset.phoneid;
+                    for (let key in phones){
+                        if (phones[key].id == buttonId){
+                            delete phones[key];
+                            showPhoneCards ();
+                        }
+                    }
+                }); 
+            }) 
         }
 
         //заменила getElementById на другой способ (где form-значение атрибута name тэга form, ["id"]-значение атрибута name тэга input)
@@ -169,18 +184,7 @@
                 sale: form.elements["sale"].value
             };
         }
-
-        const btns = app.querySelectorAll ('button');
-        btns.forEach((btn, indx)=>{
-            btn.addEventListener("click",function(e){
-                for (let key in phones){
-                    if (phones[key].id == e.target.dataset.phoneid){
-                        delete phones[key];
-                        app.innerHTML=render();
-                    }
-                }
-            })
-        })
+        
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
