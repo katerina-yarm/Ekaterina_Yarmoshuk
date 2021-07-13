@@ -20,10 +20,10 @@
             padding: 20px;
             width: 560px;
             border-color: rgb(192, 189, 189);
-            margin: auto;
+            margin-left: 40px;
         }
         .buttons{
-            width: 378px;
+            width: 186px;
             margin-left: auto;
             margin-right: 0;
         }
@@ -36,6 +36,55 @@
     </style>
 </head>
 <body>
+    <button type="button" class="btn btn-outline-secondary" style="margin: 40px" onclick="showPhoneList ()">Show list of phones</button>
+    <form name="form" class="form">
+        <h2>Product card filling in form</h2>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Model</label>
+            <div class="col-sm-10">
+              <input class="form-control" name="model" placeholder="Samsung Galaxy A21s">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Id</label>
+            <div class="col-sm-10">
+              <input class="form-control" name="id" placeholder="4">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">ImgUrl</label>
+            <div class="col-sm-10">
+              <input class="form-control" name="imgUrl" placeholder="red.jpg">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Color</label>
+            <div class="col-sm-10">
+              <input class="form-control" name="color">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Sale</label>
+            <div class="col-sm-10">
+              <input class="form-control" name="sale" placeholder="true or false">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+              <input class="form-control" name="price" placeholder="only numbers">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" aria-label="With textarea" name="description"></textarea>
+            </div>
+          </div>
+          <div class="buttons">
+            <button type="button" class="btn btn-outline-secondary" onclick="getValue()">Add</button>
+          </div>
+    </form>
     <div id=app style="display: flex; margin: 20px;"></div>
       
 
@@ -59,7 +108,7 @@
         description: "Плавные линии корпуса позволяют легко и комфортно держать смартфон в руке.",
         price: 650,
         sale: false 
-    };
+        };
         phones.id2 = { 
         model: "Samsung Galaxy A21s 64GB",
         id: 2,
@@ -68,7 +117,7 @@
         description: "Выбирай один из уникальных оттенков Черного, Синего или Красного цветов, чтобы подчеркнуть свой неповторимый стиль.",
         price: 580,
         sale: true 
-    };
+        };
         phones.id3 = { 
         model: "Samsung Galaxy A12 64GB",
         id: 3,
@@ -77,8 +126,9 @@
         description: "Яркая глянцевая панель Galaxy A12 приковывает взгляд.",
         price: 580,
         sale: true 
-    };
+        };
 
+        const app = document.getElementById('app');
      //отображаем все экземпляры класса Phone, которые находятся в хранилище phones
         function render (){
             let html = '';
@@ -92,8 +142,7 @@
                                 <p class="card-text">${phones[key].description}</p>`
                                 html+= phones[key].sale ? "<p style='color:red; margin-bottom: 120px;'> SALE </p>":"<p></p>"
                                 html+= `<div style="position:absolute; bottom:5px"> 
-                                    <button type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Add</button>
-                                    <button data-phoneId=${phones[key].id} onclick="deleteInformation ()" type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
+                                    <button data-phoneid=${phones[key].id} type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
                                     <button type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Update</button>
                                 </div>
                             </div>
@@ -101,14 +150,37 @@
             }
             return html;
         }
-  
+       // app.innerHTML=render();
     
-        function deleteInformation () {
            
+        function showPhoneList () {
+            return app.innerHTML=render();  
         }
-           
-        const app = document.getElementById('app');
-        app.innerHTML=render();
+
+        //заменила getElementById на другой способ (где form-значение атрибута name тэга form, ["id"]-значение атрибута name тэга input)
+        function getValue() {
+            phones[`id${form.elements["id"].value}`] = {
+                model: form.elements["model"].value,
+                id:parseInt(form.elements["id"].value),
+                imgUrl: form.elements["imgUrl"].value,
+                color: form.elements["color"].value,
+                description: form.elements["description"].value,
+                price: form.elements["price"].value,
+                sale: form.elements["sale"].value
+            };
+        }
+
+        const btns = app.querySelectorAll ('button');
+        btns.forEach((btn, indx)=>{
+            btn.addEventListener("click",function(e){
+                for (let key in phones){
+                    if (phones[key].id == e.target.dataset.phoneid){
+                        delete phones[key];
+                        app.innerHTML=render();
+                    }
+                }
+            })
+        })
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
