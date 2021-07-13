@@ -5,8 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="modal.css" rel="stylesheet" >
     <title>Document</title>
     <style>
+        a{
+            text-decoration: none;
+            color: rgb(117, 116, 116);
+        }
+        a:hover{
+            color:honeydew;
+        }
         body{
             padding: 10px;
         }
@@ -32,6 +40,9 @@
         }
         .col-form-label{
             width: 90px;
+        }
+        .mod{
+            width: 81px;
         }
     </style>
 </head>
@@ -86,10 +97,20 @@
           </div>
     </form>
     <div id=app style="display: flex; margin: 20px;"></div>
-      
+
+    <div id="openModal" class="modalDialog">
+        <div>
+            <a href="#close" title="Закрыть" class="close">X</a>
+            <div id=modal></div>
+        </div>
+    </div>
+    
+    
 
   <script> 
         const app = document.getElementById('app');
+        const modal = document.getElementById('modal');
+
         class Phone {
             constructor () {
                 //this.phoneArray = [];
@@ -145,7 +166,7 @@
                                 html+= phones[key].sale ? "<p style='color:red; margin-bottom: 120px;'> SALE </p>":"<p></p>"
                                 html+= `<div style="position:absolute; bottom:5px"> 
                                     <button data-phoneid=${phones[key].id} type="button" class="btn-del btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
-                                    <button type="button" class="btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Update</button>
+                                    <button data-modalid=${phones[key].id} type="button" class="btn-modal btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px"><a href="#openModal">Update</a></button>
                                 </div>
                             </div>
                         </div>`
@@ -156,8 +177,8 @@
         // отображает все карточки телефонов + позволяет работать с ними (т.е. внутри функция для удаления карточек)
         function showPhoneCards () {
             app.innerHTML=render();
-            let buttons = document.querySelectorAll('.btn-del'); //выбирает в массив все кнопки класса '.btn-del'
 
+            let buttons = document.querySelectorAll('.btn-del'); //выбирает в массив все кнопки класса '.btn-del'
             buttons.forEach ((btn,indx) => {// назначим обработчик по кнопке, он будет вызван когда кликнут на любую кнопку
                 btn.addEventListener('click', function(e){
                     //e.target ссылается на кликнутый элемент
@@ -169,7 +190,7 @@
                         }
                     }
                 }); 
-            }) 
+            })  
         }
 
         //заменила getElementById на другой способ (где form-значение атрибута name тэга form, ["id"]-значение атрибута name тэга input)
@@ -185,6 +206,68 @@
             };
         }
         
+        
+        //функция render для модального окна
+        function modalRender(id){
+            let modalHTML ="";
+                modalHTML += `  
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Information about "${phones[`id${id}`].model}"</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">Model</label>
+                                <div class="col-sm-10">
+                                <input class="form-control" name="model" value="${phones[`id${id}`].model}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">Id</label>
+                                <div class="col-sm-10">
+                                <input class="form-control" name="id" value="${phones[`id${id}`].id}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">ImgUrl</label>
+                                <div class="col-sm-10">
+                                <input class="form-control" name="imgUrl" value="${phones[`id${id}`].imgUrl}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">Color</label>
+                                <div class="col-sm-10">
+                                <input class="form-control" name="color" value="${phones[`id${id}`].color}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">Sale</label>
+                                <div class="col-sm-10">
+                                <input class="form-control" name="sale" value="${phones[`id${id}`].sale}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">Price</label>
+                                <div class="col-sm-10">
+                                <input class="form-control" name="price" value="${phones[`id${id}`].price}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-2 col-form-label mod">Description</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" aria-label="With textarea" name="description" value="${phones[`id${id}`].description}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-secondary">Save changes</button>
+                        </div>`;
+                return modalHTML;
+        }
+          
+        modal.innerHTML = modalRender(1);
+        
+
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <!--Разметка для модального окна <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>-->
+
+    <script>
+         function showModalWindow () {
+            let modalButtons = document.querySelectorAll('.btn-modal'); //выбирает в массив все кнопки класса '.btn-modal'
+          
+            modalButtons.forEach ((btn,indx) => {// назначим обработчик по кнопке, он будет вызван когда кликнут на любую кнопку
+                btn.addEventListener('click', function(e){
+                    //e.target ссылается на кликнутый элемент
+                    let buttonId = e.target.dataset.modalid;
+                    modal.innerHTML = modalRender(buttonId);
+                })  
+            })
+        }
+    </script>
+</body>
+</html>
