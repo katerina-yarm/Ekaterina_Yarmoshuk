@@ -113,11 +113,6 @@
 
         class Phone {
             constructor () {
-                //this.phoneArray = [];
-            }
-
-            deleteValue(key){
-               delete this[key];
             }
        
         }
@@ -166,7 +161,7 @@
                                 html+= phones[key].sale ? "<p style='color:red; margin-bottom: 120px;'> SALE </p>":"<p></p>"
                                 html+= `<div style="position:absolute; bottom:5px"> 
                                     <button data-phoneid=${phones[key].id} type="button" class="btn-del btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
-                                    <button type="button" class=" btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px"><a class='btn-modal' data-modalid=${phones[key].id} href="#openModal">Update</a></button>
+                                    <button type="button" class=" btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px"><a class='btn-modal' href="#openModal" onclick='showModalWindow(${phones[key].id})'>Update</a></button>
                                 </div>
                             </div>
                         </div>`
@@ -190,7 +185,7 @@
                         }
                     }
                 }); 
-            })  
+            })
         }
 
         //заменила getElementById на другой способ (где form-значение атрибута name тэга form, ["id"]-значение атрибута name тэга input)
@@ -204,9 +199,12 @@
                 price: form.elements["price"].value,
                 sale: form.elements["sale"].value
             };
+            showPhoneCards();
         }
         
         //                                              РАБОТАЕМ С МОДАЛЬНЫМ ОКНОМ
+
+        let modalButtons = document.getElementsByClassName ('btn-modal');//выбирает в массив все ссылки класса btn-modal
 
         //функция render для модального окна
         function modalRender(id){
@@ -265,17 +263,6 @@
                 return modalHTML;
         }
         
-        //let modalButtons = document.getElementsByClassName ('btn-modal');//выбирает в массив все ссылки
-
-        //let modalButtonId;
-            //modalButtons.forEach (function(el){
-            //    el.addEventListener('click', function(e){
-            //    return modalButtonId = parseInt(e.target.dataset.modalid);   
-            //    });
-            //    return modalButtonId;  
-           // });
-        modal.innerHTML = modalRender(1);
-
         //забираем данные из модальной формы и вносим изменения в карточку
         function getModalValue() {
             let model = document.getElementById('model').value;
@@ -299,10 +286,10 @@
             showPhoneCards();
         }
 
-
-    
-        
-
+        //показываем модальное окно с данными для выбранного телефона
+        function showModalWindow (modalButtonId) {
+            modal.innerHTML = modalRender(modalButtonId);
+        }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
