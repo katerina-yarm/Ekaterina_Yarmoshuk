@@ -166,7 +166,7 @@
                                 html+= phones[key].sale ? "<p style='color:red; margin-bottom: 120px;'> SALE </p>":"<p></p>"
                                 html+= `<div style="position:absolute; bottom:5px"> 
                                     <button data-phoneid=${phones[key].id} type="button" class="btn-del btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px">Delete</button>
-                                    <button data-modalid=${phones[key].id} type="button" class="btn-modal btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px"><a href="#openModal">Update</a></button>
+                                    <button type="button" class=" btn btn-outline-secondary" style="width: 100 px; margin-bottom:5px"><a class='btn-modal' data-modalid=${phones[key].id} href="#openModal">Update</a></button>
                                 </div>
                             </div>
                         </div>`
@@ -206,11 +206,12 @@
             };
         }
         
-        
+        //                                              РАБОТАЕМ С МОДАЛЬНЫМ ОКНОМ
+
         //функция render для модального окна
         function modalRender(id){
             let modalHTML ="";
-                modalHTML += `  
+                modalHTML += `<form name="modal-form" class="modal-form">  
                         <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Information about "${phones[`id${id}`].model}"</h5>
                         </div>
@@ -218,54 +219,88 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">Model</label>
                                 <div class="col-sm-10">
-                                <input class="form-control" name="model" value="${phones[`id${id}`].model}">
+                                <input class="form-control" id="model" value="${phones[`id${id}`].model}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">Id</label>
                                 <div class="col-sm-10">
-                                <input class="form-control" name="id" value="${phones[`id${id}`].id}">
+                                <input class="form-control" id="id" value="${phones[`id${id}`].id}" readonly>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">ImgUrl</label>
                                 <div class="col-sm-10">
-                                <input class="form-control" name="imgUrl" value="${phones[`id${id}`].imgUrl}">
+                                <input class="form-control" id="imgUrl" value="${phones[`id${id}`].imgUrl}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">Color</label>
                                 <div class="col-sm-10">
-                                <input class="form-control" name="color" value="${phones[`id${id}`].color}">
+                                <input class="form-control" id="color" value="${phones[`id${id}`].color}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">Sale</label>
                                 <div class="col-sm-10">
-                                <input class="form-control" name="sale" value="${phones[`id${id}`].sale}">
+                                <input class="form-control" id="sale" value="${phones[`id${id}`].sale}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">Price</label>
                                 <div class="col-sm-10">
-                                <input class="form-control" name="price" value="${phones[`id${id}`].price}">
+                                <input class="form-control" id="price" value="${phones[`id${id}`].price}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label mod">Description</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" aria-label="With textarea" name="description" value="${phones[`id${id}`].description}">
+                                    <input class="form-control" aria-label="With textarea" id="description" value="${phones[`id${id}`].description}">
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-outline-secondary">Save changes</button>
-                        </div>`;
+                        <button type="button" class="btn btn-outline-secondary" onclick='getModalValue()'>Save changes</button>
+                        </div></form>`;
                 return modalHTML;
         }
-          
+        
+        //let modalButtons = document.getElementsByClassName ('btn-modal');//выбирает в массив все ссылки
+
+        //let modalButtonId;
+            //modalButtons.forEach (function(el){
+            //    el.addEventListener('click', function(e){
+            //    return modalButtonId = parseInt(e.target.dataset.modalid);   
+            //    });
+            //    return modalButtonId;  
+           // });
         modal.innerHTML = modalRender(1);
+
+        //забираем данные из модальной формы и вносим изменения в карточку
+        function getModalValue() {
+            let model = document.getElementById('model').value;
+            let id = document.getElementById('id').value;
+            let imgUrl = document.getElementById('imgUrl').value;
+            let color = document.getElementById('color').value;
+            let description = document.getElementById('description').value;
+            let price = document.getElementById('price').value;
+            let sale = document.getElementById('sale').value;
+
+            phones[`id${id}`].model=model;
+            phones[`id${id}`].id=id;
+            phones[`id${id}`].imgUrl=imgUrl;
+            phones[`id${id}`].color=color;
+            phones[`id${id}`].description=description;
+            phones[`id${id}`].price=price;
+            phones[`id${id}`].sale=sale; 
+
+            alert ('Изменения успешно внесены, модальное окно может быть закрыто!')
+
+            showPhoneCards();
+        }
+
+
+    
         
 
   </script>
