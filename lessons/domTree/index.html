@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        label {
+            display: block;
+            margin: 10px;
+        }
+        textarea {
+            margin: 10px;
+            width: 200px;
+            height: 100px;
+        }
+        div input {
+            display: block;
+            margin: 10px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label>Введите текст:</label>
+        <textarea id=text> Привет</textarea>
+    </div>
+    <div>
+        <input type=button value='div' onclick="addTeg(div)">
+        <input type=button value='strong' onclick="addTeg(strong)">
+        <input type=button value='em' onclick="addTeg(em)">
+        <input type=button value='p' onclick="addTeg(p)">
+    </div>
+    <div id=idFooter></div>
+
+    <script>
+        function addTeg (teg) {
+            let footerElement = document.getElementById('idFooter');
+            footerElement.innerHTML = `<${teg}>${document.body.firstElementChild.lastElementChild.textContent}</${teg}>`;
+        }
+
+    </script>
+</body>
+</html>
