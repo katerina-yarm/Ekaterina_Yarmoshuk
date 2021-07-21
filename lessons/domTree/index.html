@@ -20,25 +20,31 @@
             margin: 10px;
             width: 100px;
         }
+        #idFooter{
+            width: 200px;
+            height: 100px;
+            border: solid black 1px;
+        }
     </style>
 </head>
 <body>
     <div>
-        <label>Введите текст:</label>
-        <textarea id=text> Привет</textarea>
+        <label>Введите текст: <input style="" id=text> </label>
     </div>
     <div>
-        <input type=button value='div' onclick="addTeg(div)">
-        <input type=button value='strong' onclick="addTeg(strong)">
-        <input type=button value='em' onclick="addTeg(em)">
-        <input type=button value='p' onclick="addTeg(p)">
+        <input type=button value='div' onclick="addTeg('div')">
+        <input type=button value='strong' onclick="addTeg('strong')">
+        <input type=button value='em' onclick="addTeg('em')">
+        <input type=button value='p' onclick="addTeg('p')">
     </div>
-    <div id=idFooter></div>
+    <div>
+        <label>Результат работы функции: <div id=idFooter></div> </label>
+    </div>
 
     <script>
+       
         function addTeg (teg) {
-            let footerElement = document.getElementById('idFooter');
-            footerElement.innerHTML = `<${teg}>${document.body.firstElementChild.lastElementChild.textContent}</${teg}>`;
+            return document.getElementById('idFooter').innerHTML = `<${teg}>${document.getElementById('text').value}</${teg}>`;
         }
 
     </script>
