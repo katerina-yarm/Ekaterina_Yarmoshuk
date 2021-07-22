@@ -13,6 +13,11 @@
         .div_class{
             display: flex;
         }
+        body{
+            width: 600px; 
+            border: rgb(95, 94, 94) solid 1px; 
+            margin: 20px; padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -45,11 +50,12 @@
             {caption: 'Зарегистрироваться', kind: 'submit'}
         ];
 
+        function addBr(){
+            let brTag = document.createElement ('br');
+            document.body.appendChild(brTag); 
+        }
+
         function getForm (form) {
-            function addBr(){
-                let brTag = document.createElement ('br');
-                document.body.appendChild(brTag); 
-            }
 
             for (let i = 0; i < form.length; i++) {
                 if ('variants' in form[i]){
@@ -139,10 +145,17 @@
             }
         }
 
-        getForm (formDef1);
+        let formDef11 = getForm (formDef1);
 
-        let hrTag = document.createElement('hr');
-        let hrChild = document.body.appendChild (hrTag);
+        function addHr () {
+            let hrTag = document.createElement('hr');
+            let hrChild = document.body.appendChild (hrTag);
+        }
+        addHr();
+        addHr();
+        addBr();
+        addBr();
+        addBr();
 
         getForm (formDef2);
 
