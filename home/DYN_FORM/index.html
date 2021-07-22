@@ -5,12 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        label{
+            width: 200px; 
+            margin-bottom:10px;
+        }
+        .div_class{
+            display: flex;
+        }
+    </style>
 </head>
 <body>
-    <div id=Def1 style="width: 600px; border: rgb(95, 94, 94) solid 1px; margin: 20px; padding: 20px;"></div>
-    <br>
-    <div id=Def2 style="width: 600px; border: rgb(95, 94, 94) solid 1px; margin: 20px; padding: 20px;"></div>
-
     <script>
         let formDef1 = [
             {label:'Название сайта:', kind:'longtext', name:'sitename'},
@@ -27,7 +32,7 @@
                 {text:'платное', value:2},
                 {text:'VIP', value:3}]
             },
-            {label:'Разрешить отзывы:', kind:'check', name:'votes'},
+            {label:'Разрешить отзывы:', kind:'checkbox', name:'votes'},
             {label:'Описание сайта:', kind:'memo', name:'description'},
             {caption: 'Опубликовать', kind: 'submit'}
         ];
@@ -40,50 +45,106 @@
             {caption: 'Зарегистрироваться', kind: 'submit'}
         ];
 
-
         function getForm (form) {
-            let html = '';
+            function addBr(){
+                let brTag = document.createElement ('br');
+                document.body.appendChild(brTag); 
+            }
+
             for (let i = 0; i < form.length; i++) {
                 if ('variants' in form[i]){
                     if (form[i].kind=='radio'){
-                        html += `
-                        <fieldset> <legend>${form[i].label}</legend>`
-                            for (let k=0; k<form[i].variants.length; k++){
-                                html += `<label> <input type='${form[i].kind}' 
-                                                        name='${form[i].name}' 
-                                                        value='${form[i].variants[k].value}'>
-                                                ${form[i].variants[k].text} </label>`
-                            }
-                        html += `</fieldset> <br/>` 
-                    } 
+                        //создали fieldset тег
+                        let fieldsetTag = document.createElement('fieldset');
+                        let fieldsetChild = document.body.appendChild (fieldsetTag);
+
+                        //внутри fieldset создаем legend и подписываем поле
+                        let legendTag = document.createElement('legend');
+                        const legendText = document.createTextNode(form[i].label);
+                        legendTag.appendChild(legendText);
+                        let legendChild = fieldsetChild.appendChild(legendTag);
+
+                        for (let k=0; k<form[i].variants.length; k++){
+                            let radioLabelTag = document.createElement ('label');
+                            const radioLabelText = document.createTextNode (form[i].variants[k].text);
+                            radioLabelTag.appendChild(radioLabelText);
+                            let radioLabelParent = fieldsetChild.appendChild(radioLabelTag);
+
+                            let radioInputTag = document.createElement ('input');
+                            let forRadioAttribute = radioLabelParent.appendChild(radioInputTag);
+                            forRadioAttribute.setAttribute('type', form[i].kind);
+                            forRadioAttribute.setAttribute('name', form[i].name);
+                            forRadioAttribute.setAttribute('value',form[i].variants[k].value);
+                        }
+
+                        addBr();
+                    }
                     else if (form[i].kind=='combo'){
-                        html += `
-                        <fieldset> <legend>${form[i].label}</legend><select>`
-                            for (let k=0; k<form[i].variants.length; k++){
-                                html += `<option value='${form[i].variants[k].value}'> ${form[i].variants[k].text} </option>` 
-                            }
-                        html += `</select></fieldset> <br/>` 
-                    }   
+                        //создали fieldset тег
+                        let fieldsetComboTag = document.createElement('fieldset');
+                        let fieldsetComboChild = document.body.appendChild (fieldsetComboTag);
+
+                        //внутри fieldset создаем legend и подписываем поле
+                        let legendComboTag = document.createElement('legend');
+                        const legendComboText = document.createTextNode(form[i].label);
+                        legendComboTag.appendChild(legendComboText);
+                        let legendComboChild = fieldsetComboChild.appendChild(legendComboTag);
+
+                        //создали select внутри тега legend
+                        let selectComboTag = document.createElement('select');
+                        let selectComboChild = fieldsetComboChild.appendChild (selectComboTag);
+
+                        for (let k=0; k<form[i].variants.length; k++){
+                            let optionTag = document.createElement ('option');
+                            const optionText = document.createTextNode(form[i].variants[k].text);
+                            optionTag.appendChild(optionText);
+                            let forOptionAtribute = selectComboChild.appendChild(optionTag);
+                            forOptionAtribute.setAttribute('value', form[i].variants[k].value);
+                        }
+
+                        addBr();
+                    }
+
                 } else if ('caption' in form[i]) {
-                    html += `<button type='${form[i].kind}'>${form[i].caption}</button>`
+                    //разметка для кнопок
+                    let buttonTag = document.createElement ('button');
+                    const buttonName = document.createTextNode (form[i].caption);
+                    buttonTag.appendChild(buttonName);
+                    let buttonDone = document.body.appendChild(buttonTag);
+                    buttonDone.setAttribute('type',form[i].kind);
+
+                    addBr();
+                    addBr();
+                    addBr();
 
                 } else {
-                    html += `<div style="display: flex">
-                                <label style="width: 200px; margin-bottom:10px;">${form[i].label} </label> 
-                                <input type='${form[i].kind}' name='${form[i].name}'> 
-                            </div>
-                            <br/>`
+                    //создаем div и устанавливаем для него класс
+                    let divTag = document.createElement('div');
+                    let child = document.body.appendChild (divTag);
+                    child.setAttribute('class', 'div_class');
+
+                    //внутри divа создаем 2 тега (input-устанавливаем атрибуты и label-устанавливаем название)
+                    let labelTag = document.createElement ('label');
+                    const text = document.createTextNode(form[i].label);
+                    labelTag.appendChild(text);
+                    child.appendChild(labelTag);
+
+                    let inputTag = document.createElement ('input');
+                    let forAttribute = child.appendChild(inputTag);
+                    forAttribute.setAttribute('type', form[i].kind);
+                    forAttribute.setAttribute('name', form[i].name);
+
+                    addBr();
                 }
-                
             }
-            return html;
         }
 
-        const Def1 = document.getElementById('Def1');
-        Def1.innerHTML = getForm (formDef1);
+        getForm (formDef1);
 
-        const Def2 = document.getElementById('Def2')
-        Def2.innerHTML = getForm (formDef2);
+        let hrTag = document.createElement('hr');
+        let hrChild = document.body.appendChild (hrTag);
+
+        getForm (formDef2);
 
     </script>
 </body>
