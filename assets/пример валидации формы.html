@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name='INFO' action='http://fe.it-academy.by/TestForm.php' novalidate>
+        Введите ФИО: <input type=text name='FIO'><br />
+        Введите возраст: <input type=text name='AGE'><br />
+        Согласитесь с правилами сайта: <input type=checkbox name='AGREE'><br />
+        Выберите дизайн:<br />
+        <select name='DESIGN'>
+            <option value=1>минималистичный</option>
+            <option value=2>вычурный</option>
+            <option value=3>нормальный</option>
+        </select><br />
+        Выберите язык:<br />
+            <input id=LANG11 type=radio name='LANG' value=11>русский<br />
+            <input type=radio name='LANG' value=22>английский<br />
+            <input type=radio name='LANG' value=33>немецкий<br />
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <input type='submit' value='готово'>
+    </form>
+    
+    <script>
+    
+        "use strict";
+    
+        var formTag=document.forms.INFO; // а можно было найти через getElementById
+        formTag.addEventListener('submit',validateInfoForm,false); // назначаем обработчик события submit
+    
+        function validateInfoForm(EO) {
+            EO=EO||window.event;
+            try {
+                var formTag=document.forms.INFO;
+    
+                var fioField=formTag.elements.FIO; // а можно было найти через getElementById
+                var fioValue=fioField.value; // текстовое значение
+    
+                var ageField=formTag.elements.AGE;
+                var ageValue=parseInt(ageField.value.trim()); // текст -> число
+    
+                var agreeField=formTag.elements.AGREE;
+                var agreeValue=agreeField.checked; // логическое значение
+    
+                var designField=formTag.elements.DESIGN;
+                var designValue=designField.value; // строковое значение
+    
+                // каждая радиокнопка является отдельным элементом формы
+                // форма.elements[имя] для радиогруппы вернёт КОЛЛЕКЦИЮ
+                // т.е. несколько элементов формы с одинаковым именем
+                // и коллекция.value вернёт value ВЫБРАННОЙ радиокнопки
+                // (могут быть проблемы совместимости с IE, проверяйте!)
+                var langField=formTag.elements.LANG;
+                var langValue=langField.value; // строковое значение
+    
+                if ( fioValue.length>30 ) {
+                    alert('Введите пожалуйста ФИО не длиннее 30 символов!');
+                    fioField.focus(); // фокусируем элемент и прокручиваем к нему
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+    
+                if ( isNaN(ageValue) ) {
+                    alert('Введите пожалуйста в поле возраста корректную цифру!');
+                    ageField.focus();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+    
+                if ( ageValue<16 ) {
+                    alert('Возраст должен быть не менее 16 лет!');
+                    ageField.focus();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+    
+                if ( ageValue==222 ) {
+                    alert('Возраст не может быть таким!');
+                    ageField.focuspokus(); // случайная ошибка!
+                    EO.preventDefault();
+                    return;
+                }
+    
+                if ( !agreeValue ) {
+                    alert('Вы не согласились с правилами сайта!');
+                    agreeField.focus();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+    
+                if ( designValue==2 ) {
+                    alert('Вы выбрали вычурный дизайн, подумайте ещё!');
+                    designField.focus();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+    
+                if ( langValue=="" ) { // если ничего не выбрано - radio показывает пустую строку
+                    alert('Вы не выбрали язык!');
+                    // langField.focus(); сфокусировать ВСЮ радиокнопку не получится
+                    // но можно промотать страницу к первой из радиокнопок:
+                    document.getElementById('LANG11').scrollIntoView();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+                if ( langValue==33 ) {
+                    alert('Вы выбрали немецкий язык, подумайте ещё!');
+                    //langField.focus(); сфокусировать ВСЮ радиокнопку не получится
+                    document.getElementById('LANG11').scrollIntoView();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+    
+                // валидация успешная - форма будет отправлена на сервер
+            }
+            catch ( ex ) {
+                alert('Извините, что-то пошло не так, неожиданный сбой! Пересмотрите заполнение формы, возможно, это всё из-за вас!');
+                EO.preventDefault(); // что-то пошло не так - считаем что валидация не прошла
+            }
+        }
+    
+    </script>
+</body>
+</html>

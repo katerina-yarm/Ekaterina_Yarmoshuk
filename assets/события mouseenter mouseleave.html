@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+<div id='IYellow' style='background: yellow; padding: 50px'>
+    <div style='background: red; width: 100px; height: 100px'></div>
+    <br /><br />
+    <div style='background: red; width: 100px; height: 100px'></div>
+</div>
+
+<script>
+
+    "use strict";
+
+    var divElem=document.getElementById('IYellow');
+    divElem.addEventListener('mouseenter',mouseEnter,false);
+    divElem.addEventListener('mouseleave',mouseLeave,false);
+
+    function mouseEnter(EO) {
+        EO=EO||window.event;
+        console.log('mouseenter - мышь теперь над самим элементом ИЛИ его дочерним элементом');
+    }
+
+    function mouseLeave(EO) {
+        EO=EO||window.event;
+        console.log('mouseleave - мышь теперь ни над элементом, ни над его дочерним элементом');
+    }
+
+</script>
+</body>
+</html>

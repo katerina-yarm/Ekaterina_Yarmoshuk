@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='IBox' style='background: yellow; width: 200px; height: 200px'></div>
+    координаты клика: <span id='IInfo'></span>
+
+<script>
+
+    "use strict";
+
+    var boxObj=document.getElementById('IBox');
+    boxObj.addEventListener("click",boxClicked,false);
+    // или boxObj.onclick=boxClicked;
+
+    function boxClicked(EO) {
+        console.log('EO = '+EO);
+        console.log('window.event = '+window.event);
+        // все браузеры, кроме старых IE,
+        // передают объект события как аргумент обработчику события
+        // т.е. он передан обработчику под именем EO
+        // а старые IE хранят объект события в window.event
+        // многие современные браузеры делают и то и другое
+        EO=EO||window.event;
+        // теперь EO - объект события в любом браузере
+
+        // найдём положение самого жёлтого квадрата относительно страницы
+        var boxPos=getElementPos(boxObj);
+
+        // найдём координаты клика относительно жёлтого квадрата    
+        var clickX=Math.round(EO.pageX-boxPos.left);
+        var clickY=Math.round(EO.pageY-boxPos.top);
+        var infoObj=document.getElementById('IInfo');
+        infoObj.innerHTML="x="+clickX+" y="+clickY;
+    }
+
+    function getElementPos(elem) {
+        var bbox=elem.getBoundingClientRect();
+        return {
+            left: bbox.left+window.pageXOffset,
+            top: bbox.top+window.pageYOffset
+        };
+    }
+
+</script>
+</body>
+</html>
