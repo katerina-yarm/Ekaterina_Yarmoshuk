@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style='border: solid red 1px; width: 300px; height: 150px'
+    ondrop="divDrop(event)"
+    ondragover="divDragOver(event)">
+</div>
+
+<br />
+
+<div style='border: solid blue 1px; width: 300px; height: 150px'
+    ondrop="divDrop(event)"
+    ondragover="divDragOver(event)">
+</div>
+
+<br /><br />
+
+<img id='BALL1' width=50 src="ball3.png"
+    ondragstart="ballDragStart(event)"
+    ondragend="ballDragEnd(event)">
+<img id='BALL2' width=70 src="ball3.png"
+    ondragstart="ballDragStart(event)"
+    ondragend="ballDragEnd(event)">
+<img id='BALL3' width=100 src="ball3.png"
+    ondragstart="ballDragStart(event)"
+    ondragend="ballDragEnd(event)">
+
+<script>
+
+"use strict";
+
+var draggedBall=null;
+
+function ballDragStart(EO) {
+    // началось перетаскивание мячика
+    EO=EO||window.event;
+    console.log('starting drag id='+EO.target.id);
+    draggedBall=EO.target;
+}
+
+function ballDragEnd(EO) {
+    // закончилось перетаскивание мячика (неважно куда он уронен)
+    EO=EO||window.event;
+    console.log('drag finished');
+    draggedBall=null;
+}
+
+function divDragOver(EO) {
+    EO=EO||window.event;
+    // по-умолчанию ронять элементы в div запрещено, отменяем:
+    EO.preventDefault();
+}
+
+function divDrop(EO) {
+    // мячик уронен
+    EO=EO||window.event;
+    EO.preventDefault();
+    if ( draggedBall )
+        EO.currentTarget.appendChild(draggedBall);
+}
+
+</script>
+</body>
+</html>
