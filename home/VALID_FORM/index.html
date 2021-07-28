@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .error-message{
+            color: red;
+            font-size: small; 
+            width: 200px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h3 style="padding-left: 20px;">Для внесения вашего сайта в каталог, заполните форму:</h3>
+    <!--В качестве скрипта, обрабатывающего данные форм (атрибут action), указан "http://fe.it-academy.by/TestForm.php"-->
+    <form id=Def1 name='form' action="http://fe.it-academy.by/TestForm.php" style="width: 600px; border: rgb(95, 94, 94) solid 1px; margin: 20px; padding: 20px;"></form>
+   
+    <script>
+        let formDef1 = [
+            {label:'Разработчики:', kind:'longtext', name:'developer'},
+            {label:'Название сайта:', kind:'longtext', name:'sitename'},
+            {label:'URL сайта:', kind:'longtext', name:'siteurl'},
+            {label:'Дата запуска сайта:', kind:'date', name:'date'},
+            {label:'Посетителей в сутки:', kind:'number', name:'visitors'},
+            {label:'E-mail для связи:', kind:'shorttext', name:'email'},
+            {label:'Рубрика каталога:', kind:'combo', name:'division', variants:[
+                {text:'здоровье', value:1}, 
+                {text:'домашний уют', value:2},
+                {text:'бытовая техника', value:3}]
+            },
+            {label:'Размещение:', kind:'radio', name:'payment', variants:[
+                {text:'бесплатное', value:1}, 
+                {text:'платное', value:2},
+                {text:'VIP', value:3}]
+            },
+            {label:'Разрешить отзывы:', kind:'checkbox', name:'votes'},
+            {label:'Описание сайта:', kind:'longtext', name:'description'},
+            {caption: 'Опубликовать', kind: 'submit'}
+        ];
+
+        //функция для отрисовки формы
+        function getForm (form) {
+            let html = '';
+            for (let i = 0; i < form.length; i++) {
+                if ('variants' in form[i]){
+                    if (form[i].kind=='radio'){
+                        html += `
+                        <fieldset> <legend>${form[i].label}</legend>`
+                            for (let k=0; k<form[i].variants.length; k++){
+                                html += `<label> <input type='${form[i].kind}' 
+                                                        name='${form[i].name}' 
+                                                        value='${form[i].variants[k].value}'>
+                                                ${form[i].variants[k].text} </label>`
+                            }
+                        html += `</fieldset> <br/>` 
+                    } 
+                    else if (form[i].kind=='combo'){
+                        html += `
+                        <fieldset> <legend>${form[i].label}</legend><select name='${form[i].name}'>`
+                            for (let k=0; k<form[i].variants.length; k++){
+                                html += `<option value='${form[i].variants[k].value}'> ${form[i].variants[k].text} </option>` 
+                            }
+                        html += `</select></fieldset> <br/>` 
+                    }   
+                } else if ('caption' in form[i]) {
+                    html += `<button type='${form[i].kind}'>${form[i].caption}</button>`
+
+                } else {
+                    html += `<div style="display: flex">
+                                <label style="width: 200px; margin-bottom:10px;">${form[i].label} </label> 
+                                <input type='${form[i].kind}' name='${form[i].name}'> 
+                            </div>
+                            <br/>`
+                }
+                
+            }
+            return html;
+        }
+
+        const Def1 = document.getElementById('Def1');
+        Def1.innerHTML = getForm (formDef1);
+
+        let dataInput = document.getElementsByTagName('input');
+        dataInput[3].style.width='160px';
+        dataInput[3].style.height='28px';
+
+        //назначаем обработчики событий
+        document.querySelector('[name="developer"]').addEventListener('focusout', function(){
+            let developerFieldValue = document.forms.form.elements.developer.value;
+                if ( developerFieldValue.length<10 ) {
+                    document.forms.form.elements.developer.insertAdjacentHTML('afterend', '<p class="error-message"><br/>' + 'Длина имени разработчика должна быть более 10 символов!' + '</p>');
+                    return;
+                }});
+        document.querySelector('[name="sitename"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="siteurl"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="date"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="visitors"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="email"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="division"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="payment"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="votes"]').addEventListener('focusout', validateForm);
+        document.querySelector('[name="description"]').addEventListener('focusout', validateForm);
+
+
+
+        function validateForm (EO){
+            EO=EO||window.event;
+            try{
+                // проверка на заполненность поля с ФИО разработчика
+                //let developerFieldValue = document.forms.form.elements.developer.value;
+                //if ( developerFieldValue.length<10 ) {
+                //    document.forms.form.elements.developer.insertAdjacentHTML('afterend', '<p class="error-message"><br/>' + 'Длина имени разработчика должна быть более 10 символов!' + '</p>');
+                    //EO.preventDefault();
+                //    return;
+                //}
+
+                //проверка на заполненность названия сайта
+                let siteNameValue = document.forms.form.elements.sitename.value;
+                if ( siteNameValue == '' ) {
+                    document.forms.form.elements.sitename.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Вы не внесли название вашего сайта!' + '</p>');
+                    EO.preventDefault();
+                    return;
+                }
+
+                //проверка url сайта
+                let urlReg = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
+                let urlValue = document.forms.form.elements.siteurl.value;
+                if(urlReg.test(urlValue) == false) {
+                    document.forms.form.elements.siteurl.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Введите корректный url адрес!' + '</p>');
+                    EO.preventDefault();
+                    return;
+                }
+
+                //проверка на заполненность даты запуска сайта
+                let dateValue = document.forms.form.elements.date.value;
+                if ( dateValue == '' ) {
+                    document.forms.form.elements.date.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Вы не заполнили дату запуска сайта!' + '</p>');
+                    EO.preventDefault();
+                    return;
+                }
+
+                //проверка на заполненность количества посетителей
+                let visitorsValue = document.forms.form.elements.visitors.value;
+                if ( visitorsValue == '') {
+                    document.forms.form.elements.visitors.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Введите корректное число посетителей!' + '</p>');
+                    EO.preventDefault();
+                    return;
+                }
+
+                //проверка email
+                let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                let emailValue = document.forms.form.elements.email.value;
+                if(reg.test(emailValue) == false) {
+                    let emailError = 'Введите корректный e-mail';
+                    EO.preventDefault();
+                    return;
+                }
+
+                //проверка на выбор рубрики каталога
+                let divisionValue = document.forms.form.elements.division.value;
+                if ( divisionValue.selectedIndex == '1' || '2' || '3') {
+                } else {
+                    divisionError = 'Вы не выбрали рубрику каталога!';
+                    EO.preventDefault();
+                    return;
+                }
+
+                //проверка на выбор размещения
+                let paymentValue = document.forms.form.elements.payment.value;
+                if ( paymentValue == "" ) { // если ничего не выбрано - radio показывает пустую строку
+                    paymentError = 'Вы не выбрали вид размещения!';
+                    document.forms.form.elements.payment[0].scrollIntoView(); // промотаем страницу к первой из радиокнопок:
+                    EO.preventDefault();
+                    return;
+                }
+
+                // проверка на заполненность поля Разрешить отзывы
+                let agreeValue = document.forms.form.elements.votes;
+                if ( agreeValue.checked == false ) {
+                    let agreeError = 'Вы не согласились с размещением отзывов на ваш сайт!';
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+                
+                // проверка на заполненность описания сайта
+                let descriptionFieldValue = document.forms.form.elements.description.value;
+                if ( descriptionFieldValue == '' ) {
+                    descriptionError = 'Внесите описание вашего сайта!';
+                    EO.preventDefault();
+                    return;
+                }
+                // валидация успешная - форма будет отправлена на сервер
+            }
+            catch ( ex ) {
+                alert('Извините, что-то пошло не так, неожиданный сбой! Пересмотрите заполнение формы!');
+                EO.preventDefault(); // что-то пошло не так - считаем что валидация не прошла
+            }
+        }
+
+    </script>
+</body>
+</html>
