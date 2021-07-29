@@ -8,9 +8,9 @@
     <style>
         .error-message{
             color: red;
-            font-size: small; 
+            font-size: small;
+            margin-left: 20px;
             width: 200px;
-            margin: 20px;
         }
     </style>
 </head>
@@ -49,7 +49,7 @@
                 if ('variants' in form[i]){
                     if (form[i].kind=='radio'){
                         html += `
-                        <fieldset> <legend>${form[i].label}</legend>`
+                        <fieldset class='${form[i].name}'> <legend>${form[i].label}</legend>`
                             for (let k=0; k<form[i].variants.length; k++){
                                 html += `<label> <input type='${form[i].kind}' 
                                                         name='${form[i].name}' 
@@ -60,7 +60,7 @@
                     } 
                     else if (form[i].kind=='combo'){
                         html += `
-                        <fieldset> <legend>${form[i].label}</legend><select name='${form[i].name}'>`
+                        <fieldset class='${form[i].name}'> <legend>${form[i].label}</legend><select name='${form[i].name}'>`
                             for (let k=0; k<form[i].variants.length; k++){
                                 html += `<option value='${form[i].variants[k].value}'> ${form[i].variants[k].text} </option>` 
                             }
@@ -70,7 +70,7 @@
                     html += `<button type='${form[i].kind}'>${form[i].caption}</button>`
 
                 } else {
-                    html += `<div style="display: flex">
+                    html += `<div class='${form[i].name}' style="display: flex">
                                 <label style="width: 200px; margin-bottom:10px;">${form[i].label} </label> 
                                 <input type='${form[i].kind}' name='${form[i].name}'> 
                             </div>
@@ -81,93 +81,113 @@
             return html;
         }
 
+        //отрисовываем форму
         const Def1 = document.getElementById('Def1');
         Def1.innerHTML = getForm (formDef1);
 
+        //изменяем размер поля с датой запуска сайта (чтобы все инпуты были одного размера)
         let dataInput = document.getElementsByTagName('input');
         dataInput[3].style.width='160px';
         dataInput[3].style.height='28px';
 
-        //назначаем обработчики событий
-        document.querySelector('[name="developer"]').addEventListener('focusout', function(){
+        //функция для добавления ошибки
+        function addElement (error, place) {
+            let Tag = document.createElement('div');
+            const Error = document.createTextNode(error);
+            Tag.appendChild(Error);
+            let forAttribute = place.appendChild(Tag);
+            forAttribute.setAttribute('class', "error-message");
+        }
+
+        //функция для удаления ошибки
+        function removeElement (place, index) {
+            place.removeChild(place.children[index])   
+        }
+
+        //назначаем обработчики событий и валидируем поле при потере элементом фокуса (при выполнении условия - удаляем ошибку, при невыполнении - добавляем)
+        let errorMessageDeveloper=false;
+        document.querySelector('[name="developer"]').addEventListener('focusout', function() {
             let developerFieldValue = document.forms.form.elements.developer.value;
-                if ( developerFieldValue.length<10 ) {
-                    document.forms.form.elements.developer.insertAdjacentHTML('afterend', '<p class="error-message"><br/>' + 'Длина имени разработчика должна быть более 10 символов!' + '</p>');
-                    return;
-                }});
-        document.querySelector('[name="sitename"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="siteurl"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="date"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="visitors"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="email"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="division"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="payment"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="votes"]').addEventListener('focusout', validateForm);
-        document.querySelector('[name="description"]').addEventListener('focusout', validateForm);
+                if ( developerFieldValue.length<10 && errorMessageDeveloper===false) {
+                    addElement('Длина имени разработчика должна быть более 10 символов!', document.getElementsByClassName('developer')[0]);
+                    errorMessageDeveloper = true;
+                } else if (developerFieldValue.length>=10 && errorMessageDeveloper===true) removeElement (document.getElementsByClassName('developer')[0], 2);
+            }
+        );
+
+        let errorMessageSitename=false;
+        document.querySelector('[name="sitename"]').addEventListener('focusout', function() {
+            let siteNameValue = document.forms.form.elements.sitename.value;
+                if ( siteNameValue == '' && errorMessageSitename===false) {
+                    addElement('Вы не внесли название вашего сайта!', document.getElementsByClassName('sitename')[0]);
+                    errorMessageSitename = true;
+                } else if (siteNameValue != '' && errorMessageSitename===true) removeElement (document.getElementsByClassName('sitename')[0], 2);
+            }
+        );
+
+        let errorMessageSiteurl=false;
+        document.querySelector('[name="siteurl"]').addEventListener('focusout', function() {
+            let urlReg = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
+                if (urlReg.test(document.forms.form.elements.siteurl.value)==false && errorMessageSiteurl===false) {
+                    addElement('Введите корректный url адрес!', document.getElementsByClassName('siteurl')[0]);
+                    errorMessageSiteurl = true;
+                } else if (urlReg.test(document.forms.form.elements.siteurl.value)==true && errorMessageSiteurl===true) {
+                    removeElement (document.getElementsByClassName('siteurl')[0], 2);
+                }
+            }
+        );
+
+        let errorMessageDate=false;
+        document.querySelector('[name="date"]').addEventListener('focusout', function() {
+            let dateValue = document.forms.form.elements.developer.value;
+                if (dateValue == '' && errorMessageDate===false) {
+                    addElement('Вы не заполнили дату запуска сайта!', document.getElementsByClassName('date')[0]);
+                    errorMessageDate = true;
+                } else if (dateValue != '' && errorMessageDate===true) removeElement (document.getElementsByClassName('date')[0], 2);
+            }
+        );
+
+        let errorMessageVisitors=false;
+        document.querySelector('[name="visitors"]').addEventListener('focusout', function() {
+            let visitorsValue = document.forms.form.elements.visitors.value;
+                if (visitorsValue == '' && errorMessageVisitors===false) {
+                    addElement('Введите корректное число посетителей!', document.getElementsByClassName('visitors')[0]);
+                    errorMessageVisitors = true;
+                } else if (developerFieldValue.length>=10 && errorMessageVisitors===true) removeElement (document.getElementsByClassName('visitors')[0], 2);
+            }
+        );
+
+        let errorMessageEmail=false;
+        document.querySelector('[name="email"]').addEventListener('focusout', function() {
+            let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            let emailValue = document.forms.form.elements.email.value;
+                if ( reg.test(emailValue) == false && errorMessageEmail===false) {
+                    addElement('Введите корректный e-mail', document.getElementsByClassName('email')[0]);
+                    errorMessageEmail = true;
+                } else if (reg.test(emailValue) == true && errorMessageEmail===true) removeElement (document.getElementsByClassName('email')[0], 2);
+            }
+        );
+
+        let errorMessageDivision=false;
+        document.querySelector('[name="division"]').addEventListener('focusout', function() {
+            let divisionValue = document.forms.form.elements.division.value;
+                if (divisionValue.selectedIndex == '1' || '2' || '3' && errorMessageDivision===false) {
+                    addElement('Вы не выбрали рубрику каталога!', document.getElementsByClassName('division')[0]);
+                    errorMessageDivision = true;
+                } else if (divisionValue.selectedIndex != '1' || '2' || '3' && errorMessageDivision===true) removeElement (document.getElementsByClassName('division')[0], 2);
+            }
+        );
+
+    
+        document.querySelector('[name="payment"]').addEventListener('focusout', );
+        document.querySelector('[name="votes"]').addEventListener('focusout',);
+        document.querySelector('[name="description"]').addEventListener('focusout',);
 
 
 
-        function validateForm (EO){
+       /* function validateForm (EO){
             EO=EO||window.event;
             try{
-                // проверка на заполненность поля с ФИО разработчика
-                //let developerFieldValue = document.forms.form.elements.developer.value;
-                //if ( developerFieldValue.length<10 ) {
-                //    document.forms.form.elements.developer.insertAdjacentHTML('afterend', '<p class="error-message"><br/>' + 'Длина имени разработчика должна быть более 10 символов!' + '</p>');
-                    //EO.preventDefault();
-                //    return;
-                //}
-
-                //проверка на заполненность названия сайта
-                let siteNameValue = document.forms.form.elements.sitename.value;
-                if ( siteNameValue == '' ) {
-                    document.forms.form.elements.sitename.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Вы не внесли название вашего сайта!' + '</p>');
-                    EO.preventDefault();
-                    return;
-                }
-
-                //проверка url сайта
-                let urlReg = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
-                let urlValue = document.forms.form.elements.siteurl.value;
-                if(urlReg.test(urlValue) == false) {
-                    document.forms.form.elements.siteurl.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Введите корректный url адрес!' + '</p>');
-                    EO.preventDefault();
-                    return;
-                }
-
-                //проверка на заполненность даты запуска сайта
-                let dateValue = document.forms.form.elements.date.value;
-                if ( dateValue == '' ) {
-                    document.forms.form.elements.date.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Вы не заполнили дату запуска сайта!' + '</p>');
-                    EO.preventDefault();
-                    return;
-                }
-
-                //проверка на заполненность количества посетителей
-                let visitorsValue = document.forms.form.elements.visitors.value;
-                if ( visitorsValue == '') {
-                    document.forms.form.elements.visitors.insertAdjacentHTML('afterend', '<p class="error-message">' + 'Введите корректное число посетителей!' + '</p>');
-                    EO.preventDefault();
-                    return;
-                }
-
-                //проверка email
-                let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-                let emailValue = document.forms.form.elements.email.value;
-                if(reg.test(emailValue) == false) {
-                    let emailError = 'Введите корректный e-mail';
-                    EO.preventDefault();
-                    return;
-                }
-
-                //проверка на выбор рубрики каталога
-                let divisionValue = document.forms.form.elements.division.value;
-                if ( divisionValue.selectedIndex == '1' || '2' || '3') {
-                } else {
-                    divisionError = 'Вы не выбрали рубрику каталога!';
-                    EO.preventDefault();
-                    return;
-                }
 
                 //проверка на выбор размещения
                 let paymentValue = document.forms.form.elements.payment.value;
@@ -199,7 +219,7 @@
                 alert('Извините, что-то пошло не так, неожиданный сбой! Пересмотрите заполнение формы!');
                 EO.preventDefault(); // что-то пошло не так - считаем что валидация не прошла
             }
-        }
+        }*/
 
     </script>
 </body>
