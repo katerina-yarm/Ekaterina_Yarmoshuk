@@ -169,7 +169,7 @@
         );
 
         let errorMessageDivision=false;
-        document.querySelector('[name="division"]').addEventListener('focusout', function() {
+        document.querySelector('[name="description"]').addEventListener('focus', function() {
             let divisionValue = document.forms.form.elements.division.value;
                 if (divisionValue.selectedIndex == '1' || '2' || '3' && errorMessageDivision===false) {
                     addElement('Вы не выбрали рубрику каталога!', document.getElementsByClassName('division')[0]);
@@ -178,10 +178,39 @@
             }
         );
 
-    
-        document.querySelector('[name="payment"]').addEventListener('focusout', );
-        document.querySelector('[name="votes"]').addEventListener('focusout',);
-        document.querySelector('[name="description"]').addEventListener('focusout',);
+        let errorMessagePayment=false;
+        document.querySelector('[name="description"]').addEventListener('focus', function() {
+            let paymentValue = document.forms.form.elements.payment.value;
+                if ( paymentValue == ""  && errorMessagePayment===false) {// если ничего не выбрано - radio показывает пустую строку
+                    addElement('Вы не выбрали вид размещения!', document.getElementsByClassName('payment')[0]);
+                    errorMessagePayment = true;
+                } else if ( paymentValue != ""  && errorMessagePayment===true) removeElement (document.getElementsByClassName('payment')[0], 2);
+            }
+        );
+
+        let errorMessageVotes=false;
+        document.querySelector('[name="description"]').addEventListener('focus', function() {
+            let agreeValue = document.forms.form.elements.votes;
+                if ( agreeValue.checked == false && errorMessageVotes===false) {
+                    addElement('Вы не согласились с размещением отзывов на ваш сайт!', document.getElementsByClassName('votes')[0]);
+                    errorMessageVotes = true;
+                } else if (developerFieldValue.length>=10 && errorMessageVotes===true) removeElement (document.getElementsByClassName('votes')[0], 2);
+            }
+        );
+ 
+        let errorMessageDescription=false;
+        document.querySelector('[name="description"]').addEventListener('focusout', function() {
+            let descriptionFieldValue = document.forms.form.elements.description.value;
+                if (  descriptionFieldValue == '' && errorMessageDescription===false) {
+                    addElement('Внесите описание вашего сайта!', document.getElementsByClassName('description')[0]);
+                    errorMessageDescription = true;
+                } else if ( descriptionFieldValue != '' && errorMessageDescription===true) removeElement (document.getElementsByClassName('description')[0], 2);
+            }
+        );
+        
+
+        
+        
 
 
 
@@ -198,21 +227,8 @@
                     return;
                 }
 
-                // проверка на заполненность поля Разрешить отзывы
-                let agreeValue = document.forms.form.elements.votes;
-                if ( agreeValue.checked == false ) {
-                    let agreeError = 'Вы не согласились с размещением отзывов на ваш сайт!';
-                    EO.preventDefault(); // форма не будет отправлена на сервер
-                    return;
-                }
                 
-                // проверка на заполненность описания сайта
-                let descriptionFieldValue = document.forms.form.elements.description.value;
-                if ( descriptionFieldValue == '' ) {
-                    descriptionError = 'Внесите описание вашего сайта!';
-                    EO.preventDefault();
-                    return;
-                }
+               
                 // валидация успешная - форма будет отправлена на сервер
             }
             catch ( ex ) {

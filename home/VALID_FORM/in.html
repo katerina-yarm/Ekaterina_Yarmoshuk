@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .error-message{
+            color: red;
+            font-size: small;
+            margin-left: 20px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h3 style="padding-left: 20px;">Для внесения вашего сайта в каталог, заполните форму:</h3>
+    <!--В качестве скрипта, обрабатывающего данные форм (атрибут action), указан "http://fe.it-academy.by/TestForm.php"-->
+    <form id=Def1 name='form' action="http://fe.it-academy.by/TestForm.php" style="width: 600px; border: rgb(95, 94, 94) solid 1px; margin: 20px; padding: 20px;"></form>
+   
+    <script>
+        let formDef1 = [
+            {label:'Разработчики:', kind:'longtext', name:'developer'},
+            {label:'Название сайта:', kind:'longtext', name:'sitename'},
+            {label:'URL сайта:', kind:'longtext', name:'siteurl'},
+            {label:'Дата запуска сайта:', kind:'date', name:'date'},
+            {label:'Посетителей в сутки:', kind:'number', name:'visitors'},
+            {label:'E-mail для связи:', kind:'shorttext', name:'email'},
+            {label:'Рубрика каталога:', kind:'combo', name:'division', variants:[
+                {text:'здоровье', value:1}, 
+                {text:'домашний уют', value:2},
+                {text:'бытовая техника', value:3}]
+            },
+            {label:'Размещение:', kind:'radio', name:'payment', variants:[
+                {text:'бесплатное', value:1}, 
+                {text:'платное', value:2},
+                {text:'VIP', value:3}]
+            },
+            {label:'Разрешить отзывы:', kind:'checkbox', name:'votes'},
+            {label:'Описание сайта:', kind:'longtext', name:'description'},
+            {caption: 'Опубликовать', kind: 'submit'}
+        ];
+
+        //функция для отрисовки формы
+        function getForm (form) {
+            let html = '';
+            for (let i = 0; i < form.length; i++) {
+                if ('variants' in form[i]){
+                    if (form[i].kind=='radio'){
+                        html += `
+                        <fieldset class='${form[i].name}'> <legend>${form[i].label}</legend>`
+                            for (let k=0; k<form[i].variants.length; k++){
+                                html += `<label> <input type='${form[i].kind}' 
+                                                        name='${form[i].name}'
+                                                        class='field' 
+                                                        value='${form[i].variants[k].value}'>
+                                                ${form[i].variants[k].text} </label>`
+                            }
+                        html += `</fieldset> <br/>` 
+                    } 
+                    else if (form[i].kind=='combo'){
+                        html += `
+                        <fieldset class='${form[i].name}'> <legend>${form[i].label}</legend><select name='${form[i].name}' class='field'>`
+                            for (let k=0; k<form[i].variants.length; k++){
+                                html += `<option value='${form[i].variants[k].value}'> ${form[i].variants[k].text} </option>` 
+                            }
+                        html += `</select></fieldset> <br/>` 
+                    }   
+                } else if ('caption' in form[i]) {
+                    html += `<button type='${form[i].kind}'>${form[i].caption}</button>`
+
+                } else {
+                    html += `<div class='${form[i].name}' style="display: flex">
+                                <label style="width: 200px; margin-bottom:10px;">${form[i].label} </label> 
+                                <input type='${form[i].kind}' name='${form[i].name}' class='field'> 
+                            </div>
+                            <br/>`
+                }
+                
+            }
+            return html;
+        }
+
+        //отрисовываем форму
+        const Def1 = document.getElementById('Def1');
+        Def1.innerHTML = getForm (formDef1);
+
+        //изменяем размер поля с датой запуска сайта (чтобы все инпуты были одного размера)
+        let dataInput = document.getElementsByTagName('input');
+        dataInput[3].style.width='160px';
+        dataInput[3].style.height='28px';
+
+        
+
+        let developer = document.querySelector('[name="developer"]');
+        let sitename = document.querySelector('[name="sitename"]');
+        let siteurl = document.querySelector('[name="siteurl"]');
+        let date = document.querySelector('[name="date"]');
+        let visitors = document.querySelector('[name="visitors"]');
+        let email = document.querySelector('[name="email"]');
+        let division = document.querySelector('[name="division"]');
+        let payment = document.querySelector('[name="payment"]');
+        let votes = document.querySelector('[name="votes"]');
+        let description = document.querySelector('[name="description"]');
+
+        //создадим функцию, которая будет генерировать ошибки
+        let generateError = function (text) {
+            let error = document.createElement('div')
+            error.className='error-message'
+            error.innerHTML = text
+            return error
+        }
+
+        //функция для очистки ошибок (чтобы ошибки не дублировались, удаляем их со страницы при валидации)
+        let removeValidation = function () {
+            let errors = document.forms.form.querySelectorAll('.error-message')
+            for (let i = 0; i < errors.length; i++) {
+                errors[i].remove()
+            }
+        }
+ 
+        //функция для проверки полей на пустоту
+        let checkFieldsBlank = function () {
+            for (let i = 0; i < fields.length; i++) {
+                if (!fields[i].value) {
+                    let error = generateError('Поле не может быть пустым!')
+                    document.forms.form[i].parentElement.insertBefore(error, fields[i])
+                }
+            }
+        }
+
+        function paymentCheck (){
+            let paymentValue = document.forms.form.elements.payment.value;
+            if ( paymentValue == "" ) { // если ничего не выбрано - radio показывает пустую строку
+                let error = generateError('Вы не выбрали вид размещения!')
+            }
+        }
+  
+        //находим все поля формы и проходим по ним циклом, чтобы проверить заполнено ли поле.
+        let fields = document.querySelectorAll('.field')
+        document.forms.form.addEventListener('submit', function (event) {
+            event.preventDefault()
+            removeValidation();
+            checkFieldsBlank();
+
+            paymentCheck();
+        })
+
+        
+
+    </script>
+    
+</body>
+</html>
