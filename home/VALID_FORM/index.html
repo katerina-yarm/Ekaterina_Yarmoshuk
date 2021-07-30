@@ -28,7 +28,7 @@
             {label:'Посетителей в сутки:', kind:'number', name:'visitors'},
             {label:'E-mail для связи:', kind:'shorttext', name:'email'},
             {label:'Рубрика каталога:', kind:'combo', name:'division', variants:[
-                {text:'', value:''},
+                {text:'', value:0},
                 {text:'здоровье', value:1}, 
                 {text:'домашний уют', value:2},
                 {text:'бытовая техника', value:3}]
@@ -108,6 +108,8 @@
             place.removeChild(place.children[index])   
         }
 
+        // назначаем обработчик события submit
+        document.forms.form.addEventListener('submit',validateForm);
         //назначаем обработчики событий  
         document.querySelector('[name="developer"]').addEventListener('focusout', developerCheck);
         document.querySelector('[name="sitename"]').addEventListener('focusout', sitenameCheck);
@@ -115,11 +117,9 @@
         document.querySelector('[name="date"]').addEventListener('focusout', dateCheck);
         document.querySelector('[name="visitors"]').addEventListener('focusout', visitorsCheck);
         document.querySelector('[name="email"]').addEventListener('focusout', emailCheck);
-
+        document.querySelector('[name="division"]').addEventListener('focusout', divisionCheck);
         document.querySelector('[name="description"]').addEventListener('focus', paymentCheck);
-        document.querySelector('[name="description"]').addEventListener('focus', divisionCheck);
         document.querySelector('[name="description"]').addEventListener('focus', votesCheck);//при попытке ввести данные в поле 'описание',проверяет есть ли галка в поле 'разрешить отзывы'
-        
         document.querySelector('[name="votes"]').addEventListener('change', votesCheck);//при внесении изменений в поле 'разрешить отзывы' осуществляется валидация
         document.querySelector('[name="description"]').addEventListener('focusout', descriptionCheck);
 
@@ -198,11 +198,10 @@
 
         let errorMessageDivision=false;
         function divisionCheck () {
-        let divisionValue = document.forms.form.elements.division.value;
-            if (divisionValue.selectedIndex == '1' || '2' || '3' && errorMessageDivision===false) {
+            if (document.forms.form.elements.division.value == '0' && errorMessageDivision===false) {
                 addElement('Вы не выбрали рубрику каталога!', document.getElementsByClassName('division')[0]);
                 errorMessageDivision = true;
-            } else if (divisionValue.selectedIndex != '1' || '2' || '3' && errorMessageDivision===true) {
+            } else if (document.forms.form.elements.division.value !='0' && errorMessageDivision===true) {
                 removeElement (document.getElementsByClassName('division')[0], 2);
                 errorMessageDivision = false;
             }
@@ -241,35 +240,80 @@
                 errorMessageDescription = false;
             }
         }
-        
 
-        
-        
-
-
-
-       /* function validateForm (EO){
+        //функция валидации формы при попытке отправки
+        function validateForm (EO){
             EO=EO||window.event;
             try{
+                developerCheck();
+                sitenameCheck();
+                siteurlCheck();
+                dateCheck();
+                visitorsCheck();
+                emailCheck();
+                divisionCheck();
+                paymentCheck();
+                votesCheck();
+                descriptionCheck();
 
-                //проверка на выбор размещения
-                let paymentValue = document.forms.form.elements.payment.value;
-                if ( paymentValue == "" ) { // если ничего не выбрано - radio показывает пустую строку
-                    paymentError = 'Вы не выбрали вид размещения!';
-                    document.forms.form.elements.payment[0].scrollIntoView(); // промотаем страницу к первой из радиокнопок:
-                    EO.preventDefault();
+                if (errorMessageDeveloper==true){
+                    document.forms.form.elements.developer.focus();
+                    EO.preventDefault(); // форма не будет отправлена на сервер
+                    return;
+                }
+                if (errorMessageSitename==true){
+                    document.forms.form.elements.sitename.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageSiteurl==true){
+                    document.forms.form.elements.siteurl.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageDate==true){
+                    document.forms.form.elements.date.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageVisitors==true){
+                    document.forms.form.elements.visitors.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageEmail==true){
+                    document.forms.form.elements.email.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageDivision==true){
+                    document.forms.form.elements.division.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessagePayment==true){
+                    document.forms.form.elements.payment.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageVotes==true){
+                    document.forms.form.elements.votes.focus();
+                    EO.preventDefault(); 
+                    return;
+                }
+                if (errorMessageDescription==true){
+                    document.forms.form.elements.description.focus();
+                    EO.preventDefault(); 
                     return;
                 }
 
-                
-               
                 // валидация успешная - форма будет отправлена на сервер
             }
             catch ( ex ) {
                 alert('Извините, что-то пошло не так, неожиданный сбой! Пересмотрите заполнение формы!');
                 EO.preventDefault(); // что-то пошло не так - считаем что валидация не прошла
             }
-        }*/
+        }
 
     </script>
 </body>
