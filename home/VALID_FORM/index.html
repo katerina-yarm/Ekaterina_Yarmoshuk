@@ -28,6 +28,7 @@
             {label:'Посетителей в сутки:', kind:'number', name:'visitors'},
             {label:'E-mail для связи:', kind:'shorttext', name:'email'},
             {label:'Рубрика каталога:', kind:'combo', name:'division', variants:[
+                {text:'', value:''},
                 {text:'здоровье', value:1}, 
                 {text:'домашний уют', value:2},
                 {text:'бытовая техника', value:3}]
@@ -90,6 +91,9 @@
         dataInput[3].style.width='160px';
         dataInput[3].style.height='28px';
 
+        //устанавливаем атрибут checked по умолчанию
+        document.querySelectorAll('[name="payment"]')[0].setAttribute('checked',"checked");
+
         //функция для добавления ошибки
         function addElement (error, place) {
             let Tag = document.createElement('div');
@@ -104,109 +108,139 @@
             place.removeChild(place.children[index])   
         }
 
-        //назначаем обработчики событий и валидируем поле при потере элементом фокуса (при выполнении условия - удаляем ошибку, при невыполнении - добавляем)
+        //назначаем обработчики событий  
+        document.querySelector('[name="developer"]').addEventListener('focusout', developerCheck);
+        document.querySelector('[name="sitename"]').addEventListener('focusout', sitenameCheck);
+        document.querySelector('[name="siteurl"]').addEventListener('focusout', siteurlCheck);
+        document.querySelector('[name="date"]').addEventListener('focusout', dateCheck);
+        document.querySelector('[name="visitors"]').addEventListener('focusout', visitorsCheck);
+        document.querySelector('[name="email"]').addEventListener('focusout', emailCheck);
+
+        document.querySelector('[name="description"]').addEventListener('focus', paymentCheck);
+        document.querySelector('[name="description"]').addEventListener('focus', divisionCheck);
+        document.querySelector('[name="description"]').addEventListener('focus', votesCheck);//при попытке ввести данные в поле 'описание',проверяет есть ли галка в поле 'разрешить отзывы'
+        
+        document.querySelector('[name="votes"]').addEventListener('change', votesCheck);//при внесении изменений в поле 'разрешить отзывы' осуществляется валидация
+        document.querySelector('[name="description"]').addEventListener('focusout', descriptionCheck);
+
+        //валидируем поле при потере элементом фокуса (при выполнении условия - удаляем ошибку, при невыполнении - добавляем)
         let errorMessageDeveloper=false;
-        document.querySelector('[name="developer"]').addEventListener('focusout', function() {
+        function developerCheck () {
             let developerFieldValue = document.forms.form.elements.developer.value;
-                if ( developerFieldValue.length<10 && errorMessageDeveloper===false) {
-                    addElement('Длина имени разработчика должна быть более 10 символов!', document.getElementsByClassName('developer')[0]);
-                    errorMessageDeveloper = true;
-                } else if (developerFieldValue.length>=10 && errorMessageDeveloper===true) removeElement (document.getElementsByClassName('developer')[0], 2);
+            if ( developerFieldValue.length<10 && errorMessageDeveloper===false) {
+                addElement('Длина имени разработчика должна быть более 10 символов!', document.getElementsByClassName('developer')[0]);
+                errorMessageDeveloper = true;
+            } else if (developerFieldValue.length>=10 && errorMessageDeveloper===true) {
+                removeElement (document.getElementsByClassName('developer')[0], 2);
+                errorMessageDeveloper = false;
             }
-        );
+        }
 
         let errorMessageSitename=false;
-        document.querySelector('[name="sitename"]').addEventListener('focusout', function() {
-            let siteNameValue = document.forms.form.elements.sitename.value;
-                if ( siteNameValue == '' && errorMessageSitename===false) {
-                    addElement('Вы не внесли название вашего сайта!', document.getElementsByClassName('sitename')[0]);
-                    errorMessageSitename = true;
-                } else if (siteNameValue != '' && errorMessageSitename===true) removeElement (document.getElementsByClassName('sitename')[0], 2);
+        function sitenameCheck () {
+        let siteNameValue = document.forms.form.elements.sitename.value;
+            if ( siteNameValue == '' && errorMessageSitename===false) {
+                addElement('Вы не внесли название вашего сайта!', document.getElementsByClassName('sitename')[0]);
+                errorMessageSitename = true;
+            } else if (siteNameValue != '' && errorMessageSitename===true) {
+                removeElement (document.getElementsByClassName('sitename')[0], 2);
+                errorMessageSitename = false;
             }
-        );
+        }
 
         let errorMessageSiteurl=false;
-        document.querySelector('[name="siteurl"]').addEventListener('focusout', function() {
-            let urlReg = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/gm;
-                if (urlReg.test(document.forms.form.elements.siteurl.value)==false && errorMessageSiteurl===false) {
-                    addElement('Введите корректный url адрес!', document.getElementsByClassName('siteurl')[0]);
-                    errorMessageSiteurl = true;
-                } else if (urlReg.test(document.forms.form.elements.siteurl.value)==true && errorMessageSiteurl===true) {
-                    removeElement (document.getElementsByClassName('siteurl')[0], 2);
-                }
+        function siteurlCheck () {
+            if (document.forms.form.elements.siteurl.value=='' && errorMessageSiteurl==false){
+                addElement('Введите корректный url адрес!', document.getElementsByClassName('siteurl')[0]);
+                errorMessageSiteurl = true;
+            } else if (document.forms.form.elements.siteurl.value!='' && errorMessageSiteurl==true){
+                removeElement (document.getElementsByClassName('siteurl')[0], 2);
+                errorMessageSiteurl = false;
             }
-        );
+        }
 
         let errorMessageDate=false;
-        document.querySelector('[name="date"]').addEventListener('focusout', function() {
-            let dateValue = document.forms.form.elements.developer.value;
-                if (dateValue == '' && errorMessageDate===false) {
-                    addElement('Вы не заполнили дату запуска сайта!', document.getElementsByClassName('date')[0]);
-                    errorMessageDate = true;
-                } else if (dateValue != '' && errorMessageDate===true) removeElement (document.getElementsByClassName('date')[0], 2);
+        function dateCheck () {
+        let dateValue = document.forms.form.elements.date.value;
+            if (dateValue == '' && errorMessageDate===false) {
+                addElement('Вы не заполнили дату запуска сайта!', document.getElementsByClassName('date')[0]);
+                errorMessageDate = true;
+            } else if (dateValue != '' && errorMessageDate===true) {
+                removeElement (document.getElementsByClassName('date')[0], 2);
+                errorMessageDate = false;
             }
-        );
+        }
 
         let errorMessageVisitors=false;
-        document.querySelector('[name="visitors"]').addEventListener('focusout', function() {
-            let visitorsValue = document.forms.form.elements.visitors.value;
-                if (visitorsValue == '' && errorMessageVisitors===false) {
-                    addElement('Введите корректное число посетителей!', document.getElementsByClassName('visitors')[0]);
-                    errorMessageVisitors = true;
-                } else if (developerFieldValue.length>=10 && errorMessageVisitors===true) removeElement (document.getElementsByClassName('visitors')[0], 2);
+        function visitorsCheck () {
+        let visitorsValue = document.forms.form.elements.visitors.value;
+            if (visitorsValue == '' && errorMessageVisitors===false) {
+                addElement('Введите корректное число посетителей!', document.getElementsByClassName('visitors')[0]);
+                errorMessageVisitors = true;
+            } else if (visitorsValue != '' && errorMessageVisitors===true) {
+                removeElement (document.getElementsByClassName('visitors')[0], 2);
+                errorMessageVisitors = false;
             }
-        );
+        }
 
         let errorMessageEmail=false;
-        document.querySelector('[name="email"]').addEventListener('focusout', function() {
-            let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-            let emailValue = document.forms.form.elements.email.value;
-                if ( reg.test(emailValue) == false && errorMessageEmail===false) {
-                    addElement('Введите корректный e-mail', document.getElementsByClassName('email')[0]);
-                    errorMessageEmail = true;
-                } else if (reg.test(emailValue) == true && errorMessageEmail===true) removeElement (document.getElementsByClassName('email')[0], 2);
+        function emailCheck () {
+        let emailReg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        let emailValue = document.forms.form.elements.email.value;
+            if ( emailReg.test(emailValue) == false && errorMessageEmail===false) {
+                addElement('Введите корректный e-mail', document.getElementsByClassName('email')[0]);
+                errorMessageEmail = true;
+            } else if (emailReg.test(emailValue) == true && errorMessageEmail===true) {
+                removeElement (document.getElementsByClassName('email')[0], 2);
+                errorMessageEmail=false;
             }
-        );
+        }
 
         let errorMessageDivision=false;
-        document.querySelector('[name="description"]').addEventListener('focus', function() {
-            let divisionValue = document.forms.form.elements.division.value;
-                if (divisionValue.selectedIndex == '1' || '2' || '3' && errorMessageDivision===false) {
-                    addElement('Вы не выбрали рубрику каталога!', document.getElementsByClassName('division')[0]);
-                    errorMessageDivision = true;
-                } else if (divisionValue.selectedIndex != '1' || '2' || '3' && errorMessageDivision===true) removeElement (document.getElementsByClassName('division')[0], 2);
+        function divisionCheck () {
+        let divisionValue = document.forms.form.elements.division.value;
+            if (divisionValue.selectedIndex == '1' || '2' || '3' && errorMessageDivision===false) {
+                addElement('Вы не выбрали рубрику каталога!', document.getElementsByClassName('division')[0]);
+                errorMessageDivision = true;
+            } else if (divisionValue.selectedIndex != '1' || '2' || '3' && errorMessageDivision===true) {
+                removeElement (document.getElementsByClassName('division')[0], 2);
+                errorMessageDivision = false;
             }
-        );
+        }
 
         let errorMessagePayment=false;
-        document.querySelector('[name="description"]').addEventListener('focus', function() {
-            let paymentValue = document.forms.form.elements.payment.value;
-                if ( paymentValue == ""  && errorMessagePayment===false) {// если ничего не выбрано - radio показывает пустую строку
-                    addElement('Вы не выбрали вид размещения!', document.getElementsByClassName('payment')[0]);
-                    errorMessagePayment = true;
-                } else if ( paymentValue != ""  && errorMessagePayment===true) removeElement (document.getElementsByClassName('payment')[0], 2);
+        function paymentCheck () {
+            if ( document.forms.form.elements.payment.value == ""  && errorMessagePayment===false) {// если ничего не выбрано - radio показывает пустую строку
+                addElement('Вы не выбрали вид размещения!', document.getElementsByClassName('payment')[0]);
+                errorMessagePayment = true;
+            } else if ( document.forms.form.elements.payment.value != ""  && errorMessagePayment===true) {
+                removeElement (document.getElementsByClassName('payment')[0], 2);
+                errorMessagePayment = false;
             }
-        );
+        }
 
         let errorMessageVotes=false;
-        document.querySelector('[name="description"]').addEventListener('focus', function() {
-            let agreeValue = document.forms.form.elements.votes;
-                if ( agreeValue.checked == false && errorMessageVotes===false) {
-                    addElement('Вы не согласились с размещением отзывов на ваш сайт!', document.getElementsByClassName('votes')[0]);
-                    errorMessageVotes = true;
-                } else if (developerFieldValue.length>=10 && errorMessageVotes===true) removeElement (document.getElementsByClassName('votes')[0], 2);
+        function votesCheck() {
+            if ( document.forms.form.elements.votes.checked == false && errorMessageVotes===false) {
+                addElement('Вы не согласились с размещением отзывов на ваш сайт!', document.getElementsByClassName('votes')[0]);
+                errorMessageVotes = true;
+            } else if (document.forms.form.elements.votes.checked == true && errorMessageVotes===true) {
+                removeElement (document.getElementsByClassName('votes')[0], 2);
+                errorMessageVotes = false;
             }
-        );
+        }
  
         let errorMessageDescription=false;
-        document.querySelector('[name="description"]').addEventListener('focusout', function() {
-            let descriptionFieldValue = document.forms.form.elements.description.value;
-                if (  descriptionFieldValue == '' && errorMessageDescription===false) {
-                    addElement('Внесите описание вашего сайта!', document.getElementsByClassName('description')[0]);
-                    errorMessageDescription = true;
-                } else if ( descriptionFieldValue != '' && errorMessageDescription===true) removeElement (document.getElementsByClassName('description')[0], 2);
+        function descriptionCheck () {
+        let descriptionFieldValue = document.forms.form.elements.description.value;
+            if (  descriptionFieldValue == '' && errorMessageDescription===false) {
+                addElement('Внесите описание вашего сайта!', document.getElementsByClassName('description')[0]);
+                errorMessageDescription = true;
+            } else if ( descriptionFieldValue != '' && errorMessageDescription===true) {
+                removeElement (document.getElementsByClassName('description')[0], 2);
+                errorMessageDescription = false;
             }
-        );
+        }
         
 
         
