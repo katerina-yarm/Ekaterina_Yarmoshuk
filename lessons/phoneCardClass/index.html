@@ -46,10 +46,10 @@
         }
         #cart{
             position: relative;
-            background-color: rgb(218, 214, 214);
-            width: 25%;
+            background-color: #6c757d3b;
+            width: 30%;
             padding: 10px 20px;
-            border: solid rgb(75, 74, 74) 1px;
+            border: solid rgb(133, 132, 132) 1px;
             border-radius:5px;
             height: 100%;
             position: fixed;
@@ -60,19 +60,28 @@
             padding-bottom: 20px;
         }
         #cart_list{
+            padding: 0;
+        }
+        #cart li{
             list-style: none;
+            padding: 5px;
+            border-bottom: rgb(133, 132, 132) solid 1px;
+        }
+        #cart .price{
+            float: right;
+        }
+        #cart div p{
+            float: right;
         }
     </style>
 </head>
 <body>
     <div id=cart>
         <h4>Shopping Cart</h4>
+        <p><em>Drop here to add to cart</em></p>
         <ul id=cart_list></ul>
-        <hr/>
         <div>
             <p><strong>Total sum: </strong><span id=total_sum> 0.00 </span> $</p>
-            <hr/>
-            <h6>Drop here to add to cart</h6>
         </div>
     </div>
     
@@ -180,7 +189,7 @@
         function render (){
             let html = '';
             for (let key in phones){
-            html+= `<div class="card" id="${phones[key].id}" style="width: 18rem; margin: 20px;" draggable="true">
+            html+= `<div class="card" id="${phones[key].id}" style="width: 20%; margin: 20px;" draggable="true">
                             <img src="${phones[key].imgUrl}" id="${phones[key].id}" class="card-img-top" alt="..." style="height: 400px;">
                             <div class="card-body" style="position: relative;">
                                 <h5 class="card-title">${phones[key].model}</h5>
@@ -341,9 +350,14 @@
         //событие возникает у элемента приемника,когда в нем находится перетаскиваемый элемент и левая кнопка мыши отпускается
         cart.addEventListener("drop", function (e) {
             const itemBlock = document.createElement("li");
-            const title = document.createElement("p");
-            title.innerHTML = phones[`id${itemId}`].model + " - " + phones[`id${itemId}`].price + "$";
+            const title = document.createElement("span");
+            const quantity = document.createElement("span");
+            const price = document.createElement("span");
+            price.innerHTML = phones[`id${itemId}`].price + "$";
+            title.innerHTML = phones[`id${itemId}`].model;
             itemBlock.appendChild(title);
+            itemBlock.appendChild(price).setAttribute('class','price');
+            itemBlock.appendChild(quantity).setAttribute('class','quantity');
             document.getElementById('cart_list').appendChild(itemBlock);
             priceCount += phones[`id${itemId}`].price;
             totalPrice.innerHTML = priceCount;
