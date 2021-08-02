@@ -70,6 +70,13 @@
         #cart .price{
             float: right;
         }
+        #cart .quantity{
+            font-weight: bold;
+            padding-right: 10px;
+            margin-right: 10px;
+            border-right:  1px solid rgb(133, 132, 132);
+            
+        }
         #cart div p{
             float: right;
         }
@@ -347,20 +354,29 @@
             e.preventDefault();
         });
 
-        //событие возникает у элемента приемника,когда в нем находится перетаскиваемый элемент и левая кнопка мыши отпускается
-        cart.addEventListener("drop", function (e) {
+        //функция для добавления нового товара в карзину
+        let count=1;
+        function addPhoneToCart () {
             const itemBlock = document.createElement("li");
+            itemBlock.setAttribute('id',itemId);
             const title = document.createElement("span");
             const quantity = document.createElement("span");
             const price = document.createElement("span");
+            quantity.innerHTML = count;
             price.innerHTML = phones[`id${itemId}`].price + "$";
-            title.innerHTML = phones[`id${itemId}`].model;
+            title.innerHTML = phones[`id${itemId}`].model +` <em style="font-size:.7em">${phones[`id${itemId}`].color}</em>`;
+            itemBlock.appendChild(quantity).setAttribute('class',`quantity`);
             itemBlock.appendChild(title);
             itemBlock.appendChild(price).setAttribute('class','price');
-            itemBlock.appendChild(quantity).setAttribute('class','quantity');
             document.getElementById('cart_list').appendChild(itemBlock);
             priceCount += phones[`id${itemId}`].price;
             totalPrice.innerHTML = priceCount;
+            count++;
+            return count;
+        }
+        //событие возникает у элемента приемника,когда в нем находится перетаскиваемый элемент и левая кнопка мыши отпускается
+        cart.addEventListener("drop", function (e) {
+            addPhoneToCart ();     
         });
 
         
