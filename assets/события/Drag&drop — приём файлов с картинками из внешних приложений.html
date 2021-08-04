@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id=TARGET
+    style='border: solid red 1px; width: 300px; height: 300px'
+    ondrop="DivDrop(event)"
+    ondragover="DivDragOver(event)">
+перетащи сюда картинку из Проводника!<br />
+</div>
+
+<script>
+
+function DivDragOver(EO)
+{
+    EO=EO||window.event;
+    // по-умолчанию ронять элементы в div запрещено, отменяем:
+    EO.preventDefault();
+    // хотим чтобы при перетаскивании отображался ярлычок "копирование":
+    EO.dataTransfer.dropEffect='copy';
+    // возможны также варианты "none", "copy", "link", "move"
+}
+
+function DivDrop(EO)
+{
+    // что-то уронено
+    EO=EO||window.event;
+    EO.preventDefault();
+
+    var FilesA=EO.dataTransfer.files; // перебираем все уроненые файлы
+    for ( var F=0; F<FilesA.length; F++)
+    {
+        var FileInfo=FilesA[F];
+
+        if ( !FileInfo.type.match('image.*') ) // если не картинка - пропускаем
+            continue;
+
+        // создаём объект FileReader для чтения файла
+        var reader=new FileReader();
+        // после успешной загрузки будем вставлять картинку
+        reader.onload=ImageReaded;
+        // читаем файл в формате data:URL
+        reader.readAsDataURL(FileInfo);
+    }
+
+}
+
+function ImageReaded(EO)
+{
+    // вызывается когда картинка прочитана из файла
+    var img=document.createElement('img');
+    // в target.result - data:URL представление картинки
+    img.src=EO.target.result;
+    img.style.maxWidth="300px";
+    document.getElementById('TARGET').appendChild(img);
+}
+
+</script>
+</body>
+</html>

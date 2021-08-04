@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id=TARGET
+    style='border: solid red 1px; width: 350px; height: 300px'
+    ondrop="DivDrop(event)"
+    ondragover="DivDragOver(event)">
+перетащи сюда форматированный текст (например из Word)!
+</div>
+
+<script>
+
+function DivDragOver(EO)
+{
+    EO=EO||window.event;
+    // по-умолчанию ронять элементы в div запрещено, отменяем:
+    EO.preventDefault();
+}
+
+function DivDrop(EO)
+{
+    // что-то уронено
+    EO=EO||window.event;
+    EO.preventDefault();
+
+    console.log('=== Доступны типы данных:');
+    console.log( EO.dataTransfer.types );
+
+    var HTMLData=EO.dataTransfer.getData("text/html");
+    if ( HTMLData )
+    {
+        console.log('=== Данные в виде HTML:');
+        console.log( HTMLData );
+        document.getElementById('TARGET').innerHTML+=HTMLData;
+    }
+
+    var TextData=EO.dataTransfer.getData("text/plain");
+    if ( TextData )
+    {
+        console.log('=== Данные в текстовом виде:');
+        console.log( TextData );
+        if ( !HTMLData )
+            document.getElementById('TARGET').innerHTML+=TextData;
+    }
+
+    console.log('=== Файлы:');
+    console.log( EO.dataTransfer.files );
+}
+
+</script>
+</body>
+</html>

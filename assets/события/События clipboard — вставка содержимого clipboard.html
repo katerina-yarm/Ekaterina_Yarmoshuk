@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea id=TEXT style='width: 300px; height: 200px'>
+        вставь сюда через paste или Ctrl+V
+        форматированный текст или картинку
+        </textarea>
+        <div id=TARGET
+            style='width: 300px; min-height: 200px; border: solid red 1px'>
+        </div>
+        
+        <script>
+        
+        document.getElementById('TEXT').onpaste=Paste;
+        
+        function Paste(EO)
+        {
+            EO=EO||window.event;
+            var ItemsA=(EO.clipboardData||EO.originalEvent.clipboardData).items;
+        
+            // информация о разных форматах идёт
+            // в непредсказуемом порядке
+            // переберём циклом все форматы
+            // и будем запоминать интересующие нас
+            var TextItem=null;
+            var HTMLItem=null;
+            var ImageItem=null;
+            for ( var A=0; A<ItemsA.length; A++ )
+            {
+                var ItemH=ItemsA[A];
+                switch ( ItemH.type )
+                {
+                    case 'text/plain': // неформатированный текст
+                        TextItem=ItemH;
+                        break;
+                    case 'text/html': // форматированный текст
+                        HTMLItem=ItemH;
+                        break;
+                    case 'image/png':
+                    case 'image/gif':
+                    case 'image/jpg':
+                    case 'image/jpeg':
+                        ImageItem=ItemH;
+                        break;
+                }
+            }
+        
+            if ( HTMLItem ) // если есть HTML-содержимое, его и вставим в div
+                HTMLItem.getAsString(ClipboardStringReady);
+            else if ( ImageItem ) // если есть картинка, её и вставим в div
+            {
+                var blob=ImageItem.getAsFile();
+                var reader=new FileReader();
+                reader.onload=ClipboardImageReady;
+                reader.readAsDataURL(blob);
+            }
+            else if ( TextItem )
+            {
+                // если ничего другого нет, хотя бы просто текст вставим в div
+                TextItem.getAsString(ClipboardStringReady);
+            }
+        
+        }
+        
+        // на подготовку содержимого клипбоарда в выбранном формате
+        // может потребоваться время, поэтому getAsString и getAsFile
+        // вызывают коллбэк-функцию в момент готовности
+        
+        function ClipboardStringReady(Str)
+        {
+            console.log('ВСТАВЛЯЕМ ТЕКСТ: '+Str);
+            document.getElementById('TARGET').innerHTML+=Str;
+        }
+        
+        function ClipboardImageReady(EO)
+        {
+            console.log('ВСТАВЛЯЕМ КАРТИНКУ: '+EO.target.result);
+            document.getElementById('TARGET').innerHTML+=
+                "<img src='"+EO.target.result+"' style='max-width: 300px'>";
+        }
+        
+        </script>
+</body>
+</html>
