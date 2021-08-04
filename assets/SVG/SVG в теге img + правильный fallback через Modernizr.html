@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src='http://fe.it-academy.by/Examples/modernizr.js'></script>
+
+    <div id=ICont style='background-color: #FFFF80'></div>
+
+    <script>
+
+    "use strict";
+
+    function SVGImage(SVGURL,fallBackURL,width,height,hint) {
+        var s='';
+
+        if ( Modernizr.svgasimg )
+            s+="<img src='"+SVGURL+"' width="+width+" height="+height+" alt='"+hint+"' title='"+hint+"'>";
+        else
+            s+="<img src='"+fallBackURL+"' width="+width+" height="+height+" alt='"+hint+"' title='"+hint+"'>";
+
+        return s;
+    }
+
+    console.log('Поддержка вставки SVG тегом IMG: '+Modernizr.svgasimg);
+    var str="";
+    str+="Привет!<br />";
+    str+=SVGImage('shockdanger.svg','shockdanger.jpg',256,256,'Danger!');
+    str+="<br />Пока!";
+
+    console.log(str);
+    document.getElementById('ICont').innerHTML=str;
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <img src="sprites2.svg#triangle" width=150 height=150 style='border: solid red 1px'>
+        <img src="sprites2.svg#square" width=150 height=150 style='border: solid red 1px'>
+        <img src="sprites2.svg#circle" width=150 height=150 style='border: solid red 1px'>
+        <br/>
+        <br/>
+        <object data="sprites2.svg#triangle" type="image/svg+xml" width=150 height=150 style='border: solid red 1px'></object>
+        <object data="sprites2.svg#square" type="image/svg+xml" width=150 height=150 style='border: solid red 1px'></object>
+        <object data="sprites2.svg#circle" type="image/svg+xml" width=150 height=150 style='border: solid red 1px'></object>
+
+        <br/>
+        <br/>
+        <svg width="380" height="220" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+            <symbol id="circle">
+                <ellipse cy="50" cx="50" ry="45" rx="45" stroke-width="5" stroke="#00ff00" fill="#00ff00" fill-opacity="0.75" />
+            </symbol>
+              
+            <symbol id="square">
+                <rect y="5" x="5" width="90" height="90" stroke-width="5" stroke="#ff0000" fill="#ff0000" fill-opacity="0.75" />
+            </symbol>
+              
+            <symbol id="triangle">
+                <path d="M20,7 L92,50 L6,93 z" stroke-width="5" stroke="#0000ff" fill="#0000ff" fill-opacity="0.75" />
+            </symbol>
+
+            <use xlink:href="#triangle" x="30" y="10"></use>
+            <use xlink:href="#square" x="135" y="10"></use>
+            <use xlink:href="#circle" x="240" y="10"></use>
+        
+            <use xlink:href="#triangle" x="30" y="120" opacity="0.3"></use>
+            <use xlink:href="#square" x="270" y="240" transform="scale(0.5)"></use>
+            <use xlink:href="#circle" x="240" y="120" stroke-dasharray="12,8"></use>
+        
+        </svg>
+    </div>
+</body>
+</html>

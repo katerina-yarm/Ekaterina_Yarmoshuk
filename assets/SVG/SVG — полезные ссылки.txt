@@ -1,0 +1,30 @@
+Бесплатные клипарты: 
+Клипарт - это важный элемент, который используют при разработке графического дизайна. 
+... Клипарты окружают нас повсюду, просто мы их не замечаем. Такие изображения можно встретить на одежде или наружной рекламе.
+
+nicu's clipart collection - http://clipart.nicubunu.ro/
+Open Clip Art Library - https://openclipart.org/
+SVGCuts - https://svgcutsblog.com/blog/category/fsvgotw/
+NounProject - https://thenounproject.com/
+Vecteezy - https://www.vecteezy.com/
+Pinterest - https://www.pinterest.com/ligayatg/svg-files-free/
+google material design icons - https://github.com/google/material-design-icons
+
+
+
+Онлайн-редактор SVG:
+Method Draw - https://editor.method.ac/
+
+
+Различные ресурсы про SVG:
+
+svg-art.ru - https://svg-art.ru/
+стилевые свойства, которые поддерживаются тегами SVG - https://www.w3.org/TR/SVG/styling.html
+SVG на MDN - https://developer.mozilla.org/ru/docs/Web/SVG
+Используем SVG на сайте - https://habr.com/ru/post/260645/
+видео В. Кузнецов: I ♥ SVG
+Awesome SVG - https://github.com/willianjusten/awesome-svg#libraries
+Руководство по SVG-анимациям (SMIL) - https://css-live.ru/articles/rukovodstvo-po-svg-animaciyam-smil.html
+Карманное руководство по написанию SVG - https://css-live.ru/articles/karmannoe-rukovodstvo-po-napisaniyu-svg-vvedenie.html
+видео В. Макеев: Веб в кривых. Второе рождение SVG - https://vimeo.com/channels/wstdays/17252610
+учебный курс Знакомство с SVG - https://htmlacademy.ru/courses/130
