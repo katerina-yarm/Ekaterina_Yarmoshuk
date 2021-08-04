@@ -51,13 +51,10 @@
             padding: 10px 20px;
             border: solid rgb(133, 132, 132) 1px;
             border-radius:5px;
-            height: 100%;
+            height: 60%;
             position: fixed;
             top: 0;
             right: 0;
-        }
-        #cart h4 {
-            padding-bottom: 20px;
         }
         #cart_list{
             padding: 0;
@@ -80,9 +77,27 @@
         #cart div p{
             float: right;
         }
+        #garbage{
+            position: relative;
+            background-color: #aaaeb33b;
+            width: 30%;
+            padding: 10px 20px;
+            border: solid rgb(133, 132, 132) 1px;
+            border-radius:5px;
+            height: 40%;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+        }
+        #garbage li{
+            list-style: none;
+            padding: 5px;
+            border-bottom: rgb(133, 132, 132) solid 1px;
+        }
     </style>
 </head>
 <body>
+    <!--Корзина покупок-->
     <div id=cart>
         <h4>Shopping Cart</h4>
         <p><em>Drop here to add to cart</em></p>
@@ -90,6 +105,12 @@
         <div>
             <p><strong>Total sum: </strong><span id=total_sum> 0.00 </span> $</p>
         </div>
+    </div>
+    <!--Мусорная корзина-->
+    <div id=garbage>
+        <h4>Garbage Basket</h4>
+        <p><em>Drop here to delete an item card</em></p>
+        <ul id=garbage_list></ul>
     </div>
     
     <button type="button" class="btn btn-outline-secondary" style="margin: 40px" onclick="showPhoneCards ()">Show list of phones</button>
@@ -337,6 +358,7 @@
         }
 
         //                                                   РАБОТАЕМ С КОРЗИНОЙ
+        //                                         (добавляем товар в корзину перетягиванием)
 
         const cart = document.getElementById("cart");
         const totalPrice = document.getElementById("total_sum");
@@ -354,7 +376,7 @@
             e.preventDefault();
         });
 
-        //функция для добавления нового товара в карзину
+        //функция для добавления нового товара в корзину
         let count=1;
         function addPhoneToCart () {
             const itemBlock = document.createElement("li");
@@ -377,6 +399,42 @@
         //событие возникает у элемента приемника,когда в нем находится перетаскиваемый элемент и левая кнопка мыши отпускается
         cart.addEventListener("drop", function (e) {
             addPhoneToCart ();     
+        });
+
+        //                                      (удаляем карточку товара перетягиванием в корзину)
+
+        const garbage = document.getElementById("garbage");
+        let garbageItemId = null; 
+
+        //забираем id у перетаскиваемого элемента,когда пользователь нажал левую кнопку мыши и начал движение
+        document.addEventListener("dragstart", function (e) {
+            console.log ("id: " + e.target.id);
+            garbageItemId = e.target.id;
+        });
+
+        document.addEventListener("dragover", function (e) {
+            e.preventDefault();
+        });
+
+        //функция для удаления карточки товара и создания отметки, что определенная карточка в корзине и удалена
+        function deleteItemCard () {
+            const garbageItemBlock = document.createElement("li");
+            const garbageTitle = document.createElement("span");
+            garbageTitle.innerHTML = phones[`id${itemId}`].model +`<em style="font-size:.7em">${phones[`id${itemId}`].color}</em>`+`<em style="color:red"> - is deleted </em>`;
+            garbageItemBlock.appendChild(garbageTitle);
+            document.getElementById('garbage_list').appendChild(garbageItemBlock);
+
+            for (let key in phones){
+                if (phones[key].id == garbageItemId){
+                    delete phones[key];
+                    showPhoneCards ();
+                }
+            }
+        }
+
+        //событие возникает у элемента приемника,когда в нем находится перетаскиваемый элемент и левая кнопка мыши отпускается
+        garbage.addEventListener("drop", function (e) {
+            deleteItemCard ();     
         });
 
         
