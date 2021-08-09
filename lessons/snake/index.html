@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 100px;
+        }
+        .field {
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: cadetblue;
+        }
+        .pixel{
+            width: 50px;
+            height: 50px;
+        }
+        .snakeHead{
+            background-color:cornsilk;
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //создали поле
+        let field = document.createElement('div');
+        document.body.appendChild(field).setAttribute('class','field');
+
+        //разбили его на ячейки
+        for (let i=0; i<100; i++){
+            let pixel = document.createElement('div');
+            field.appendChild(pixel).setAttribute('class','pixel');
+        }
+
+        //присваиваем координаты каждой ячейке
+        let pixel=document.getElementsByClassName('pixel');
+        let x=1;
+        let y=10;
+        for (let i=0; i<100; i++){
+            if(x>10){
+                x=1;
+                y--;
+            }
+            pixel[i].setAttribute('posX',x);
+            pixel[i].setAttribute('posY',y);
+            x++;
+        }
+
+        //функция для генерации координат начальной позиции змеи
+        function generateSnake() {
+            let posX = Math.round(Math.random()*(10-1)+1);
+            let posY = Math.round(Math.random()*(10-1)+1);
+            return [posX, posY];
+        }
+
+        //находим ячейку с полученными рандомными координатами и присваимаем ей нужный класс
+        let coordinates = generateSnake();
+        let snakeHead = [document.querySelector(`[posX='${coordinates[0]}'][posY='${coordinates[1]}']`)];
+        snakeHead[0].classList.add('snakeHead');
+        
+        let direction = 'right';
+        function move() {
+            //получаем текущие координаты нашей ячейки
+            let snakeCoordinates = [snakeHead[0].getAttribute('posX'), snakeHead[0].getAttribute('posY')];
+            //удаляем змеиный класс в устаревшей ячейке
+            snakeHead[0].classList.remove('snakeHead');
+            //прописываем условие для движения змеи
+            if (direction == 'right'){
+                if (snakeCoordinates[0]<10){
+                snakeHead = [document.querySelector(`[posX='${parseInt(snakeCoordinates[0])+1}'][posY='${snakeCoordinates[1]}']`)];
+                } else snakeHead = [document.querySelector(`[posX='1'][posY='${snakeCoordinates[1]}']`)];
+            }
+            else if (direction == 'left'){
+                if (snakeCoordinates[0]>1){
+                snakeHead = [document.querySelector(`[posX='${parseInt(snakeCoordinates[0])-1}'][posY='${snakeCoordinates[1]}']`)];
+                } else snakeHead = [document.querySelector(`[posX='10'][posY='${snakeCoordinates[1]}']`)];
+            }
+            else if (direction == 'up'){
+                if (snakeCoordinates[1]<10){
+                snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='${parseInt(snakeCoordinates[1])+1}']`)];
+                } else snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='1']`)];
+            }
+            else if (direction == 'down'){
+                if (snakeCoordinates[1]>1){
+                snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='${parseInt(snakeCoordinates[1])-1}']`)];
+                } else snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='10']`)];
+            }
+           
+            //добавляем змеиный класс в текущей ячейке
+            snakeHead[0].classList.add('class','snakeHead');
+        }
+
+        //задаем частоту, с которой будут вызываться функция move
+        let interval=setInterval(move, 500);
+
+        //прописываем изменение направления движения при нажатии на стрелки
+        window.addEventListener('keydown',function (e) {
+            if (e.keyCode == 37 && direction != 'right'){
+                direction = 'left';
+            }
+            else if (e.keyCode == 38 && direction != 'down'){
+                direction = 'up';
+            }
+            else if (e.keyCode == 39 && direction != 'left'){
+                direction = 'right';
+            }
+            else if (e.keyCode == 40 && direction != 'up'){
+                direction = 'down';
+            } 
+        });
+
+    </script>
+</body>
+</html>
