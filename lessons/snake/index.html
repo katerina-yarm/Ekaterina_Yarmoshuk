@@ -69,7 +69,9 @@
         let snakeHead = [document.querySelector(`[posX='${coordinates[0]}'][posY='${coordinates[1]}']`)];
         snakeHead[0].classList.add('snakeHead');
         
-        let direction = 'right';
+        let direction;
+        let timer;
+
         function move() {
             //получаем текущие координаты нашей ячейки
             let snakeCoordinates = [snakeHead[0].getAttribute('posX'), snakeHead[0].getAttribute('posY')];
@@ -79,44 +81,52 @@
             if (direction == 'right'){
                 if (snakeCoordinates[0]<10){
                 snakeHead = [document.querySelector(`[posX='${parseInt(snakeCoordinates[0])+1}'][posY='${snakeCoordinates[1]}']`)];
-                } else snakeHead = [document.querySelector(`[posX='1'][posY='${snakeCoordinates[1]}']`)];
+                } else clearInterval(timer);
+                //если нужно чтобы про прохождении до конца строки появился вначале
+                //snakeHead = [document.querySelector(`[posX='1'][posY='${snakeCoordinates[1]}']`)];
             }
             else if (direction == 'left'){
                 if (snakeCoordinates[0]>1){
                 snakeHead = [document.querySelector(`[posX='${parseInt(snakeCoordinates[0])-1}'][posY='${snakeCoordinates[1]}']`)];
-                } else snakeHead = [document.querySelector(`[posX='10'][posY='${snakeCoordinates[1]}']`)];
+                } else clearInterval(timer);
             }
             else if (direction == 'up'){
                 if (snakeCoordinates[1]<10){
                 snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='${parseInt(snakeCoordinates[1])+1}']`)];
-                } else snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='1']`)];
+                } else clearInterval(timer);
             }
             else if (direction == 'down'){
                 if (snakeCoordinates[1]>1){
                 snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='${parseInt(snakeCoordinates[1])-1}']`)];
-                } else snakeHead = [document.querySelector(`[posX='${snakeCoordinates[0]}'][posY='10']`)];
+                } else clearInterval(timer);
             }
            
             //добавляем змеиный класс в текущей ячейке
             snakeHead[0].classList.add('class','snakeHead');
         }
 
-        //задаем частоту, с которой будут вызываться функция move
-        let interval=setInterval(move, 500);
 
         //прописываем изменение направления движения при нажатии на стрелки
         window.addEventListener('keydown',function (e) {
-            if (e.keyCode == 37 && direction != 'right'){
+            if (e.keyCode == 37){ //&& direction != 'right' - прописываем условие, чтобы змейка не ходила задом наперед
+                clearInterval(timer);
                 direction = 'left';
+                timer = setInterval(move,300); //при нажатии на клавишу запускается таймер с вызовом функции move
             }
-            else if (e.keyCode == 38 && direction != 'down'){
+            else if (e.keyCode == 38){
+                clearInterval(timer);
                 direction = 'up';
+                timer = setInterval(move,300);
             }
-            else if (e.keyCode == 39 && direction != 'left'){
+            else if (e.keyCode == 39){
+                clearInterval(timer);
                 direction = 'right';
+                timer = setInterval(move,300);
             }
-            else if (e.keyCode == 40 && direction != 'up'){
+            else if (e.keyCode == 40){
+                clearInterval(timer);
                 direction = 'down';
+                timer = setInterval(move,300);
             } 
         });
 
