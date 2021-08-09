@@ -108,7 +108,7 @@
 
         //прописываем изменение направления движения при нажатии на стрелки
         window.addEventListener('keydown',function (e) {
-            if (e.keyCode == 37){ //&& direction != 'right' - прописываем условие, чтобы змейка не ходила задом наперед
+            if (e.keyCode == 37){ // если нужно чтобы у змейки не было возможности ходить в обратном направлении, то можно прописать && direction != 'right'
                 clearInterval(timer);
                 direction = 'left';
                 timer = setInterval(move,300); //при нажатии на клавишу запускается таймер с вызовом функции move
