@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .clock{
+            width: 250px; 
+            height: 250px;
+            background-color: rgb(243, 243, 95);
+            border-radius: 50%;
+        }
+        .number{
+            position: absolute;
+            background-color: rgb(107, 106, 106);
+            width: 30px;
+            height: 30px;
+            border-radius:50%;
+            text-align: center;
+            font-size: 20px;
+            box-shadow: -5px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+            color: honeydew;
+        }
+        .tablo{
+            position: absolute;
+            left:100px;
+            top:70px;
+            font-size: 20px;
+
+        }
+    </style>
+</head>
+<body>
+    <script> 
+        //создали часы
+        let clock = document.createElement('div');
+        document.body.appendChild(clock);
+        clock.classList.add('clock');
+
+        //создадим табло c временем
+        let tablo = document.createElement('div');
+        clock.appendChild(tablo);
+        tablo.classList.add('tablo');
+
+        //и определяем центр часов
+        let clockCenterX=clock.offsetLeft+clock.offsetWidth/2;
+        let clockCenterY=clock.offsetTop+clock.offsetHeight/2;
+
+        //указываем первоначальное значение угла
+        let ang=30;
+
+        //разбили его на табло с цифрами
+        for (let i=1; i<13; i++){
+            let number = document.createElement('div');
+            let text = document.createTextNode(i);
+            number.appendChild(text);
+            clock.appendChild(number);
+            number.classList.add('number');
+            //позиционируем элементы с цифрами
+            let radius=100;
+            let angle=ang/180*Math.PI;
+            //определяем центр круга с цифрой
+            let numberCenterX=clockCenterX+radius*Math.sin(angle);
+            let numberCenterY=clockCenterY-radius*Math.cos(angle);
+
+            number.style.left=Math.round(numberCenterX-number.offsetWidth/2)+'px';
+            number.style.top=Math.round(numberCenterY-number.offsetHeight/2)+'px';
+
+            ang+=30;
+        }
+
+
+        function showTime (){
+            let currTime=new Date();
+            // форматирует переданную дату-время в формате дд.мм.гггг чч:мм:сс
+            function formatDateTime(dt) {
+                let hours=dt.getHours();
+                let minutes=dt.getMinutes();
+                let seconds=dt.getSeconds();
+                return str0l(hours,2) + ':' + str0l(minutes,2) + ':' + str0l(seconds,2);
+            }
+
+            // дополняет строку Val слева нулями до длины Len
+            function str0l(val,len) {
+                let strVal=val.toString();
+                while ( strVal.length < len )
+                    strVal='0'+strVal;
+                return strVal;
+            }
+
+            let time = formatDateTime(currTime);
+            tablo.innerHTML='<div>'+time+'</div>';    
+          
+        }
+        
+        setInterval (showTime,1000); //интервал обновления - секунда
+       
+    </script>
+</body>
+</html>
