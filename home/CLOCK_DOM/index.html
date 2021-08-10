@@ -10,6 +10,7 @@
             width: 250px; 
             height: 250px;
             background-color: rgb(243, 243, 95);
+            box-shadow: -5px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
             border-radius: 50%;
         }
         .number{
@@ -28,8 +29,38 @@
             left:100px;
             top:70px;
             font-size: 20px;
-
         }
+        .hourArrow {
+            width: 50px;
+            height: 4px;
+            background-color:black;
+            position: absolute;
+            border: solid black 2px;
+            border-radius: 5px;
+            z-index: 5;
+            transform-origin: left;
+        }
+        .minutesArrow {
+            width: 90px;
+            height: 1px;
+            background-color:black;
+            position: absolute;
+            border: solid black 2px;
+            border-radius: 5px;
+            z-index: 5;
+            transform-origin: left;
+        }
+        .secondsArrow {
+            width: 110px;
+            height: 1px;
+            position: absolute;
+            background-color:black;
+            border: solid black .5px;
+            border-radius: 5px;
+            z-index: 5;
+            transform-origin: left;
+        }
+
     </style>
 </head>
 <body>
@@ -44,14 +75,39 @@
         clock.appendChild(tablo);
         tablo.classList.add('tablo');
 
+        //рисуем стрелки
+        let hourArrow = document.createElement('div');
+        clock.appendChild(hourArrow);
+        hourArrow.classList.add('hourArrow');
+
+        let minutesArrow = document.createElement('div');
+        clock.appendChild(minutesArrow);
+        minutesArrow.classList.add('minutesArrow');
+
+        let secondsArrow = document.createElement('div');
+        clock.appendChild(secondsArrow);
+        secondsArrow.classList.add('secondsArrow');
+        
+
         //и определяем центр часов
         let clockCenterX=clock.offsetLeft+clock.offsetWidth/2;
         let clockCenterY=clock.offsetTop+clock.offsetHeight/2;
 
-        //указываем первоначальное значение угла
+        //позиционируем стрелки
+        secondsArrow.style.top=clockCenterY+'px';
+        secondsArrow.style.left=clockCenterX+'px';
+
+        hourArrow.style.top=clockCenterY+'px';
+        hourArrow.style.left=clockCenterX+'px';
+
+        minutesArrow.style.top=clockCenterY+'px';
+        minutesArrow.style.left=clockCenterX+'px';
+
+
+        //указываем первоначальное значение угла для цифры 1
         let ang=30;
 
-        //разбили его на табло с цифрами
+        //разбили поле часов на табло с цифрами
         for (let i=1; i<13; i++){
             let number = document.createElement('div');
             let text = document.createTextNode(i);
@@ -74,11 +130,15 @@
 
         function showTime (){
             let currTime=new Date();
+            let hours;
+            let minutes;
+            let seconds;
+            //                            РАБОТАЕМ С ЭЛЕКТРОННЫМ ТАБЛО
             // форматирует переданную дату-время в формате дд.мм.гггг чч:мм:сс
             function formatDateTime(dt) {
-                let hours=dt.getHours();
-                let minutes=dt.getMinutes();
-                let seconds=dt.getSeconds();
+                hours=dt.getHours();
+                minutes=dt.getMinutes();
+                seconds=dt.getSeconds();
                 return str0l(hours,2) + ':' + str0l(minutes,2) + ':' + str0l(seconds,2);
             }
 
@@ -91,12 +151,30 @@
             }
 
             let time = formatDateTime(currTime);
-            tablo.innerHTML='<div>'+time+'</div>';    
+            tablo.innerHTML='<div>'+time+'</div>';  
+            //                            РАБОТАЕМ С ЦИФЕРБЛАТОМ
+            //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
+            let hoursAngle;
+            if (hours>12){
+                hours=hours-12;
+                hoursAngle=hours*30+minutes/2;
+            }hoursAngle=hours*30+minutes/2;
+            let minutesAngle=minutes*6;
+            let secondsAngle=seconds*6;
           
+             //установим угол для каждой из стрелок
+            hourArrow.style.transform = `rotateZ(${hoursAngle-90}deg)`;//корректировка -90, так как начальная позиция стрелок на 15 минутах
+            minutesArrow.style.transform = `rotateZ(${minutesAngle-90}deg)`;
+            secondsArrow.style.transform = `rotateZ(${secondsAngle-90}deg)`;
         }
         
+        
+
+       
+
         setInterval (showTime,1000); //интервал обновления - секунда
        
+
     </script>
 </body>
 </html>
