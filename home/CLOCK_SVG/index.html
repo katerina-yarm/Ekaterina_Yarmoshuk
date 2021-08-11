@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
+        xmlns:xlink="http://www.w3.org/1999/xlink"  width="310" height="310" viewBox="0 0 620 620" style="border:1px solid gray;" >   
+	
+        <defs>
+            <filter id='shadow' x="0" y="0" width="200%" height="200%">
+                <feOffset in="SourceAlpha" dx="10" dy="10" /><!-- указываем смешение только для альфаканала -->
+                <feGaussianBlur stdDeviation="10" /><!-- указываем радиус размытия -->
+                <feBlend in="SourceGraphic"/> <!-- смешиваем все построения -->
+            </filter>
+        </defs>
+	    <!-- Внешний круг -->
+	    <circle cx="300" cy="300" r="300" fill="#f3f35f" stroke-width="3" filter='url(#shadow)'/> 
+	    <!--  круг c 12 секторами-->
+	    <circle cx="300" cy="300" r="250" fill="none" stroke="#d3d3d3" stroke-width="30" stroke-dasharray="5 126" stroke-dashoffset='4'/>
+        <!--Круги с цифрами-->
+        <circle cx="300" cy="550" r="40" fill="#6b6a6a"/> 
+        <text x="285" y="570" fill='#F0FFF0' style='font-size:60px;'>6</text>
+
+        <circle cx="300" cy="50" r="40" fill="#6b6a6a"/> 
+        <text x="265" y="70" fill='#F0FFF0' style='font-size:60px;'>12</text>
+
+        <circle cx="50" cy="300" r="40" fill="#6b6a6a"/> 
+        <text x="40" y="325" fill='#F0FFF0' style='font-size:60px;'>9</text>
+
+        <circle cx="550" cy="300" r="40" fill="#6b6a6a"/> 
+        <text x="540" y="325" fill='#F0FFF0' style='font-size:60px;'>3</text>
+
+        <circle cx="520" cy="180" r="40" fill="#6b6a6a"/> 
+        <text x="510" y="200" fill='#F0FFF0' style='font-size:60px;'>2</text>
+
+        <circle cx="80" cy="180" r="40" fill="#6b6a6a"/> 
+        <text x="50" y="200" fill='#F0FFF0' style='font-size:60px;'>10</text>
+
+        <circle cx="520" cy="420" r="40" fill="#6b6a6a"/> 
+        <text x="500" y="440" fill='#F0FFF0' style='font-size:60px;'>4</text>
+
+        <circle cx="80" cy="420" r="40" fill="#6b6a6a"/> 
+        <text x="60" y="440" fill='#F0FFF0' style='font-size:60px;'>8</text>
+
+        <circle cx="435" cy="90" r="40" fill="#6b6a6a"/> 
+        <text x="420" y="110" fill='#F0FFF0' style='font-size:60px;'>1</text>
+
+        <circle cx="160" cy="90" r="40" fill="#6b6a6a"/> 
+        <text x="130" y="110" fill='#F0FFF0' style='font-size:60px;'>11</text>
+
+        <circle cx="435" cy="510" r="40" fill="#6b6a6a"/> 
+        <text x="420" y="530" fill='#F0FFF0' style='font-size:60px;'>5</text>
+
+        <circle cx="170" cy="510" r="40" fill="#6b6a6a"/> 
+        <text x="150" y="530" fill='#F0FFF0' style='font-size:60px;'>7</text>
+        <!--Стрелки-->
+        <line x1='300' y1='300' x2='300' y2='180' stroke='black' stroke-width='15' stroke-linecap='round'></line>
+        <line x1='300' y1='300' x2='300' y2='100' stroke='black' stroke-width='9' stroke-linecap='round'></line>
+        <line x1='300' y1='300' x2='300' y2='50' stroke='black' stroke-width='4' stroke-linecap='round'></line>
+        
+    
+	
+    </svg>
+        
+
+    
+</body>
+</html>
