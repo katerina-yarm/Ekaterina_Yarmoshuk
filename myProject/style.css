@@ -1,6 +1,5 @@
 body{
-    background-image: url("background.jpg");
-    background-size: cover;
+    background-image: url("assets/background.jpg");
 }
 .mainPage{
     margin-top: 200px;

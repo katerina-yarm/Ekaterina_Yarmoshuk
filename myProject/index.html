@@ -5,8 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="style.css" rel="stylesheet" >
-    <title>Document</title>
-    <script src="mainPageHtml.js"></script>
+    <script src="pages/mainPage.js"></script>
+    <script src="pages/rulesPage.js"></script>
+    <script src="pages/recordsPage.js"></script>
+    <script src="pages/gamePage.js"></script>
+    <title>My Game</title>
 </head>
     <body>
         <div id=app></div>
@@ -37,7 +40,7 @@
             function switchToStateFromURLHash() {
 
                 let URLHash=window.location.hash;
-                let stateStr=URLHash.substr(1);//убираем из урла решетку
+                let stateStr=URLHash.substr(1);//убираем из URL решетку
 
                 //согласно значению в URL выбираем нужную разметку
                 if ( stateStr == "Records" ) SPAState={ pagename: 'Records' };
@@ -52,13 +55,13 @@
                     pageHTML+= mainPageLoading ();
                     break;
                 case 'Game':
-                    pageHTML+="<h3>Game</h3>";
+                    pageHTML+= gamePageLoading ();
                     break;
                 case 'Rules':
-                    pageHTML+="<h3>Rules</h3>";
+                    pageHTML+= rulesPageLoading ();
                     break;
                 case 'Records':
-                    pageHTML+="<h3>Records</h3>";
+                    pageHTML+= recordsPageLoading ();  
                     break;
           
                 }
