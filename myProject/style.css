@@ -1,14 +1,12 @@
 body{
     background-image: url("assets/background.jpg");
 }
-.mainPage{
-    margin-top: 200px;
-}
+
 /*стили для кнопок*/
 a.fciA {
-    margin: 100px auto;
-    font-family:arial;
-    font-size: 60px;
+    margin: 20px auto;
+    font-family: 'Gowun Batang', serif;
+    font-size: 30px;
     line-height: 40px;
     letter-spacing: -1px;
     text-decoration: none;

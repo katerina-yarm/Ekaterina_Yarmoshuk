@@ -1,0 +1,14 @@
+.rulesPage{
+    height: 500px;
+    width: 500px;
+    margin: 50px auto;
+    background-color: rgba(240, 255, 255, 0.541);
+    border-radius: 15%;
+}
+.rules{
+    padding: 40px;
+    font-family: 'Gowun Batang', serif;
+    color: #3f3f3f;
+    font-size: 20px;
+    font-weight: 400;
+}
