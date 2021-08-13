@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet" >
+    <title>Document</title>
+    <script src="mainPageHtml.js"></script>
+</head>
+    <body>
+        <div id=app></div>
+        
+        <script>
+            //при изменении URL подгружается нужная разметка
+            window.onhashchange=switchToStateFromURLHash; 
+
+            //при нажатии на кнопку меняется хэш (т.е. часть URL после знака #)
+            function switchToMainPage() {
+                location.hash={pagename:'Main'}.pagename;
+            }
+    
+            function switchToGamePage() {
+                location.hash={pagename:'Game'}.pagename;
+            }
+    
+            function switchToRulesPage() {
+                location.hash={pagename:'Rules'}.pagename;
+            }
+
+            function switchToRecordsPage() {
+                location.hash={pagename:'Records'}.pagename;
+            }
+
+    
+            let SPAState={};
+            function switchToStateFromURLHash() {
+
+                let URLHash=window.location.hash;
+                let stateStr=URLHash.substr(1);//убираем из урла решетку
+
+                //согласно значению в URL выбираем нужную разметку
+                if ( stateStr == "Records" ) SPAState={ pagename: 'Records' };
+                else if ( stateStr == "Rules" ) SPAState={ pagename: 'Rules' };
+                else if ( stateStr == "Game" ) SPAState={ pagename: 'Game' };
+                else SPAState={pagename:'Main'};
+    
+                //прописываем варианты разметки для каждой станицы
+                let pageHTML="";
+                switch ( SPAState.pagename ) {
+                case 'Main':
+                    pageHTML+= mainPageLoading ();
+                    break;
+                case 'Game':
+                    pageHTML+="<h3>Game</h3>";
+                    break;
+                case 'Rules':
+                    pageHTML+="<h3>Rules</h3>";
+                    break;
+                case 'Records':
+                    pageHTML+="<h3>Records</h3>";
+                    break;
+          
+                }
+                document.getElementById('app').innerHTML=pageHTML;
+            }
+    
+            //переключаемся в состояние, которое сейчас прописано в закладке URL
+            switchToStateFromURLHash();
+        </script>
+
+    </body>
+</html>
