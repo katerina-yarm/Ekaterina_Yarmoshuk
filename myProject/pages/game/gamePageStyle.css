@@ -1,0 +1,22 @@
+@keyframes birdAnimation{
+    from{background: url(../../assets/bird-sprite-png-3.png) 0 0}
+    to {background:url(../../assets/bird-sprite-png-3.png)550px 0}
+
+}
+@keyframes coinAnimation{
+    from{
+        background: url(../../assets/stars.png) 0 0}
+    to {
+        background:url(../../assets/stars.png)800px 0}
+
+}
+.bird{
+    width: 195px;
+    height: 167px;
+    animation: birdAnimation 1s steps(3) infinite;
+}
+.coin{
+    width: 160px;
+    height: 160px;
+    animation: coinAnimation 1s steps(5) infinite;
+}
