@@ -17,15 +17,23 @@
 <body>
     <div class='tablo'></div>
     <canvas id='CLOCK'  width='300' height='300'>
-        Обновите браузер
+        Извините, ваш браузер не поддерживает тег canvas
     </canvas>
     <script>
-        let context = document.getElementById('CLOCK').getContext('2d');
-    
         //функция для отрисовки часов
-        function clockDraw (){
-            
-            //рисуем основной циферблат
+        function clockDrawing (){
+            let currTime = new Date();
+            let seconds = currTime.getSeconds();
+            let minutes = currTime.getMinutes();
+            let hours = currTime.getHours();
+
+            let context = document.getElementById('CLOCK').getContext('2d');
+
+            //очищаем наш холст 
+            context.fillStyle = 'white';
+            context.fillRect(0, 0, 300, 300);
+
+            //рисуем статичный циферблат
             context.fillStyle='#f3f35f';
             context.beginPath();
             context.arc(150,150,150,0,Math.PI*2,false)
@@ -127,26 +135,52 @@
             context.font='normal 30px Times New Roman';
             context.fillText('7',80,265);
 
+            function degreeToRadian (degree) {
+                return (degree-90) * Math.PI / 180;
+            }
+            //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
+            let hoursAngle;
+            if (hours>12){
+                hours=hours-12;
+                hoursAngle=hours*30+minutes/2;
+            }hoursAngle=hours*30+minutes/2;
+            let minutesAngle=minutes*6;
+            let secondsAngle=seconds*6;
+
             //рисуем стрелки
+            
+            let r = Math.round(Math.min(150,150)-2);
+            let len = 2*r/2.5;
+            //секундная
+            context.save();
             context.beginPath();
-            context.moveTo(150,150);
-            context.lineTo(150,25);
+            context.translate(150, 150);
+            context.rotate(degreeToRadian(secondsAngle));
+            context.moveTo((-(len-10)) / 10, 0);
+            context.lineTo((len-10), 0);
             context.strokeStyle='black';
             context.lineWidth=2;
             context.lineCap='round';
             context.stroke();
+            
 
+            //минутная
             context.beginPath();
-            context.moveTo(150,150);
-            context.lineTo(150,55);
+            context.translate(150, 150);
+            context.rotate(degreeToRadian(minutesAngle));
+            context.moveTo((-(len-20)) / 10, 0);
+            context.lineTo((len-20), 0);
             context.strokeStyle='black';
             context.lineWidth=4;
             context.lineCap='round';
             context.stroke();
 
+            //часовая
             context.beginPath();
-            context.moveTo(150,150);
-            context.lineTo(150,75);
+            context.translate(150, 150);
+            context.rotate(degreeToRadian(hoursAngle));
+            context.moveTo((-(len-50)) / 10, 0);
+            context.lineTo((len-50), 0);
             context.strokeStyle='black';
             context.lineWidth=8;
             context.lineCap='round';
@@ -183,7 +217,8 @@
             //                            РАБОТАЕМ С ЦИФЕРБЛАТОМ
             //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
            
-            clockDraw();
+            clockDrawing();
+            
             
         }
         
