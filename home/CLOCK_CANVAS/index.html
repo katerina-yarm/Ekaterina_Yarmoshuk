@@ -22,16 +22,7 @@
     <script>
         //функция для отрисовки часов
         function clockDrawing (){
-            let currTime = new Date();
-            let seconds = currTime.getSeconds();
-            let minutes = currTime.getMinutes();
-            let hours = currTime.getHours();
-
             let context = document.getElementById('CLOCK').getContext('2d');
-
-            //очищаем наш холст 
-            context.fillStyle = 'white';
-            context.fillRect(0, 0, 300, 300);
 
             //рисуем статичный циферблат
             context.fillStyle='#f3f35f';
@@ -135,10 +126,13 @@
             context.font='normal 30px Times New Roman';
             context.fillText('7',80,265);
 
-            function degreeToRadian (degree) {
-                return (degree-90) * Math.PI / 180;
-            }
+            
             //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
+            let currTime = new Date();
+            let seconds = currTime.getSeconds();
+            let minutes = currTime.getMinutes();
+            let hours = currTime.getHours();
+
             let hoursAngle;
             if (hours>12){
                 hours=hours-12;
@@ -147,44 +141,26 @@
             let minutesAngle=minutes*6;
             let secondsAngle=seconds*6;
 
-            //рисуем стрелки
-            
-            let r = Math.round(Math.min(150,150)-2);
-            let len = 2*r/2.5;
-            //секундная
-            context.save();
-            context.beginPath();
-            context.translate(150, 150);
-            context.rotate(degreeToRadian(secondsAngle));
-            context.moveTo((-(len-10)) / 10, 0);
-            context.lineTo((len-10), 0);
-            context.strokeStyle='black';
-            context.lineWidth=2;
-            context.lineCap='round';
-            context.stroke();
-            
+            //отрисовываем стрелки
+            drawClockArm(context, secondsAngle, 130, 2);
+            drawClockArm(context, minutesAngle, 100, 4);
+            drawClockArm(context, hoursAngle, 70, 7);
 
-            //минутная
-            context.beginPath();
-            context.translate(150, 150);
-            context.rotate(degreeToRadian(minutesAngle));
-            context.moveTo((-(len-20)) / 10, 0);
-            context.lineTo((len-20), 0);
-            context.strokeStyle='black';
-            context.lineWidth=4;
-            context.lineCap='round';
-            context.stroke();
-
-            //часовая
-            context.beginPath();
-            context.translate(150, 150);
-            context.rotate(degreeToRadian(hoursAngle));
-            context.moveTo((-(len-50)) / 10, 0);
-            context.lineTo((len-50), 0);
-            context.strokeStyle='black';
-            context.lineWidth=8;
-            context.lineCap='round';
-            context.stroke();
+            //функция для отрисовки стрелок
+            function drawClockArm(context, degree, len, lineWidth) {
+                context.save(); //добавляет текущее состояние в стек
+                context.lineWidth = lineWidth;
+                context.lineCap = 'round';
+                context.translate(150, 150);//Центром вращения всегда является начало холста. Для изменения центра вращения, нам необходимо передвинуть холст, используя метод translate() 
+                context.rotate((degree - 90) * Math.PI/180);//Угол поворота по часовой стрелке, в радианах. Вы также можете использовать degree * Math.PI / 180 если вы хотите использовать для угла значение градуса (degree).
+                context.strokeStyle = 'black';
+                context.beginPath();
+                context.moveTo(0, 0);
+                context.lineTo(len, 0);
+                context.stroke();
+                context.closePath(); //Сама функция ничего не рисует. Он лишь позволяет отрисовывать путь таким методам, как stroke() и fill().
+                context.restore(); //восстанавливает предварительно сохранённое состояние канваса из стека. Если состояние ранее не сохранялось, то метод ничего не делает.
+            }
         }
 
 
@@ -215,11 +191,7 @@
             tablo.innerHTML='<div>'+time+'</div>';
 
             //                            РАБОТАЕМ С ЦИФЕРБЛАТОМ
-            //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
-           
             clockDrawing();
-            
-            
         }
         
         setInterval (showTime,1000); //интервал обновления - секунда
