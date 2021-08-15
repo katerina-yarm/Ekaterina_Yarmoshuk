@@ -20,15 +20,8 @@
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
             xmlns:xlink="http://www.w3.org/1999/xlink"  width="310" height="310" viewBox="0 0 600 600" >   
         
-            <defs>
-                <filter id='shadow' x="0" y="0" width="200%" height="200%">
-                    <feOffset in="SourceAlpha" dx="2" dy="2" /><!-- указываем смешение только для альфаканала -->
-                    <feGaussianBlur stdDeviation="5" /><!-- указываем радиус размытия -->
-                    <feBlend in="SourceGraphic"/> <!-- смешиваем все построения -->
-                </filter>
-            </defs>
             <!-- Внешний круг -->
-            <circle cx="300" cy="300" r="295" fill="#f3f35f" stroke-width="3" filter='url(#shadow)'/> 
+            <circle cx="300" cy="300" r="295" fill="#f3f35f" stroke-width="3"/> 
             <!--  круг c 12 секторами для разметки-->
             <circle cx="300" cy="300" r="250" fill="none" stroke="#d3d3d3" stroke-width="30" stroke-dasharray="5 126" stroke-dashoffset='4'/>
             <!--Круги с цифрами-->

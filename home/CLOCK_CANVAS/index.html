@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tablo{
+            position: absolute;
+            left:110px;
+            top:70px;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class='tablo'></div>
+    <canvas id='CLOCK'  width='300' height='300'>
+        Обновите браузер
+    </canvas>
+    <script>
+        let context = document.getElementById('CLOCK').getContext('2d');
+    
+        //функция для отрисовки часов
+        function clockDraw (){
+            
+            //рисуем основной циферблат
+            context.fillStyle='#f3f35f';
+            context.beginPath();
+            context.arc(150,150,150,0,Math.PI*2,false)
+            context.fill();
+            //рисуем маленькие круги с цифрами
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(150,25,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('12',135,35);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(150,275,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('6',140,285);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(275,150,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('3',270,160);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(25,150,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('9',20,160);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(215,45,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('1',210,55);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(215,257,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('5',210,265);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(260,90,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('2',255,100);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(260,210,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('4',255,220);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(40,90,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('10',25,100);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(40,210,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('8',35,220);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(82,45,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('11',70,55);
+
+            context.fillStyle='#6b6a6a';
+            context.beginPath();
+            context.arc(85,257,20,0,Math.PI*2,false)
+            context.fill();
+            context.fillStyle='#F0FFF0';
+            context.font='normal 30px Times New Roman';
+            context.fillText('7',80,265);
+
+            //рисуем стрелки
+            context.beginPath();
+            context.moveTo(150,150);
+            context.lineTo(150,25);
+            context.strokeStyle='black';
+            context.lineWidth=2;
+            context.lineCap='round';
+            context.stroke();
+
+            context.beginPath();
+            context.moveTo(150,150);
+            context.lineTo(150,55);
+            context.strokeStyle='black';
+            context.lineWidth=4;
+            context.lineCap='round';
+            context.stroke();
+
+            context.beginPath();
+            context.moveTo(150,150);
+            context.lineTo(150,75);
+            context.strokeStyle='black';
+            context.lineWidth=8;
+            context.lineCap='round';
+            context.stroke();
+        }
+
+
+        function showTime (){
+            let currTime=new Date();
+            let hours;
+            let minutes;
+            let seconds;
+            //                            РАБОТАЕМ С ЭЛЕКТРОННЫМ ТАБЛО
+            // форматирует переданную дату-время в формате дд.мм.гггг чч:мм:сс
+            function formatDateTime(dt) {
+                hours=dt.getHours();
+                minutes=dt.getMinutes();
+                seconds=dt.getSeconds();
+                return str0l(hours,2) + ':' + str0l(minutes,2) + ':' + str0l(seconds,2);
+            }
+
+            // дополняет строку Val слева нулями до длины Len
+            function str0l(val,len) {
+                let strVal=val.toString();
+                while ( strVal.length < len )
+                    strVal='0'+strVal;
+                return strVal;
+            }
+
+            let time = formatDateTime(currTime);
+            let tablo = document.getElementsByClassName('tablo')[0];
+            tablo.innerHTML='<div>'+time+'</div>';
+
+            //                            РАБОТАЕМ С ЦИФЕРБЛАТОМ
+            //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
+           
+            clockDraw();
+            
+        }
+        
+        setInterval (showTime,1000); //интервал обновления - секунда
+    </script>
+</body>
+</html>
