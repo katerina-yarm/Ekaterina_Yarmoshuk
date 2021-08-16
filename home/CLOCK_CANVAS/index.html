@@ -41,18 +41,20 @@
                 context.fillText(num,tx,ty);
             }
 
-            smallCircle (150,25,"12",135,35);
-            smallCircle (150,275,"6",140,285);
-            smallCircle (275,150,'3',270,160);
-            smallCircle (25,150,'9',20,160);
-            smallCircle (215,45,'1',210,55);
-            smallCircle (215,257,'5',210,265);
-            smallCircle (260,90,'2',255,100);
-            smallCircle (260,210,'4',255,220);
-            smallCircle (40,90,'10',25,100);
-            smallCircle (40,210,'8',35,220);
-            smallCircle (82,45,'11',70,55);
-            smallCircle (85,257,'7',80,265);
+            //отрисовываем круги с цифрами
+            let ang = 30;
+            for (let i=1; i<10; i++) {
+                let numberCenterX=parseInt(150+125*Math.sin(ang/180*Math.PI));
+                let numberCenterY=parseInt(150-125*Math.cos(ang/180*Math.PI));
+                smallCircle (numberCenterX,numberCenterY,i,numberCenterX-6,numberCenterY+10);
+                ang+=30;
+            }
+            for (let i=10; i<13; i++) {
+                let numberCenterX=parseInt(150+125*Math.sin(ang/180*Math.PI));
+                let numberCenterY=parseInt(150-125*Math.cos(ang/180*Math.PI));
+                smallCircle (numberCenterX,numberCenterY,i,numberCenterX-14,numberCenterY+10);
+                ang+=30;
+            }
 
             //преобразуем время (часы, минуты и секунды) в соответствующий угол для каждой из стрелок
             let currTime = new Date();
