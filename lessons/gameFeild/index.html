@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 50px;
+        }
+        .field {
+            width: 700px;
+            height: 700px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .grass{
+            background-image: url('grass.jpg');
+            height: 70px;
+            width: 70px;
+        }
+        .wall{
+            background-image: url('wall.jpg');
+            height: 70px;
+            width: 70px;
+        }
+        
+        @keyframes coinAnimation{
+        from{
+            background:url(coins.png) 0 0}
+        to {
+            background:url(coins.png)365px 0}
+        }
+        .coin{
+            width: 70px;
+            height: 70px;
+            animation: coinAnimation 1s steps(5) infinite;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //создали поле
+        let field = document.createElement('div');
+        document.body.appendChild(field).setAttribute('class','field');
+
+        //разбили его на ячейки
+        for (let i=0; i<100; i++){
+            let grass = document.createElement('div');
+            field.appendChild(grass).setAttribute('class','grass');
+        }
+
+        //присваиваем координаты каждой ячейке
+        let grass=document.getElementsByClassName('grass');
+        let x=1;
+        let y=10;
+        for (let i=0; i<100; i++){
+            if(x>10){
+                x=1;
+                y--;
+            }
+            grass[i].setAttribute('posX',x);
+            grass[i].setAttribute('posY',y);
+            x++;
+        }
+
+        // функция для получения целого случайного числа в заданном диапазоне
+        function randomDiap(n,m) {
+            return Math.floor(Math.random()*(m-n+1))+n;
+        }
+
+        //расставляем рандомно препятствия (количество препятствий=20)
+        let count =99;
+        for (let i=1; i<21; i++){
+            let wall= randomDiap(0,count);
+            grass[wall].setAttribute('class','wall');
+            count--; //так как количество полей grass после каждой итерации уменьшается
+        }
+        //расставляем рандомно монеты (количество монет=10)
+        for (let i=1; i<11; i++){
+            let coinPosition= randomDiap(0,count);
+            let coin = document.createElement('div');
+            grass[coinPosition].appendChild(coin).setAttribute('class','coin');
+            count--; 
+        }
+
+
+    </script>
+    
+</body>
+</html>
