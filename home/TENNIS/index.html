@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .countBlock{
+            width: 500px;
+            margin: 0 auto;
+        }
+        .field{
+            width: 500px;
+            height: 350px;
+            background-color: rgb(233, 236, 53);
+            border: black solid 1px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .button{
+            background-color:rgb(139, 139, 139);
+            width: 70px;
+            padding: 0 15px;
+            margin: 20px 0;
+        }
+        .ball{
+            background-color:rgb(216, 35, 35);
+            border-radius: 50%;
+            width:30px;
+            height: 30px;
+            position: absolute;
+            left: 235px;
+            top: 160px;
+        }
+        .blue{
+            width: 5px;
+            height: 80px;
+            position: absolute;
+            background-color:rgb(9, 9, 110);
+            right: 0;
+        }
+        .green{
+            width: 5px;
+            height: 80px;
+            position: absolute;
+            background-color:rgb(3, 56, 12);
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //создаем блок с кнопкой и счетом
+        let countBlock = document.createElement('div');
+        document.body.appendChild(countBlock);
+        countBlock.classList ='countBlock';
+        let button = document.createElement('div');
+        countBlock.appendChild(button).classList='button';
+        let buttonText = document.createTextNode('старт!');
+        button.appendChild(buttonText);
+
+        //игровое поле
+        let field = document.createElement('div');
+        document.body.appendChild(field).classList='field';
+        //зеленая ракетка
+        let green=document.createElement('div');
+        field.appendChild(green).classList='green';
+        //синяя ракетка
+        let blue=document.createElement('div');
+        field.appendChild(blue).classList='blue';
+        //мячик
+        let ball=document.createElement('div');
+        field.appendChild(ball).classList='ball';
+
+    </script>
+</body>
+</html>
