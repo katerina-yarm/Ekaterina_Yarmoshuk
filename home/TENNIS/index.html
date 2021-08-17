@@ -11,12 +11,12 @@
             margin: 0 auto;
         }
         .field{
-            width: 500px;
-            height: 350px;
             background-color: rgb(233, 236, 53);
             border: black solid 1px;
             margin: 0 auto;
             position: relative;
+            height: 350px;
+            width: 500px;
         }
         .button{
             background-color:rgb(139, 139, 139);
@@ -24,14 +24,16 @@
             padding: 0 15px;
             margin: 20px 0;
         }
+        .tennisCount{
+            margin-left:160px;
+            font-size: 30px;
+        }
         .ball{
             background-color:rgb(216, 35, 35);
             border-radius: 50%;
-            width:30px;
-            height: 30px;
             position: absolute;
-            left: 235px;
-            top: 160px;
+            width: 30px;
+            height: 30px;
         }
         .blue{
             width: 5px;
@@ -41,24 +43,38 @@
             right: 0;
         }
         .green{
-            width: 5px;
+            width: 6px;
             height: 80px;
             position: absolute;
             background-color:rgb(3, 56, 12);
-            left: 0;
+            left: -1px;
         }
     </style>
 </head>
 <body>
     <script>
         //создаем блок с кнопкой и счетом
+        //общий блок
         let countBlock = document.createElement('div');
         document.body.appendChild(countBlock);
         countBlock.classList ='countBlock';
-        let button = document.createElement('div');
+        //кнопка старта
+        let button = document.createElement('button');
         countBlock.appendChild(button).classList='button';
         let buttonText = document.createTextNode('старт!');
         button.appendChild(buttonText);
+        //поле со счетом
+        let countBlue=0;
+        let countGreen=0;
+        let tennisCount = document.createElement('span');
+        countBlock.appendChild(tennisCount).classList='tennisCount';
+        let tennisCountText;
+        function countUpdate () {
+            tennisCountText=document.createTextNode(`${countGreen}:${countBlue}`);
+            tennisCount.appendChild(tennisCountText);
+        }
+        countUpdate();
+
 
         //игровое поле
         let field = document.createElement('div');
@@ -73,6 +89,73 @@
         let ball=document.createElement('div');
         field.appendChild(ball).classList='ball';
 
+        //при нажатии на кнопку 'старт' мячик начинает двигаться
+        let timer;
+        function start() {
+            timer = setInterval(tick,40);
+        }
+        document.getElementsByClassName('button')[0].addEventListener('click',start);
+
+
+        //устанавливаем параметры для мячика и игрового поля
+        let ballParameters={
+            posX : 235,
+            posY : 160,
+            speedX : 2,
+            speedY : 1,
+            width : 30,
+            height: 30,
+
+            update : function() {
+                ball.style.left=this.posX+"px";
+                ball.style.top=this.posY+"px";
+            }
+        }
+
+        let fieldParameters={
+            width : 500,
+            height : 350
+        }
+
+      
+        function tick() {
+            ballParameters.posX+=ballParameters.speedX;
+            ballParameters.posY+=ballParameters.speedY;
+            //ограничим область полета мяча
+            //с правой стороны
+            if ( ballParameters.posX+ballParameters.width>fieldParameters.width ) {
+                ballParameters.speedX=-ballParameters.speedX;
+                ballParameters.posX=fieldParameters.width-ballParameters.width;
+                clearInterval(timer);
+                countGreen++;
+                tennisCount.removeChild(tennisCountText);
+                countUpdate(); 
+            }
+            //с левой стороны
+            if ( ballParameters.posX<0 ) {
+                ballParameters.speedX=-ballParameters.speedX;
+                ballParameters.posX=0;
+                clearInterval(timer);
+                countBlue++;
+                tennisCount.removeChild(tennisCountText);
+                countUpdate(); 
+            }
+            //снизу
+            if ( ballParameters.posY+ballParameters.height>fieldParameters.height ) {
+                ballParameters.speedY=-ballParameters.speedY;
+                ballParameters.posY=fieldParameters.height-ballParameters.height;
+            }
+            //сверху
+            if ( ballParameters.posY<0 ) {
+                ballParameters.speedY=-ballParameters.speedY;
+                ballParameters.posY=0;
+            }
+
+            ballParameters.update();
+        }
+
+        //устанавливаем мяч в центр поля
+        ballParameters.update();
     </script>
 </body>
 </html>
