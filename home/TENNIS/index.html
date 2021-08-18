@@ -140,11 +140,13 @@
             ballParameters.posX+=ballParameters.speedX;
             ballParameters.posY+=ballParameters.speedY;
             //с правой стороны
-            if ((ball.offsetLeft+ballParameters.width-blueParameters.width) == blue.offsetLeft){
+            //если попадает в ракетку, то отбивается        
+            if ((ball.offsetLeft+ballParameters.width+blueParameters.width) == fieldParameters.width){
                 //blue.offsetTop-ball.offsetTop/2 - для случая когда мяч выше ракетки,но мы можем его отбить уголком ракетки
-                if( ball.offsetTop > (blue.offsetTop-ball.offsetTop/2) && ball.offsetTop < (ball.offsetTop+blueParameters.height)){
+                if( ball.offsetTop > (blue.offsetTop-ball.offsetTop/2) && ball.offsetTop < (blue.offsetTop+blueParameters.height)){
                         ballParameters.speedX=-ballParameters.speedX;
                         ballParameters.posX=fieldParameters.width-blueParameters.width-ballParameters.width;
+                        ballParameters.posX+=ballParameters.speedX;
                 }
             } 
             //если попадает мимо, то останавливается и добавляет гол
