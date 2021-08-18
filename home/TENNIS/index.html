@@ -10,6 +10,11 @@
             width: 500px;
             margin: 0 auto;
         }
+        .description{
+            width: 500px;
+            padding-top: 20px;
+            margin: 0 auto;
+        }
         .field{
             background-color: rgb(233, 236, 53);
             border: black solid 1px;
@@ -83,6 +88,11 @@
         //игровое поле
         let field = document.createElement('div');
         document.body.appendChild(field).classList='field';
+        //описание игры
+        let description = document.createElement('div');
+        document.body.appendChild(description).classList='description';
+        let descriptionText = document.createTextNode('Управление левой ракеткой - клавишами Shift (вверх) и Ctrl (вниз), правой ракеткой - "стрелка вверх" и "стрелка вниз" ');
+        description.appendChild(descriptionText);
         //зеленая ракетка
         let green=document.createElement('div');
         field.appendChild(green).classList='green';
