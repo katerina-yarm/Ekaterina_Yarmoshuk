@@ -15,7 +15,7 @@
             border: black solid 1px;
             margin: 0 auto;
             position: relative;
-            height: 347px;
+            height: 350px;
             width: 500px;
         }
         .button{
@@ -107,7 +107,7 @@
         let ballParameters={
             posX : ballPosX,
             posY : ballPosY,
-            speedX : 2,
+            speedX : 5,
             speedY : 1,
             width : 30,
             height: 30,
@@ -124,23 +124,31 @@
         }
 
         let greenParameters={
+            width : 5,
             height : 80,
-            speed : 4
+            speed : 10
         }
 
         let blueParameters={
+            width : 5,
             height : 80,
-            speed : 4
+            speed : 10
         }
-
 
       
         function tick() {
             ballParameters.posX+=ballParameters.speedX;
             ballParameters.posY+=ballParameters.speedY;
-            //ограничим область полета мяча
             //с правой стороны
-            if ( ballParameters.posX+ballParameters.width>fieldParameters.width ) {
+            if ((ball.offsetLeft+ballParameters.width-blueParameters.width) == blue.offsetLeft){
+                //blue.offsetTop-ball.offsetTop/2 - для случая когда мяч выше ракетки,но мы можем его отбить уголком ракетки
+                if( ball.offsetTop > (blue.offsetTop-ball.offsetTop/2) && ball.offsetTop < (ball.offsetTop+blueParameters.height)){
+                        ballParameters.speedX=-ballParameters.speedX;
+                        ballParameters.posX=fieldParameters.width-blueParameters.width-ballParameters.width;
+                }
+            } 
+            //если попадает мимо, то останавливается и добавляет гол
+            if ( ballParameters.posX+ballParameters.width==fieldParameters.width ) {
                 ballParameters.speedX=-ballParameters.speedX;
                 ballParameters.posX=fieldParameters.width-ballParameters.width;
                 //останавливаем движение мяча при столкновении с правой областью поля
@@ -153,9 +161,17 @@
                 //запоминаем координаты мяча
                 ballPosX=ball.getBoundingClientRect().left;
                 ballPosY=ball.getBoundingClientRect().top;
-
             }
             //с левой стороны
+            //если попадает в ракетку, то отбивается
+            if ((ball.offsetLeft-greenParameters.width) == 0){
+                if( ball.offsetTop > (green.offsetTop-ball.offsetTop/2) && ball.offsetTop < (green.offsetTop+greenParameters.height)){
+                        ballParameters.speedX=-ballParameters.speedX;
+                        ballParameters.posX=5;
+                        ballParameters.posX+=ballParameters.speedX;
+                }
+            } 
+            //если попадает мимо, то останавливается и добавляет гол
             if ( ballParameters.posX<0 ) {
                 ballParameters.speedX=-ballParameters.speedX;
                 ballParameters.posX=0;
