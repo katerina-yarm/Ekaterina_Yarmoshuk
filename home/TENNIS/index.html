@@ -15,7 +15,7 @@
             border: black solid 1px;
             margin: 0 auto;
             position: relative;
-            height: 350px;
+            height: 347px;
             width: 500px;
         }
         .button{
@@ -34,6 +34,8 @@
             position: absolute;
             width: 30px;
             height: 30px;
+            left: 235px;
+            top: 160px;
         }
         .blue{
             width: 5px;
@@ -41,6 +43,7 @@
             position: absolute;
             background-color:rgb(9, 9, 110);
             right: 0;
+            top: 0px;
         }
         .green{
             width: 6px;
@@ -48,6 +51,7 @@
             position: absolute;
             background-color:rgb(3, 56, 12);
             left: -1px;
+            top: 0px;
         }
     </style>
 </head>
@@ -98,9 +102,11 @@
 
 
         //устанавливаем параметры для мячика и игрового поля
+        let ballPosX=235;
+        let ballPosY=160;
         let ballParameters={
-            posX : 235,
-            posY : 160,
+            posX : ballPosX,
+            posY : ballPosY,
             speedX : 2,
             speedY : 1,
             width : 30,
@@ -117,6 +123,17 @@
             height : 350
         }
 
+        let greenParameters={
+            height : 80,
+            speed : 4
+        }
+
+        let blueParameters={
+            height : 80,
+            speed : 4
+        }
+
+
       
         function tick() {
             ballParameters.posX+=ballParameters.speedX;
@@ -126,10 +143,17 @@
             if ( ballParameters.posX+ballParameters.width>fieldParameters.width ) {
                 ballParameters.speedX=-ballParameters.speedX;
                 ballParameters.posX=fieldParameters.width-ballParameters.width;
+                //останавливаем движение мяча при столкновении с правой областью поля
                 clearInterval(timer);
+                //увеличиваем счет для соперника
                 countGreen++;
+                //удаляем старый счет и добавляем новый
                 tennisCount.removeChild(tennisCountText);
                 countUpdate(); 
+                //запоминаем координаты мяча
+                ballPosX=ball.getBoundingClientRect().left;
+                ballPosY=ball.getBoundingClientRect().top;
+
             }
             //с левой стороны
             if ( ballParameters.posX<0 ) {
@@ -139,6 +163,8 @@
                 countBlue++;
                 tennisCount.removeChild(tennisCountText);
                 countUpdate(); 
+                ballPosX=ball.getBoundingClientRect().left;
+                ballPosY=ball.getBoundingClientRect().top;
             }
             //снизу
             if ( ballParameters.posY+ballParameters.height>fieldParameters.height ) {
@@ -154,8 +180,40 @@
             ballParameters.update();
         }
 
-        //устанавливаем мяч в центр поля
-        ballParameters.update();
+        //прописываем изменения движений ракеток при нажатии на клавиши
+        let blueDistance;
+        let greenDistance;
+        window.addEventListener('keydown',function (e) {
+            if (e.keyCode == 38){
+                blueDistance=blue.getBoundingClientRect().top-69;
+                if(blueDistance>=blueParameters.speed){//чтобы ракетка не выходила за пределы поля ограничиваем размером смещения (speed)
+                    blueDistance -= blueParameters.speed;
+                    blue.style.top=blueDistance+'px'; 
+                }
+            }
+            else if (e.keyCode == 40){
+                blueDistance=blue.getBoundingClientRect().top-69;
+                if(blueDistance<=(fieldParameters.height-blueParameters.height-blueParameters.speed)){
+                    blueDistance += blueParameters.speed;
+                    blue.style.top=blueDistance+'px'; 
+                } 
+            } 
+            else if (e.keyCode == 16){
+                greenDistance=green.getBoundingClientRect().top-69;
+                if(greenDistance>=greenParameters.speed){
+                    greenDistance -= greenParameters.speed;
+                    green.style.top=greenDistance+'px'; 
+                }
+            } 
+            else if (e.keyCode == 17){
+                greenDistance=green.getBoundingClientRect().top-69;
+                if(greenDistance<=(fieldParameters.height-greenParameters.height-greenParameters.speed)){
+                    greenDistance += greenParameters.speed;
+                    green.style.top=greenDistance+'px'; 
+                }
+            } 
+        });
+       
     </script>
 </body>
 </html>
