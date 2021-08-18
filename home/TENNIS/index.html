@@ -174,7 +174,7 @@
                 }
             } 
             //если попадает мимо, то останавливается и добавляет гол
-            if ( ballParameters.posX<0 ) {
+            if ( ballParameters.posX<0) {
                 ballParameters.speedX=-ballParameters.speedX;
                 ballParameters.posX=0;
                 clearInterval(timer);
@@ -195,6 +195,7 @@
                 ballParameters.posY=0;
             }
 
+            
             ballParameters.update();
         }
 
