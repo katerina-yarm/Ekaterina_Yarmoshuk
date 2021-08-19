@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="font-family: sans-serif; margin: 1vw; font-size: 4vw">
+
+    <div id="ISolidColors" style="float: left; width: 79vw">
+      <div style="float: left; width: 16vw; padding-top: 1.7vw">Цвет:</div>
+      <!-- сюда будут вставлены образцы цвета -->
+    <canvas width="41" height="41" data-color="#000000" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#FFFFFF" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#808080" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#FF0000" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#00FF00" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#0000FF" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#FFFF00" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#00FFFF" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#FF00FF" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#800000" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#008000" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#000080" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#808000" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#008080" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#800080" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#80FF00" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#0080FF" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#8000FF" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#FF8000" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#00FF80" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-color="#FF0080" style="float: left; width: 8vw; height: 8vw;"></canvas></div>
+    <div style="float: left; width: 16vw; padding-left: 2vw">
+      <div style="text-align: center">Кисть:</div>
+      <canvas id="IBrush" style="width: 16vw; height: 16vw; border: solid black 1px; background: url(&quot;skrip.gif&quot;)" width="82" height="82"></canvas>
+    </div>
+    <div id="ISizes" style="float: left; width: 98vw; margin-bottom: 1vw">
+      <div style="float: left; width: 16vw; padding-top: 1.7vw">Размер:</div>
+      <!-- сюда будут вставлены образцы размера -->
+    <canvas width="41" height="41" data-radius="1" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="2" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="3" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="5" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="7" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="10" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="15" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-radius="20" style="float: left; width: 8vw; height: 8vw;"></canvas></div>
+    <div id="IOpacitys" style="float: left; width: 98vw; background: url(&quot;skrip.gif&quot;); margin-bottom: 2vw">
+      <div style="float: left; width: 32vw; padding-top: 1.7vw">Прозрачность:</div>
+      <!-- сюда будут вставлены образцы прозрачности -->
+    <canvas width="41" height="41" data-opacity="0.1" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="0.2" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="0.3" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="0.4" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="0.5" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="0.6" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="0.7" style="float: left; width: 8vw; height: 8vw;"></canvas><canvas width="41" height="41" data-opacity="1" style="float: left; width: 8vw; height: 8vw;"></canvas></div>
+    
+    <div style="position: relative; clear: both">
+      <!-- рисование выполняется многократными lineTo в позицию мыши/пальца -->
+      <!-- поэтому полупрозрачным цветом рисовать нельзя - он сам на себя накладывается и становится более насыщенным -->
+      <!-- вместо этого, рисование выполняется сплошным цветом в полупрозрачном канвасе IDraw -->
+      <!-- а потом накладывается с учётом полупрозрачности в основной канвас IDrawBack -->
+      <canvas id="IDrawBack" style="position: absolute; left: 0; top: 0; width: 98vw; height: 98vw; border: solid black 1px" width="500" height="500"></canvas>
+      <canvas id="IDraw" style="position: absolute; left: 0; top: 0; width: 98vw; height: 98vw; border: solid black 1px" width="500" height="500"></canvas>
+    </div>
+    
+    <script>
+    
+      // размеры в пикселях канваса, в котором рисуем
+      // не путаем этот размер с CSS-размером - этот фактический, CSS - отображаемый
+      var DrawCanvasWidth=500;
+      var DrawCanvasHeight=500;
+      
+      var DrawBackCanvas=document.getElementById('IDrawBack');
+      DrawBackCanvas.width=DrawCanvasWidth;
+      DrawBackCanvas.height=DrawCanvasHeight;
+      var DrawBackContext=DrawBackCanvas.getContext('2d');
+    
+      var DrawCanvas=document.getElementById('IDraw');
+      DrawCanvas.width=DrawCanvasWidth;
+      DrawCanvas.height=DrawCanvasHeight;
+      var DrawContext=DrawCanvas.getContext('2d');
+      
+      var BrushCanvas=document.getElementById('IBrush');
+    
+      // размеры в пикселях образца текущей кисти
+      // т.к. все размеры в вёрстке относительные и заданы в vw,
+      // важно чтобы пиксельные размеры канвасов сооносились бы между собой так же как и CSS-размеры
+      // иначе масштаб образца кисти и рисунка не будет совпадать
+      var BrushCanvasWidth=Math.round(DrawCanvasWidth/98*16);
+      var BrushCanvasHeight=Math.round(DrawCanvasHeight/98*16);
+    
+      BrushCanvas.width=BrushCanvasWidth;
+      BrushCanvas.height=BrushCanvasHeight;
+    
+      // отображение образца кисти (не обязательно текущей) в указанном canvas
+      // используется и для отображения текущей кисти,
+      // и для отображения всех образцов - цвета, размера, прозрачности
+      function DrawBrushPattern(BrushH,Canvas)
+      {
+        var Context=Canvas.getContext('2d');
+    
+        // стираем фон; закраска белым не пойдёт, иначе полупрозрачность образца не будет видна
+        Context.globalCompositeOperation='destination-out';
+        Context.fillStyle="rgba(0,0,0,1)";
+        Context.fillRect(0,0,BrushCanvasWidth,BrushCanvasHeight);
+        Context.globalCompositeOperation='source-over';
+    
+        Context.globalAlpha=BrushH.opacity;
+        Context.fillStyle=BrushH.color;
+        Context.beginPath();
+        Context.ellipse(Canvas.width/2,Canvas.height/2,BrushH.radius,BrushH.radius,0,0,Math.PI*2,true);
+        Context.fill();
+        Context.globalAlpha=1;
+      }
+    
+      // текущая кисть для рисования
+      var CurrentBrushH=
+      {
+        color: '#00FF00',
+        radius: 20,
+        opacity: 1
+      };
+    
+      DrawBrushPattern(CurrentBrushH,BrushCanvas);
+    
+      // создадим плашки с чистыми цветами
+    
+      var SolidColorsA=
+      [
+        '#000000','#FFFFFF','#808080',
+        '#FF0000','#00FF00','#0000FF',
+        '#FFFF00','#00FFFF','#FF00FF',
+        '#800000','#008000','#000080',
+        '#808000','#008080','#800080',
+        '#80FF00','#0080FF','#8000FF',
+        '#FF8000','#00FF80','#FF0080'
+      ];
+    
+      for ( var C=0; C<SolidColorsA.length; C++ )
+      {
+        var BrushColorElem=document.createElement('canvas');
+        BrushColorElem.width=Math.round(DrawCanvasWidth/98*8);
+        BrushColorElem.height=Math.round(DrawCanvasWidth/98*8);
+        BrushColorElem.style.cssText='float: left; width: 8vw; height: 8vw';
+        BrushColorElem.setAttribute('data-color',SolidColorsA[C]);
+        BrushColorElem.addEventListener("click",SetBrushColor,false);
+        document.getElementById('ISolidColors').appendChild(BrushColorElem);
+    
+        var ColorBrushH={ color:SolidColorsA[C], radius:15, opacity:1 };
+        DrawBrushPattern(ColorBrushH,BrushColorElem)
+      }
+    
+      // устанавливает новый цвет текущей кисти и обновляет образец кисти
+      function SetBrushColor(EO)
+      {
+        var Elem=EO.target;
+        CurrentBrushH.color=Elem.getAttribute('data-color');
+        DrawBrushPattern(CurrentBrushH,BrushCanvas);
+      }
+    
+      // создадим плашки с размерами
+    
+      var SizesA=[1,2,3,5,7,10,15,20];
+    
+      for ( var S=0; S<SizesA.length; S++ )
+      {
+        var BrushSizeElem=document.createElement('canvas');
+        BrushSizeElem.width=Math.round(DrawCanvasWidth/98*8);
+        BrushSizeElem.height=Math.round(DrawCanvasWidth/98*8);
+        BrushSizeElem.style.cssText='float: left; width: 8vw; height: 8vw';
+        BrushSizeElem.setAttribute('data-radius',SizesA[S]);
+        BrushSizeElem.addEventListener("click",SetBrushSize,false);
+        document.getElementById('ISizes').appendChild(BrushSizeElem);
+    
+        var SizeBrushH={ color:'black', radius:SizesA[S], opacity:1 };
+        DrawBrushPattern(SizeBrushH,BrushSizeElem)
+      }
+    
+      // устанавливает новый размер кисти и обновляет образец кисти
+    
+      function SetBrushSize(EO)
+      {
+        var Elem=EO.target;
+        CurrentBrushH.radius=Elem.getAttribute('data-radius');
+        DrawBrushPattern(CurrentBrushH,BrushCanvas);
+      }
+    
+      // создадим плашки с прозрачностями
+    
+      var OpacitysA=[0.1,0.2,0.3,0.4,0.5,0.6,0.7,1];
+    
+      for ( var O=0; O<OpacitysA.length; O++ )
+      {
+        var BrushOpacityElem=document.createElement('canvas');
+        BrushOpacityElem.width=Math.round(DrawCanvasWidth/98*8);
+        BrushOpacityElem.height=Math.round(DrawCanvasWidth/98*8);
+        BrushOpacityElem.style.cssText='float: left; width: 8vw; height: 8vw';
+        BrushOpacityElem.setAttribute('data-opacity',OpacitysA[O]);
+        BrushOpacityElem.addEventListener("click",SetBrushOpacity,false);
+        document.getElementById('IOpacitys').appendChild(BrushOpacityElem);
+    
+        var OpacityBrushH={ color:'black', radius:15, opacity:OpacitysA[O] };
+        DrawBrushPattern(OpacityBrushH,BrushOpacityElem)
+      }
+    
+      // устанавливает новую прозрачность кисти и обновляет образец кисти
+    
+      function SetBrushOpacity(EO)
+      {
+        var Elem=EO.target;
+        CurrentBrushH.opacity=Elem.getAttribute('data-opacity');
+        DrawBrushPattern(CurrentBrushH,BrushCanvas);
+      }
+    
+    
+      // опускает кисть на холст (вызывается из mousedown и touchstart)
+      function BrushBegin(CoordsH)
+      {
+        // во временном канвасе отрисовка будет выполняться сплошным цветом
+        // но сам канвас будет иметь нужную полупрозрачность
+        DrawCanvas.style.opacity=CurrentBrushH.opacity;
+        DrawContext.lineCap='round';
+        DrawContext.lineJoin='round';
+        DrawContext.lineWidth=CurrentBrushH.radius*2;
+        DrawContext.strokeStyle=CurrentBrushH.color;
+        DrawContext.beginPath();
+        DrawContext.moveTo(CoordsH.X,CoordsH.Y);
+        // надо сдвинуться хоть чуть-чуть, чтобы при касании уже был виден кружок
+        DrawContext.lineTo(CoordsH.X+0.001,CoordsH.Y);
+        DrawContext.stroke();
+      }
+      // двигает опущенную кисть по холсту (вызывается из mousemove и touchmove)
+      function BrushMove(CoordsH)
+      {
+        DrawContext.lineTo(CoordsH.X,CoordsH.Y);
+        DrawContext.stroke();
+      }
+      // поднимает кисть над холстом (вызывается из mouseup и touchend)
+      function BrushEnd(CoordsH)
+      {
+        DrawContext.lineTo(CoordsH.X,CoordsH.Y);
+        DrawContext.stroke();
+    
+        // рисование во временном канвасе закончено
+        // линия нарисована СПЛОШНЫМ цветом, но сам канвас - с нужной полупрозрачностью (CSS-свойство opacity)
+    
+        // теперь перенесём сплошной цвет на основной канвас, сделав его до нужной степени полупрозрачным
+        DrawBackContext.globalAlpha=CurrentBrushH.opacity;
+        DrawBackContext.drawImage(DrawCanvas,0,0);
+        DrawBackContext.globalAlpha=1;
+    
+        // теперь очистим временный канвас (заполним его прозрачными пикселями)
+        DrawContext.globalCompositeOperation='destination-out';
+        DrawContext.fillStyle="rgba(0,0,0,1)";
+        DrawContext.fillRect(0,0,DrawCanvasWidth,DrawCanvasHeight);
+        DrawContext.globalCompositeOperation='source-over';
+    
+        // визуально ничего не должно измениться
+        // было: основной + (временный*opacity)
+        // стало: (основной+временный*opacity) + 0
+      }
+    
+      // обработчики мышиных событий
+    
+      DrawCanvas.addEventListener('mousedown',BrushMouseBegin,false);
+      DrawCanvas.addEventListener('mouseup',BrushMouseEnd,false);
+    
+      // преобразует из координат события (экранных) в координаты внутри canvas
+      // они отличаются, т.к. canvas отображён не в своём родном размере
+      // (CSS-размеры канваса отличаются от пиксельных)
+      function EventToDrawCoords(CoordsH)
+      {
+        // отображаемое положение канваса - offsetLeft/offsetTop + положение div-контейнера с канвасами
+        // отображаемый, CSS-размер канваса - offsetWidth/offsetHeight
+        var PercX=(CoordsH.X-DrawCanvas.offsetLeft-DrawCanvas.offsetParent.offsetLeft)/DrawCanvas.offsetWidth;
+        var PercY=(CoordsH.Y-DrawCanvas.offsetTop-DrawCanvas.offsetParent.offsetTop)/DrawCanvas.offsetHeight;
+        // получили координаты в виде процентов внутри канваса
+        // умножим на пиксельный размер канваса
+        var DrawX=DrawCanvasWidth*PercX;
+        var DrawY=DrawCanvasHeight*PercY;
+        return {X:DrawX,Y:DrawY};
+      }
+    
+      // опускает кисть на холст (вызывается по mousedown)
+      function BrushMouseBegin(EO)
+      {
+        EO.preventDefault();
+    
+        var DrawCoordsH=EventToDrawCoords( { X:EO.pageX, Y:EO.pageY } );
+        BrushBegin(DrawCoordsH);
+    
+        DrawCanvas.addEventListener('mousemove',BrushMouseMove,false);
+      }
+    
+      // двигает опущенную кисть по холсту (вызывается по mousemove)
+      function BrushMouseMove(EO)
+      {
+        EO.preventDefault();
+    
+        var DrawCoordsH=EventToDrawCoords( { X:EO.pageX, Y:EO.pageY } );
+        BrushMove(DrawCoordsH);
+      }
+    
+    
+      // обработчики тач-событий
+    
+      DrawCanvas.addEventListener('touchstart',BrushTouchBegin,false);
+      DrawCanvas.addEventListener('touchend',BrushTouchEnd,false);
+    
+      // поднимает кисть над холстом (вызывается по mouseup)
+      function BrushMouseEnd(EO)
+      {
+        EO.preventDefault();
+    
+        var DrawCoordsH=EventToDrawCoords( { X:EO.pageX, Y:EO.pageY } );
+        BrushEnd(DrawCoordsH);
+    
+        DrawCanvas.removeEventListener('mousemove',BrushMouseMove,false);
+      }
+    
+      // опускает кисть на холст (вызывается по touchstart)
+      function BrushTouchBegin(EO)
+      {
+        EO.preventDefault();
+    
+        var Touch=EO.changedTouches[0];
+        var DrawCoordsH=EventToDrawCoords( { X:Touch.pageX, Y:Touch.pageY } );
+        BrushBegin(DrawCoordsH);
+    
+        DrawCanvas.addEventListener('touchmove',BrushTouchMove,false);
+      }
+    
+      // двигает опущенную кисть по холсту (вызывается по touchmove)
+      function BrushTouchMove(EO)
+      {
+        EO.preventDefault();
+    
+        var Touch=EO.changedTouches[0];
+        var DrawCoordsH=EventToDrawCoords( { X:Touch.pageX, Y:Touch.pageY } );
+        BrushMove(DrawCoordsH);
+      }
+    
+      // поднимает кисть над холстом (вызывается по touchend)
+      function BrushTouchEnd(EO)
+      {
+        EO.preventDefault();
+    
+        var Touch=EO.changedTouches[0];
+        var DrawCoordsH=EventToDrawCoords( { X:Touch.pageX, Y:Touch.pageY } );
+        BrushEnd(DrawCoordsH);
+    
+        DrawCanvas.removeEventListener('touchmove',BrushTouchMove,false);
+      }
+    
+    </script>
+    
+    
+    
+    </body>
+</html>

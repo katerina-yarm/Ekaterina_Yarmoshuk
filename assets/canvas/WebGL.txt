@@ -1,0 +1,11 @@
+WebGL (Web-based Graphics Library) — JavaScript API, позволяющий создавать интерактивную 3D-графику в Canvas для широкого спектра совместимых с WebGL веб-браузеров.
+WebGL использует низкоуровневый OpenGL, поэтому часть кода на WebGL выполняется с аппаратным ускорением на GPU.
+
+WebGL на MDN - https://developer.mozilla.org/ru/docs/Web/API/WebGL_API
+Знакомство с WebGL - https://habr.com/ru/post/112430/
+WebGL для всех - https://habr.com/ru/company/2gis/blog/273735/
+WebGl: графические эффекты и фильтрация изображений под стероидами - https://html5.by/blog/webgl-image-filters/
+Наиболее впечатляющие приложения HTML5 для демонстрации WebGL, Flight arcade - https://habr.com/ru/post/130294/ 
+платформа для онлайн-разработки интерактивных сцен на WebGL — WebGLStudio.js - https://webglstudio.org/
+
+Поддержка: Chrome 18+, Firefox (неполная), Opera 12+ (неполная), IE 11+

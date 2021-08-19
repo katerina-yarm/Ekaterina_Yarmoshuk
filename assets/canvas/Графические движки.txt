@@ -1,0 +1,63 @@
+
+таблица сравнения 2D-библиотек для работы с Canvas
+
+pixi.js
+2D-движок, позволяющий абстрагироваться от аппаратных возможностей платформы (автоматически использует WebGL либо Canvas).
+Поддерживает сцену, текстуры, спрайты, работу с мышью и тачскрином.
+репозиторий на github https://github.com/pixijs/pixijs
+демо-игра https://www.goodboydigital.com/runpixierun/
+тест производительности
+
+Paper.js
+Фреймворк, работающий с Canvas в терминах объектов векторной графики (растры, символы, пути, группы, слои).
+сайт проекта http://paperjs.org/
+примеры http://paperjs.org/examples/
+Web-Drawing библиотеки: Paper.js Vs. Processing.js Vs. Raphael.js https://habr.com/ru/post/140286/
+
+EaselJS
+JavaScript-библиотека для работы с Canvas.
+сайт https://www.createjs.com/easeljs
+HTML5 игры: canvas http://www.pixelcom.crimea.ua/html5-igry-canvas.html
+демо http://www.pirateslovedaisies.com/
+
+
+LibCanvas
+Фреймворк для работы с Canvas и сопутствующими технологиями, применяемый для разработки игр и других интерактивных приложений.
+Много примеров и документации, но уровень входа высок.
+Основы LibCanvas — теория https://habr.com/ru/post/121046/
+Основы LibCanvas — практика https://habr.com/ru/post/121047/
+
+Cocos2D
+Фреймворк для построения игр, приложений и графических интерфейсов интерактивных кросс-платформенных приложений. Содержит множество версий, с JavaScript работает версия Cocos2d-html5. Есть несколько редакторов — SpriteSheet Editors, Particle Editors, Font Editors и Tilemap Editors; редакторы миров — CocosBuilder и CocoStudio.
+Работа всех версий Cocos2D основана на использовании спрайтов. Некоторые версии Cocos2D реализуют эффекты частиц и применение шейдерных фильтров.
+Опыт создания кроссплатформенной игры (iOS/Android) https://habr.com/ru/post/201598/
+Введение в CocosBuilder https://habr.com/ru/post/166709/
+Туториал по JavaScript движку для создания игр Cocos 2D: Инициализация проекта http://habrparser.blogspot.com/2013/08/javascript-cocos-2d.html
+
+Three.js
+Легковесная кроссбраузерная библиотека для анимированной 3D-графики.
+Может работать с Canvas, SVG, WebGL.
+Three.js — 3d движок на Javascript https://habr.com/ru/post/117772/
+Изучаем Three.js. Глава 1 https://habr.com/ru/post/224509/
+Изучаем Three.js. Глава 2 https://habr.com/ru/post/225199/
+Как сделать 3D шутер на JavaScript за пару дней https://habr.com/ru/post/164003/
+Игровой мир WebGL или Three.js vs Babylon.js https://habr.com/ru/post/246259/
+Примеры:
+простой пример с тором, http://fe.it-academy.by/Examples/ThreeJS_Demo/index.html
+конструктор для его создания, http://jeromeetienne.github.io/threejsboilerplatebuilder/
+краткое описание кода и возможностей его модификации (англ.)
+Aviator https://tympanus.net/Tutorials/TheAviator/
+полёт между шариками https://www.omiod.com/games/fastkat.php
+панорамный движок
+Minecraft
+
+Babylon.js
+Простой и мощный 3D-движок, построенный на WebGL, JavaScript и TypeScript.
+Базируется на сценах, имеет движок коллизий (столкновений), гравитации, поддерживает камеры, источники света.
+демо https://www.babylonjs.com/scenes/robot/
+Игровой мир WebGL или Three.js vs Babylon.js
+Урок 1, Урок 2
+
+canvg
+Умеет парсить SVG и рисовать его в Canvas со скоростью, сравнимой с браузерной отрисовкой SVG.
+github
