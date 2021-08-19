@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        #BALL
+        {
+            position: absolute;
+            left: 50px;
+            top: 250px;
+            width: 200px;
+            height: 200px;
+            background-color: green;
+    
+            -webkit-transition-duration: 3s; /* для Android */
+            transition-duration: 3s;
+            -webkit-transition-timing-function: linear; /* для Android */
+            transition-timing-function: linear;
+        }
+    
+    </style>
+</head>
+<body>
+    <input type=button value='вправо' onclick='toRight()'>
+<input type=button value='красный' onclick='toRed()'>
+<input type=button value='по часовой' onclick='rotate()'>
+
+<br /><br />
+<div id=CONTAINER>
+    <div id=BALL></div>
+</div>
+
+<script>
+
+    "use strict";
+
+    var ballElem=document.getElementById('BALL');
+
+    ballElem.addEventListener('transitionend',ballAnimEnd, false);
+
+    function toRight() {
+        ballElem.style.left="350px";
+    }
+
+    function toRed() {
+        ballElem.style.backgroundColor="red";
+    }
+
+    function rotate() {
+        ballElem.style.transform='rotate(135deg)';
+        ballElem.style.webkitTransform='rotate(135deg)';
+    }
+
+    function ballAnimEnd(EO) {
+        console.log('анимация окончена');
+        console.log(EO);
+    }
+
+</script>
+</body>
+</html>

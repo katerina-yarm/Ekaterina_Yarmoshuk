@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <input type='button' value='Пуск!' onclick='start()'>
+<br /><br />
+<div style='width: 400px; height: 300px; border: solid blue 1px;
+    position: relative'>
+    <img src='ball3.png' id='IBall'
+        style='position: absolute'>
+</div>
+
+<script>
+
+    "use strict";
+
+    var ballH={
+        posX : 30,
+        posY : 30,
+        speedX : 1,
+        width : 50,
+        height: 50,
+
+        update : function() {
+            var ballElem=document.getElementById('IBall');
+            ballElem.style.left=this.posX+"px";
+            ballElem.style.top=this.posY+"px";
+        }
+    }
+
+    var areaH={
+        width : 400,
+        height : 300
+    }
+
+    function start() {
+        // плавное движение - от 25 кадр/сек, 1000мс/25к=40мс
+        setInterval(tick,40);
+    }
+
+    function tick() {
+        ballH.posX+=ballH.speedX;
+        // вылетел ли мяч правее стены?
+        if ( ballH.posX+ballH.width>areaH.width ) {
+            ballH.speedX=-ballH.speedX;
+            ballH.posX=areaH.width-ballH.width;
+        }
+        if ( ballH.posX<0 ) { // вылетел ли мяч левее стены?
+            ballH.speedX=-ballH.speedX;
+            ballH.posX=0;
+        }
+
+        ballH.update();
+    }
+
+    ballH.update();
+
+</script>
+</body>
+</html>

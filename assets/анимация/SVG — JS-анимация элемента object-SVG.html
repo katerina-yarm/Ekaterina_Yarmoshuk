@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type=button value='старт!' onclick='start()'>
+
+<div style='position: relative; width: 600px; height: 270px; background-color: #FFFF80'>
+    <object id=SSS data="Examples/shockdanger.svg" type="image/svg+xml" width=256 height=256></object>
+</div>
+
+<script>
+
+    "use strict";
+
+    var path2Elem=null; // сейчас его искать нельзя - SVG из внешнего файла ещё не загружен
+    var r;
+
+    function start() {
+        var SVGObjectElem=document.getElementById('SSS');
+        var SVGDocument=SVGObjectElem.contentDocument;
+        path2Elem=SVGDocument.querySelector("path:nth-child(2)");
+        path2Elem.style.transformOrigin='435px 445px';
+
+        r=0;
+        requestAnimationFrame(anim);
+    }
+
+    function anim() {
+        r+=1; // 1 градус за кадр
+        path2Elem.style.transform='rotate('+r+'deg)';
+
+        requestAnimationFrame(anim);
+    }
+
+</script>
+</body>
+</html>

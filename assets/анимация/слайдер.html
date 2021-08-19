@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <title>Document</title>
+    <style id="jsbin-css">
+        #gallery {
+           position: relative;
+           width: 100px;
+           height: 100px;
+           border: 1px green dotted;
+           margin: 30px 0 0 150px;
+           /* usually an «overflow:hidden» is set here */
+        }
+        
+        #overflow:checked + #gallery { 
+          overflow:hidden; 
+        }
+        
+        #gallery ul {
+           font-size: 0;
+           white-space: nowrap;
+           position: absolute;
+           top: 0;
+           left: -100px;
+           margin: 0; padding: 0;
+        }
+        
+        #gallery li {
+           display: inline-block;
+           vertical-align: top;
+           width: 96px;
+           height: 96px;
+           white-space: normal;
+           padding: 2px
+        }
+        
+        button {
+          font: 40px "Courier New";
+          border: 1px #d8d8d8 dotted;
+          color: #626262;
+          background: none;
+          cursor: pointer;
+          width: 50px;
+          text-align: center;
+          margin: 20px -150px 0 150px;
+        }
+        
+        label, a {
+           font: 14px Georgia;
+           font-style: italic;
+           color: #626262;
+        }
+        
+        
+        </style>
+</head>
+<body>
+  
+    <label for="overflow">This checkbox toggles <b>overflow: hidden</b> property on the gallery <br> to see the effect when a mask is applied:</label>
+    <input type="checkbox" id="overflow">
+    
+    <div id="gallery"> <!-- mask -->
+      
+      <ul>  <!-- container -->
+        <li><img src="http://dummyimage.com/96x96/f0f0f0/626262.png&amp;text=4"></li><li><img src="http://dummyimage.com/96x96/f0f0f0/626262.png&amp;text=1"></li>
+        <li><img src="http://dummyimage.com/96x96/f0f0f0/626262.png&amp;text=2"></li>
+        <li><img src="http://dummyimage.com/96x96/f0f0f0/626262.png&amp;text=3"></li>
+        <li><img src="http://dummyimage.com/96x96/f0f0f0/626262.png&amp;text=4"></li><li><img src="http://dummyimage.com/96x96/f0f0f0/626262.png&amp;text=1"></li>
+      </ul>    
+  
+    </div>
+    
+    <button type="button" id="prev">«</button>
+    <button type="button" id="next">»</button>
+    
+    <p>
+    <a href="http://stackoverflow.com/a/15877302/1098851">Further information about this demo on this Stackoverflow discussion</a>
+    </p>
+  <script>
+  $(function() {
+   
+    var gallery = $('#gallery ul'),
+        items   = gallery.find('li'),
+        len     = items.length,
+        current = 1,  /* the current item we're looking */
+        
+        first   = items.filter(':first'),
+        last    = items.filter(':last'),
+        
+        triggers = $('button');
+    
+    /* 1. Cloning first and last item */
+    first.before(last.clone(true)); 
+    last.after(first.clone(true)); 
+    
+    /* 2. Set button handlers */
+    triggers.on('click', function() {
+      
+      if (gallery.is(':not(:animated)')) {
+       
+          var cycle = false,
+              delta = (this.id === "prev")? -1 : 1;
+              /* in the example buttons have id "prev" or "next" */  
+      
+          gallery.animate({ left: "+=" + (-100 * delta) }, function() {
+        
+              current += delta;
+         
+              /** 
+               * we're cycling the slider when the the value of "current" 
+               * variable (after increment/decrement) is 0 or when it exceeds
+               * the initial gallery length
+               */          
+              cycle = !!(current === 0 || current > len);
+         
+              if (cycle) {
+                  /* we switched from image 1 to 4-cloned or 
+                     from image 4 to 1-cloned */
+                  current = (current === 0)? len : 1; 
+                  gallery.css({left:  -100 * current });
+              }
+          });   
+       }
+      
+    });
+  });
+  </script>
+  <script src="http://static.jsbin.com/js/render/edit.js?4.1.8"></script>
+  <script>jsbinShowEdit && jsbinShowEdit({"static":"http://static.jsbin.com","root":"http://jsbin.com"});</script>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  
+  ga('create', 'UA-1656750-34', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+  
+  </script>
+  
+  
+  </body>
+</html>
