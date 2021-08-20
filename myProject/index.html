@@ -17,12 +17,16 @@
     <script src="pages/rules/rulesPage.js"></script>
     <script src="pages/records/recordsPage.js"></script>
     <script src="pages/game/gamePage.js"></script>
+    <script src="backgroundAnimation.js"></script>
     <title>My Game</title>
 </head>
     <body>
         <div id=app></div>
+        <canvas id="background"></canvas>
         
         <script>
+            //запускает скрипт с прорисовкой фона
+            bg();
             //при изменении URL подгружается нужная разметка
             window.onhashchange=switchToStateFromURLHash; 
 

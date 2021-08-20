@@ -1,29 +1,41 @@
-body{
-    background-image: url("assets/background.jpg");
+* { margin:0; padding:0; }
+/*делаем объект канвас фоном*/
+canvas { 
+   position: absolute;
+   width:100vw;
+   height:100vh;
+   background-size: cover;
+   background: url(assets/Mars.jpg) no-repeat;
+   left: 0;
+   top: 0;
+   z-index: -1; 
 }
 
 /*стили для кнопок*/
 a.fciA {
     margin: 20px auto;
-    font-family: 'Gowun Batang', serif;
-    font-size: 30px;
+    font-family: 'Gowun Batang', serif; 
+    font-size: 40px;
     line-height: 40px;
     letter-spacing: -1px;
     text-decoration: none;
     text-align:center;
     display:block;
     width:400px;
-    color: #3f3f3f;
+    color: #a09e9e;
     position: relative;
     -webkit-transition: color 0.2s;
     -moz-transition: color 0.2s;
     -o-transition: color 0.2s;
     transition: color 0.2s;
   }
+  /*при наведении мышкой появляется прозрачный фон у надписи и шрифт становится ярче*/
   a.fciA:hover {
-    color: #444444;
-    background:rgba(0,0,0,0.1);
+    color:  #f7f3f3;
+    background:rgba(252, 250, 250, 0.24);
   }
+
+  /*левый верхний уголок*/
   a.fciA:after {
     left: -20px;
     -webkit-transition-property: left, opacity, top;
@@ -39,8 +51,8 @@ a.fciA {
     height: 12px;
     background: transparent;
     position: absolute;
-    border-left: 5px solid #444444;
-    border-top: 5px solid #444444;
+    border-left: 5px solid #d3d1d1;
+    border-top: 5px solid  #d3d1d1;
     top: -22px;
     opacity: 0;
   }
@@ -49,6 +61,7 @@ a.fciA {
     top: -12px;
     opacity: 1;
   }
+  /*правый верхний уголок*/
   a.fciA:before {
     right: -20px;
     -webkit-transition-property: right, opacity, top;
@@ -64,8 +77,8 @@ a.fciA {
     height: 12px;
     background: transparent;
     position: absolute;
-    border-right: 5px solid #444444;
-    border-top: 5px solid #444444;
+    border-right: 5px solid  #d3d1d1;
+    border-top: 5px solid  #d3d1d1;
     top: -22px;
     opacity: 0;
   }
@@ -74,6 +87,7 @@ a.fciA {
     top: -12px;
     opacity: 1;
   }
+  /*левый нижний уголок*/
   .fciSpan:after {
     left: -20px;
     -webkit-transition-property: left, opacity, bottom;
@@ -89,8 +103,8 @@ a.fciA {
     height: 12px;
     background: transparent;
     position: absolute;
-    border-left: 5px solid #444444;
-    border-bottom: 5px solid #444444;
+    border-left: 5px solid  #d3d1d1;
+    border-bottom: 5px solid  #d3d1d1;
     bottom: -24px;
     opacity: 0;
   }
@@ -99,6 +113,7 @@ a.fciA {
     bottom: -14px;
     opacity: 1;
   }
+  /*правый нижний уголок*/
   .fciSpan:before {
     right: -20px;
     -webkit-transition-property: right, opacity, bottom;
@@ -114,8 +129,8 @@ a.fciA {
     height: 12px;
     background: transparent;
     position: absolute;
-    border-right: 5px solid #444444;
-    border-bottom: 5px solid #444444;
+    border-right: 5px solid  #d3d1d1;
+    border-bottom: 5px solid  #d3d1d1;
     bottom: -24px;
     opacity: 0;
   }
