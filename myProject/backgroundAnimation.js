@@ -7,9 +7,9 @@ function bg (){
     canvas.setAttribute('width',w);
     canvas.setAttribute('height',h);
     //указываем сколько будет создано частиц
-    let number = 100;
+    let stars = 100;
     //создаем массив, в котором будем хранить наши частицы
-    let numberArray = new Array;
+    let starsArray = new Array;
     //создаем массив цветов (чтобы пыль была разноцветная)
     let colors = ['#ffd893','#ef6b4d','white','#f3a998','#fac365'];
     //задаем максимальный размер частиц
@@ -27,8 +27,8 @@ function bg (){
     function create() {
       time = 0;
 
-      for(let i = 0; i < number; i++) {
-        numberArray[i] = {
+      for(let i = 0; i < stars; i++) {
+        starsArray[i] = {
           x: Math.ceil(Math.random() * w),
           y: Math.ceil(Math.random() * h),
           toX:Math.random() * 5 - 1, //число,на которое будет смещаться частица в сторону после создания по оси х
@@ -54,48 +54,48 @@ function bg (){
     }
 
     //функция заставляет ранее созданные частицы двигаться
-    function particles() {
-      //после каждой итерации очищаем наш холст, так как в противном случае у нас будут не будут двигаться частиты,а будут рисоваться полоски
+    function starsMove() {
+      //после каждой итерации очищаем наш холст, так как в противном случае у нас не будут двигаться частиты,а будут отрисовываться полоски
       ctx.clearRect(0,0,w,h);
       //навешиваем слушатель события, чтобы при наведении мышкой записывались новые координаты
       canvas.addEventListener('mousemove', MouseMove, false);
-      for(let i = 0; i < number; i++) {
+      for(let i = 0; i < stars; i++) {
         //при наведении мышкой круги в этой области будут отрисовываться большего размера
-        let sizeFactor = DistanceBetween( mouse, numberArray[i] );
+        let sizeFactor = DistanceBetween( mouse, starsArray[i] );
         let distanceFactor = Math.max( Math.min( 15 - ( sizeFactor / 10 ), 10 ), 1 );
         ctx.beginPath();
         //рисуем круг
-        ctx.arc(numberArray[i].x,numberArray[i].y,numberArray[i].size*distanceFactor,0,Math.PI*2,false);
+        ctx.arc(starsArray[i].x,starsArray[i].y,starsArray[i].size*distanceFactor,0,Math.PI*2,false);
         //указываем цвет заливки
-        ctx.fillStyle = numberArray[i].c;
+        ctx.fillStyle = starsArray[i].c;
         //и цвет обводки
-        ctx.strokeStyle=numberArray[i].c;
+        ctx.strokeStyle=starsArray[i].c;
         //прописываем условие (если четный, то обводим)
         if(i%2==0)
           ctx.stroke();
         else //если нечетный, то закрашиваем
           ctx.fill();
         //чтобы частицы начали двигаться, то смещаем их координаты
-        numberArray[i].x = numberArray[i].x + numberArray[i].toX*speed;
-        numberArray[i].y = numberArray[i].y + numberArray[i].toY*speed;
+        starsArray[i].x = starsArray[i].x + starsArray[i].toX*speed;
+        starsArray[i].y = starsArray[i].y + starsArray[i].toY*speed;
 
         //чтобы процесс был бесконечным, то как только координаты частицы заходят за пределы поля частицы появляется с противоположной стороны
-        if(numberArray[i].x > w){
-          numberArray[i].x = 0; 
+        if(starsArray[i].x > w){
+          starsArray[i].x = 0; 
         }
-        if(numberArray[i].y > h) {
-          numberArray[i].y = 0; 
+        if(starsArray[i].y > h) {
+          starsArray[i].y = 0; 
         }
-        if(numberArray[i].x < 0) {
-          numberArray[i].x = w; 
+        if(starsArray[i].x < 0) {
+          starsArray[i].x = w; 
         }
-        if(numberArray[i].y < 0) {
-          numberArray[i].y = h; 
+        if(starsArray[i].y < 0) {
+          starsArray[i].y = h; 
         }
       }
-      setTimeout(particles,1000/rate);
+      setTimeout(starsMove,1000/rate);
     }
 
   create();
-  particles();
+  starsMove();
 }
