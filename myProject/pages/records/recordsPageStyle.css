@@ -1,0 +1,37 @@
+.recordsPage{
+    margin: 5vh;
+    display: flex;
+}
+table {
+    margin: auto;
+    border-spacing: 0;
+    padding: 40px;
+    color:#a09e9e;
+    text-align: center;
+    font-size: 3vh;
+    background-color: rgba(250, 249, 249, 0.055);
+    animation-duration: 3s;
+    animation-name: scaleTransform;  
+}
+td {
+    width: 15vw;
+    padding: 10px 20px;
+    border-bottom: 1px solid #3b3b3b71;
+    
+}
+td:first-child {
+    width: 3vw;  
+}
+th {
+    padding: 10px 20px;
+    border-bottom: 1px solid #3b3b3b71;
+}
+@keyframes scaleTransform {
+    from {
+      transform: scale(0.1);
+    }
+  
+    to {
+        transform: scale(1);
+    }
+}

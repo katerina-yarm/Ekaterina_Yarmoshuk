@@ -10,14 +10,14 @@
     background-color: rgba(2, 2, 2, 0.24);
     padding: 2vw;
     font-family: 'Gowun Batang', serif;
-    color:  #f7f3f3;
-    font-size: 3vh;
+    color:#a09e9e;;
+    font-size: 2.5vh;
     font-weight: 400;
     animation-duration: 3s;
     animation-name: scaleTransform;
 }
 h3{
-    color: #f7f3f3;
+    color:#a09e9e;;
     font-family: 'Gowun Batang', serif;
     font-size: 4vh;
     font-weight: 400;
@@ -33,5 +33,5 @@ h3{
     to {
         transform: scale(1);
     }
-  }
+}
 
