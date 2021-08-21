@@ -5,14 +5,24 @@ function rulesPageLoading (){
     Points are collected when bumping with stars.
     <br> 
     <br>
-    When bumping with an obstacle, the number of lives decreases.`;
+    When bumping with an obstacle, the number of lives decreases.
+    <br> 
+    <br>
+    Good luck!`;
 
-    let rulesHtml = `<div class="rulesPage">
+    let rulesHtml = `
+            <div class="rulesPage">
+                <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Main page</span></a>
+                <a href="#Game" class="fciA navItem" onclick="switchToGamePage()"><span class="fciSpan">New Game</span></a>
+                <a href="#Records" class="fciA navItem" onclick="switchToRecordsPage()"><span class="fciSpan">Records</span></a>
+            </div>
             <div class="rules">
                 <h3>The rules of the game</h3>
+                <br>
                 <div>${rules}</div>
-            </div>
-            <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">back to the main page</span></a>
-        </div>`;
+            </div>`;
+    
+   
     return rulesHtml;
 }
+

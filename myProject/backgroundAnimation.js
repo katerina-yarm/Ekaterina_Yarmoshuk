@@ -25,8 +25,6 @@ function bg (){
     }
     // описываем функцию для создания массива с частицами звездной пыли
     function create() {
-      time = 0;
-
       for(let i = 0; i < stars; i++) {
         starsArray[i] = {
           x: Math.ceil(Math.random() * w),
