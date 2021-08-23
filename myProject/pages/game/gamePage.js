@@ -1,9 +1,9 @@
 function gamePageLoading (){
+    let rocket = document.getElementsByClassName('rocket');
+
     
     let gameHtml = `<div class="mainPage">
-            <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Back to main page</span></a>
-            <div class='bird'></div>
-            <div class='coin'></div>
+            <div class='rocket'><img src='assets/rocket.png'></img></div>
         </div>`;
     return gameHtml;
 
