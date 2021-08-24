@@ -1,9 +1,9 @@
 .rocket{
     background: url(../../assets/rocket.png) no-repeat ;
-    background-size: 20vh;
+    background-size: 150px;
     position: absolute;
-    width: 40vh;
-    height: 30vh;
+    width: 280px;
+    height: 220px;
     animation: vibrate 0.1s 0s infinite linear;
 }
 @keyframes vibrate {
@@ -18,17 +18,23 @@
     }
   }
   
-@keyframes StarAnimation {
-    from { left: 1067px; }
-    to { left: -10px; }
-}
+
 
 .star{
     position: absolute;
-    background-color: yellow;
-    width: 10px;
-    height: 10px;
+    width: 80px;
+    height: 70px;
+    animation: starAnimation 1s steps(5) infinite;  
+    background-size: 50px;
 }
+@keyframes starAnimation{
+    from{
+        background:url(../../assets/stars.png) 0 0;
+        background-size: 500px;}
+    to {
+        background:url(../../assets/stars.png)-1250px 0;
+        background-size: 500px;}
+    }
 
  
   

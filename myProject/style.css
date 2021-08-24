@@ -3,7 +3,6 @@
 canvas { 
    position: absolute;
    width:100vw;
-   height:100vh;
    background-size: cover;
    background: url(assets/Mars.jpg) no-repeat;
    left: 0;

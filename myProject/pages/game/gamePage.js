@@ -1,83 +1,115 @@
 function gamePageLoading (){
-    let rocket = document.createElement('div');
-    document.body.appendChild(rocket).classList='rocket';
-    
-    // получение целого случайного числа в заданном диапазоне
-    function randomDiap(n,m) {
-        return Math.floor(Math.random()*(m-n+1))+n;
-    }
-    
-    //создаем массив, куда будем помещать вновь созданные звезды
-    let starsArray=[];
+    //получаем текущие размеры окна браузера(холстаБ к которому будем обращаться) 
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    let canvas = document.getElementById('background');
+    let ctx = canvas.getContext('2d');
+    //установим количество жизней
+    let lives = 5;
+    let score =0;
+    //переменные для управления ракетой
+    let goUp=false;
+    let goDown=false;
+    //объявим переменную для ракеты
+    let rocket=new Image();
+    rocket.src='assets/rocket.png';
+    rocket.Y=-700;
+    rocket.X=0;
+    //объявим переменную для звезды
+    let star=new Image();
+    star.src='assets/stars.png';
+    star.X=-180;
+    star.Y=100;
+    //объявим переменную для препятствия
+    let obstacle=new Image();
+    obstacle.src='assets/rocket.png';
+    obstacle.X=-180;
+    obstacle.Y=100;
 
-    //создаем звезды и помещаем их в массив
-    
-    function starsCreate() {
-        for(let i = 0; i < randomDiap(0,5); i++) {
-            starsArray[i] = document.createElement('div');
-            document.body.appendChild(starsArray[i]).classList = 'star object';
-            starsArray[i].style.left=(window.innerWidth)+"px";
-            starsArray[i].style.top=Math.ceil(Math.random() * window.innerHeight)+"px";
-            starsArray[i].style.animation=`StarAnimation ${randomDiap(5,20)}s linear 1 forwards`;
-        }
+    //функция для отображения количества жизней
+    function livesCounting (){
+        ctx.font ='30px Arial';
+        ctx.fillStyle ='white';
+        ctx.fillText('Lives:'+lives,w-235,50);
     }
-   
-    for(let i = 0; i < starsArray.length; i++) {
-        if (document.getElementsByClassName('star')[i].offsetLeft==0){
-            document.removeChild(document.getElementsByClassName('star')[i]);
 
-        }
+    //функция для отображения счета
+    function scoreCounting (){
+        ctx.font ='30px Arial';
+        ctx.fillStyle ='white';
+        ctx.fillText('Scores:'+score,w-435,50);
     }
-    starsCreate();
 
-    //функция заставляет ранее созданные частицы двигаться
-   /* function starsCreate() {
-        for(let i = 0; i < stars; i++) {
-            star = document.createElement('div');
-            document.body.appendChild(star).setAttribute('style',`left:${window.innerWidth-10}px; top:${Math.ceil(Math.random() * window.innerHeight)}px `)
-            document.body.appendChild(star).classList = 'star';
-            star.style.animation='starMove 4.54s linear 1 forwards';
-            //starsArray.push(star); 
-            //console.log(starsArray);
-             star.style.animation=`starMove ${starParameters.speedX}s linear 1 forwards`;
-        }
+    //функция для остановки игры
+    function gameOver (){
+        cancelAnimationFrame(timer);
+        ctx.font ='60px Arial';
+        ctx.fillStyle='red';
+        ctx.fillText('Game over', w/2,h/2);
+        gameOver = true;
     }
-    starsCreate();
-    starsCreate();*/
+
+    //функция для отрисовки ракеты
+    function drawRocket () {
+        if(goUp===true && rocket.X>0){
+            rocket.X-=5
+        }
+        if(goDown===true && rocket.X<h){
+            rocket.X+=5
+        }
+
+
+        ctx.save(); // Сохраняем настройки канваса до всяких манипуляций с ним
+        ctx.translate(0,0);// Сдвигаем все адресованные пиксели на указанные значения
+        ctx.scale(0.4, 0.4);
+        ctx.rotate(85*Math.PI/180);// Поворачиваем на `degrees` наш градус
+        ctx.drawImage(rocket, rocket.X, rocket.Y);// Рисуем повернутую картинку
+        // Восстанавливаем настройки на момент когда делали `ctx.save`
+        // то бишь до `ctx.translate` и `ctx.rotate`. Рисунок при этом сохраняется.
+        ctx.restore(); 
+    }
+
+
+    //функция для отрисовки игры
+    function render(){
+        //проверяем, если gameOver ==true, то останавливаем функцию render
+        if(gameOver===true){return;}
+
+
+        livesCounting();
+        scoreCounting ();
+        drawRocket();
+
+        //для отрисовки анимации
+        timer=requestAnimationFrame(render);
+    }
+    render();
+
+    //пропишем обработчики событий нажатия клавиш
+    //нажатия клавиши
+    addEventListener('keydown', function(e){
+        let direction = e.keyCode;
+        if(direction===38){
+            goUp=true;
+        }
+        if(direction===40){
+            goDown=true;
+        }
+    })
+
+    //отжатия клавиши
+    addEventListener('keyUp', function(e){
+        let direction = e.keyCode;
+        if(direction===38){
+            goUp=false;
+        }
+        if(direction===40){
+            goDown=false;
+        }
+    })
 
     
-    //устанавливаем управление ракетой с помощью стрелок клавиатуры
-    let rocketPositionY=rocket.offsetTop;
-    let rocketPositionX=rocket.offsetLeft;
-    window.addEventListener('keydown',function (e) {
-        if (e.keyCode == 40){
-            if(rocketPositionY<window.innerHeight){
-            rocketPositionY=rocket.offsetTop+5
-            rocket.style.top=rocketPositionY+'px';
-            }
-        }
-        else if (e.keyCode == 38){
-            if(rocketPositionY>0){
-                rocketPositionY=rocket.offsetTop-5
-                rocket.style.top=rocketPositionY+'px';
-            }
-        } 
-        else if (e.keyCode == 37){
-            if(rocketPositionX>0){
-                rocketPositionX=rocket.offsetLeft-5
-                rocket.style.left=rocketPositionX+'px';
-            }
-        } 
-        else if (e.keyCode == 39){
-            if(rocketPositionX<window.innerWidth){
-                rocketPositionX=rocket.offsetLeft+5
-                rocket.style.left=rocketPositionX+'px';
-            }
-        } 
-    });
-    
-    
- return '';
+ 
 
     
 }
