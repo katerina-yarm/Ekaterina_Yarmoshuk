@@ -1,5 +1,5 @@
 function bg (){
-    //получаем текущие размеры окна браузера
+    //получаем текущие размеры окна браузера 
     let w = window.innerWidth;
     let h = window.innerHeight;
     let canvas = document.getElementById('background');
@@ -36,6 +36,7 @@ function bg (){
         }
       }
     }
+    
 
     //устанавливаем начальные координаты позиции мышки
     let mouse = { x: 0, y: 0 };
