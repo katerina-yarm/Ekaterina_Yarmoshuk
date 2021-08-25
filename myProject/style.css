@@ -1,8 +1,10 @@
 * { margin:0; padding:0; }
+html{
+  overflow: hidden;
+}
 /*делаем объект канвас фоном*/
 canvas { 
    position: absolute;
-   width:100vw;
    background-size: cover;
    background: url(assets/Mars.jpg) no-repeat;
    left: 0;
