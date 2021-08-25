@@ -3,7 +3,7 @@ function gamePageLoading (){
     let w = window.innerWidth;
     let h = window.innerHeight;
     let canvas = document.getElementById('background');
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d');   
     //установим количество жизней
     let lives = 5;
     let score =0;
@@ -30,12 +30,13 @@ function gamePageLoading (){
     let obstacles = [];
     for (let i=0; i<obstaclesNumber; i++){
         obstacles[i] = new Image();
-        obstacles[i].src = 'assets/rocket2.png';
+        obstacles[i].src = 'assets/monster.png';
         obstacles[i].Y=h+Math.random()*h;
         obstacles[i].X=Math.random()*(w-coins[i].width);
     }
     
 
+    
     //функция для отображения количества жизней
     function livesCounting (){
         ctx.font ='30px Arial';
@@ -97,7 +98,7 @@ function gamePageLoading (){
                 0, 100,100, coins[num].X,coins[num].Y, 100*0.7,100*0.7);
             coins[num].Y--;
             //если монеты выходит за пределы поля, то меняем координаты
-            if (coins[num].Y<0){
+            if ((coins[num].Y+coins[num].width*0.7)<0){
                 coins[num].Y=h;
                 coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
             }
@@ -120,10 +121,10 @@ function gamePageLoading (){
         } else {crash=false;}
         if (!crash){
             //отрисовываем препятствие и заставляем его двигаться вверх
-            ctx.drawImage(obstacles[num], 0,0, 1680,1680, obstacles[num].X,obstacles[num].Y, 1680*0.1,1680*0.1);
+            ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*0.3,900*0.3);
             obstacles[num].Y--;
             //если препятствия выходят за пределы поля, то меняем координаты
-            if (obstacles[num].Y<0){
+            if ((obstacles[num].Y+obstacles[num].width*0.3)<0){
                 obstacles[num].Y=h;
                 obstacles[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
             }
@@ -135,10 +136,6 @@ function gamePageLoading (){
         //проверяем, если gameOver ==true, то останавливаем функцию render
         if(gameOver===true){return}
 
-        livesCounting();
-
-        scoreCounting ();
-
         for (let i=0; i<coinsNumber; i++){
             drawCoins(i);
         }
@@ -146,6 +143,10 @@ function gamePageLoading (){
         for (let i=0; i<obstaclesNumber; i++){
             drawObstacles(i);
         }
+
+        livesCounting();
+
+        scoreCounting ();
 
         drawRocket();
 
