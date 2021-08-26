@@ -2,10 +2,13 @@ function gamePageLoading (){
     //получаем текущие размеры окна браузера(холста, к которому будем обращаться) 
     let w = window.innerWidth;
     let h = window.innerHeight;
-    let canvas = document.getElementById('background');
-    let ctx = canvas.getContext('2d');   
+    let canvas = document.getElementById('game');
+    let ctx = canvas.getContext('2d');
+    canvas.setAttribute('width',w);
+    canvas.setAttribute('height',h);
+    let time=0;   
     //установим количество жизней
-    let lives = 100;
+    let lives = 10;
     let score =0;
 
     //переменные для управления ракетой
@@ -20,8 +23,17 @@ function gamePageLoading (){
     rocket.Y=h-400;
     rocket.X=0;
 
+    //объявим переменную для взрыва
+    let boom=new Image();
+    boom.src='assets/boom2.png';
+    let boomFramesX=4;
+    let currentBoomFrameY=0;
+    let currentBoomFrameX=0;
+
     //создадим массив монет
     let coinsNumber = 7;
+    let frames=10;
+    let currentFrame=0;
     let coins=[];
     for (let i=0; i<coinsNumber; i++){
         coins[i] = new Image();
@@ -44,24 +56,24 @@ function gamePageLoading (){
     
     //функция для отображения количества жизней
     function livesCounting (){
-        ctx.font ='30px Arial';
-        ctx.fillStyle ='white';
+        ctx.font ='40px Gowun Batang';
+        ctx.fillStyle ='#a09e9e';
         ctx.fillText('Lives:'+lives,w-235,50);
     }
 
     //функция для отображения счета
     function scoreCounting (){
-        ctx.font ='30px Arial';
-        ctx.fillStyle ='white';
+        ctx.font ='40px Gowun Batang';
+        ctx.fillStyle ='#a09e9e';
         ctx.fillText('Scores:'+score,w-435,50);
     }
 
     //функция для остановки игры
     function gameOver (){
         cancelAnimationFrame(timer);
-        ctx.font ='60px Arial';
-        ctx.fillStyle='red';
-        ctx.fillText('Game over', w/2,h/2);
+        ctx.font ='100px Gowun Batang';
+        ctx.fillStyle='#900000';
+        ctx.fillText('Game over', w/2-250,h/2);
         gameOver = true;
     }
 
@@ -93,7 +105,23 @@ function gamePageLoading (){
         // то есть до `ctx.translate` и `ctx.rotate`. Рисунок при этом сохраняется.
         //ctx.restore();
     }
+    
+    //функция для отрисовки взрыва при ударе с препятствием
+    function drawObstacleBoom (x,y) {
+        ctx.drawImage(boom,128*1,128*0, 128,128, x,y, 128,128);    
+    }
 
+    //функция с анимацией взрыва
+    function drawBoom (x,y) {
+        ctx.drawImage(boom,128*currentBoomFrameX,128*currentBoomFrameY, 128,128, x,y, 128,128);
+        if(currentBoomFrameX==boomFramesX){
+            currentBoomFrameX=0;
+            currentBoomFrameY++;
+        } else {
+            currentBoomFrameX++;
+        }   
+    }
+    
     //функция для отрисовки появляющихся монет
     function drawCoins (num){
         //пропишем условие столкновения ракеты с монетами
@@ -106,9 +134,19 @@ function gamePageLoading (){
             score++;
         } else {bingo=false;}
         if (!bingo){
-            //отрисовываем монету и заставляем ее двигаться вверх
-            ctx.drawImage(coins[num],0/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
+            //отрисовываем монету и заставляем ее двигаться вниз
+            ctx.drawImage(coins[num],100*currentFrame/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
                 0, 100,100, coins[num].X,coins[num].Y, 100*0.6,100*0.6);
+            //пропишем условие,чтобы спрайт вращался и замедлим анимацию
+            let currentTime = new Date().getTime();
+            if ((currentTime-time)>16){
+                if(currentFrame==frames){
+                    currentFrame=0;
+                } else {
+                    currentFrame++;
+                }
+                time=currentTime;
+            } else {time=currentTime}
             //чтобы вдальнейшем было проще писать логику столкновений,укажем для монет ширину и высоту
             coins[num].w=coins[num].width*0.6*0.1;
             coins[num].h=coins[num].height*0.6;
@@ -127,6 +165,8 @@ function gamePageLoading (){
         //пропишем условие столкновения ракеты с препятствием
         if((obstacles[num].X+obstacles[num].w>rocket.X) && obstacles[num].X<(rocket.X+rocket.w) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
             crash=true;
+            //при столкновении запускаем анимацию взрава препятствий
+            drawObstacleBoom(obstacles[num].X,obstacles[num].Y);
             //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
             obstacles[num].Y=h;
             obstacles[num].X=Math.floor(Math.random()*w);
@@ -155,6 +195,10 @@ function gamePageLoading (){
         //проверяем, если gameOver ==true, то останавливаем функцию render
         if(gameOver===true){return}
 
+        ctx.clearRect(0,0,w,h);
+
+        drawRocket();
+
         for (let i=0; i<coinsNumber; i++){
             drawCoins(i);
         }
@@ -166,8 +210,6 @@ function gamePageLoading (){
         livesCounting();
 
         scoreCounting ();
-
-        drawRocket();
 
         //для отрисовки анимации
         timer=requestAnimationFrame(render);
