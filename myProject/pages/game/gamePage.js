@@ -5,24 +5,29 @@ function gamePageLoading (){
     let canvas = document.getElementById('background');
     let ctx = canvas.getContext('2d');   
     //установим количество жизней
-    let lives = 5;
+    let lives = 100;
     let score =0;
+
     //переменные для управления ракетой
     let goUp=false;
     let goDown=false;
+    let goRight=false;
+    let goLeft=false;
+
     //объявим переменную для ракеты
     let rocket=new Image();
-    rocket.src='assets/rocket3.png';
-    rocket.Y=0;
+    rocket.src='assets/rocket.png';
+    rocket.Y=h-400;
     rocket.X=0;
+
     //создадим массив монет
     let coinsNumber = 7;
     let coins=[];
     for (let i=0; i<coinsNumber; i++){
         coins[i] = new Image();
         coins[i].src = 'assets/coin-sprite-animation.png';
-        coins[i].Y=h+Math.random()*h;//чтобы монеты появлялись вразброс укажем для них рандобные координаты
-        coins[i].X=Math.random()*(w-coins[i].width);
+        coins[i].Y=0-Math.random()*h;//чтобы монеты появлялись вразброс укажем для них рандомные координаты
+        coins[i].X=Math.random()*w;
     }
     
     //создадим переменную для массива с препятствиями
@@ -31,7 +36,7 @@ function gamePageLoading (){
     for (let i=0; i<obstaclesNumber; i++){
         obstacles[i] = new Image();
         obstacles[i].src = 'assets/monster.png';
-        obstacles[i].Y=h+Math.random()*h;
+        obstacles[i].Y=0-Math.random()*h;
         obstacles[i].X=Math.random()*(w-coins[i].width);
     }
     
@@ -63,18 +68,26 @@ function gamePageLoading (){
     //функция для отрисовки ракеты
     function drawRocket () {
         //описываем условия движения ракеты
-        if(goUp==true && rocket.X>0){
+        if(goLeft==true && rocket.X>0){
             rocket.X-=5
         }
-        if(goDown==true && rocket.X<(w-rocket.width*0.3)){
+        if(goRight==true && rocket.X<(w-rocket.w)){
             rocket.X+=5
+        }
+        if(goUp==true && rocket.Y>0){
+            rocket.Y-=5
+        }
+        if(goDown==true && rocket.Y<(h-rocket.h)){
+            rocket.Y+=5
         }
         //ctx.save(); // Сохраняем настройки канваса до всяких манипуляций с ним
         // Сдвигаем в центр изображения,которое хотим повернуть.Все дело в работе метода rotate.
         // Он крутит относительно верхнего левого угла. Соответственно перевернется вся система координат
         //ctx.translate(0,0);
         //ctx.rotate(120*Math.PI/180);// Поворачиваем на `degrees` наш градус
-        ctx.drawImage(rocket, 0,0, rocket.width,rocket.height,rocket.X,rocket.Y, rocket.width*0.3,rocket.height*0.3/*сжали изображение до 30%*/);
+        ctx.drawImage(rocket, 0,0, rocket.width,rocket.height,rocket.X,rocket.Y, rocket.width*0.4,rocket.height*0.4/*сжали изображение до 30%*/);
+        rocket.w=rocket.width*0.4;
+        rocket.h=rocket.height*0.4-40;
         // Рисуем повернутую картинку
         // Восстанавливаем настройки на момент когда делали `ctx.save`
         // то есть до `ctx.translate` и `ctx.rotate`. Рисунок при этом сохраняется.
@@ -84,7 +97,7 @@ function gamePageLoading (){
     //функция для отрисовки появляющихся монет
     function drawCoins (num){
         //пропишем условие столкновения ракеты с монетами
-        if(coins[num].Y<(rocket.Y+rocket.height*0.1) && (coins[num].X+coins[num].width*0.7)>rocket.X && coins[num].X<(rocket.X+rocket.width*0.3-120/*без учета пламени */)){
+        if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
             bingo=true;
             //меняем координаты монеты
             coins[num].Y=h;
@@ -95,20 +108,24 @@ function gamePageLoading (){
         if (!bingo){
             //отрисовываем монету и заставляем ее двигаться вверх
             ctx.drawImage(coins[num],0/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
-                0, 100,100, coins[num].X,coins[num].Y, 100*0.7,100*0.7);
-            coins[num].Y--;
+                0, 100,100, coins[num].X,coins[num].Y, 100*0.6,100*0.6);
+            //чтобы вдальнейшем было проще писать логику столкновений,укажем для монет ширину и высоту
+            coins[num].w=coins[num].width*0.6*0.1;
+            coins[num].h=coins[num].height*0.6;
+            coins[num].Y++;
             //если монеты выходит за пределы поля, то меняем координаты
-            if ((coins[num].Y+coins[num].width*0.7)<0){
-                coins[num].Y=h;
+            if (coins[num].Y>h){
+                coins[num].Y=0-coins[num].h;
                 coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
             }
         }
+        
     }
-
+   
     //функция для отрисовки препятствий
     function drawObstacles (num){
         //пропишем условие столкновения ракеты с препятствием
-        if(obstacles[num].Y<(rocket.Y+rocket.height*0.1) && (obstacles[num].X+obstacles[num].width*0.7)>rocket.X && obstacles[num].X<(rocket.X+rocket.width*0.3-120/*без учета пламени */)){
+        if((obstacles[num].X+obstacles[num].w>rocket.X) && obstacles[num].X<(rocket.X+rocket.w) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
             crash=true;
             //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
             obstacles[num].Y=h;
@@ -122,10 +139,12 @@ function gamePageLoading (){
         if (!crash){
             //отрисовываем препятствие и заставляем его двигаться вверх
             ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*0.3,900*0.3);
-            obstacles[num].Y--;
+            obstacles[num].w=obstacles[num].width*0.3;
+            obstacles[num].h=obstacles[num].height*0.3-30;//-30 -это погрешность на торчащие лапки
+            obstacles[num].Y++;
             //если препятствия выходят за пределы поля, то меняем координаты
-            if ((obstacles[num].Y+obstacles[num].width*0.3)<0){
-                obstacles[num].Y=h;
+            if (obstacles[num].Y>h){
+                obstacles[num].Y=0-obstacles[num].height*0.3;
                 obstacles[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
             }
         }
@@ -160,21 +179,33 @@ function gamePageLoading (){
     let direction;
     addEventListener('keydown', function(e){
         direction = e.keyCode;
+        if(direction===39){
+            goRight=true;
+        }
         if(direction===37){
+            goLeft=true;
+        }
+        if(direction===38){
             goUp=true;
         }
-        if(direction===39){
+        if(direction===40){
             goDown=true;
         }
     })
      //отжатия клавиши
      addEventListener('keyup', function(e){
         direction = e.keyCode;
-        if(direction===37){
+        if(direction===38){
             goUp=false;
         }
-        if(direction===39){
+        if(direction===40){
             goDown=false;
+        }
+        if(direction===39){
+            goRight=false;
+        }
+        if(direction===37){
+            goLeft=false;
         }
     })  
 }
