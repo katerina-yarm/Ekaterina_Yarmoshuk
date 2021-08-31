@@ -1,0 +1,24 @@
+
+.gameButtons a{
+    margin-top: 15vh;
+}
+
+.gameButtons{
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    background-color: rgba(7, 7, 7, 0.4);
+    padding: 2vw;
+    animation-duration: 3s;
+    animation-name: scaleTransform;
+}
+
+@keyframes scaleTransform {
+    from {
+      transform: scale(0.1);
+    }
+  
+    to {
+        transform: scale(1);
+    }
+}

@@ -58,8 +58,6 @@ function gamePageLoading (){
         obstacles[i].X=Math.random()*(w-coins[i].width);
     }
     
-
-    
     //функция для отображения количества жизней
     function livesCounting (){
         ctx.font ='40px Gowun Batang';
@@ -74,13 +72,26 @@ function gamePageLoading (){
         ctx.fillText('Scores:'+score,w-435,50);
     }
 
+    //функция для отрисовки кнопок после окончания игры
+    function buttonsDraw (){
+        let buttonsHtml = `
+            <div class="gameButtons">
+                <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Main page</span></a>
+                <a href="#Rules" class="fciA navItem" onclick="switchToRulesPage()"><span class="fciSpan">Rules</span></a>
+                <a href="#Records" class="fciA navItem" onclick="switchToRecordsPage()"><span class="fciSpan">Scores</span></a>
+                <a href="#Game" class="fciA navItem" onclick="gamePageLoading()"><span class="fciSpan">New Game</span></a>
+            </div>`
+        return buttonsHtml;
+    }
+
     //функция для остановки игры
     function gameOver (){
         cancelAnimationFrame(timer);
         ctx.font ='100px Gowun Batang';
         ctx.fillStyle='#900000';
-        ctx.fillText('Game over', w/2-250,h/2);
+        ctx.fillText('Game over', w/2-220,h/2);
         gameOver = true;
+
     }
 
     //функция для отрисовки ракеты
@@ -240,8 +251,15 @@ function gamePageLoading (){
     
     //функция для отрисовки игры
     function render(){
+        //для того, чтобы при старте новой игры исчезали кнопки
+        document.getElementById('app').innerHTML='';
         //проверяем, если gameOver ==true, то останавливаем функцию render
-        if(gameOver===true){return}
+        if(gameOver===true){
+            //при окончании игры отрисовываем кнопки
+            pageHTML=buttonsDraw();
+            document.getElementById('app').innerHTML=pageHTML;
+            return
+        }
 
         ctx.clearRect(0,0,w,h);
 

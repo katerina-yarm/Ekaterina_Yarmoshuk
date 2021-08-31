@@ -14,6 +14,7 @@
     <link href="pages/main/mainPageStyle.css" rel="stylesheet" >
     <link href="pages/rules/rulesPageStyle.css" rel="stylesheet" >
     <link href="pages/records/recordsPageStyle.css" rel="stylesheet" >
+    <link href="pages/game/gamePageStyle.css" rel="stylesheet" >
     <script src="pages/main/mainPage.js"></script>
     <script src="pages/rules/rulesPage.js"></script>
     <script src="pages/records/recordsPage.js"></script>
@@ -27,8 +28,9 @@
         <canvas id="game"></canvas>
 
         <script>
-            //запускает скрипт с прорисовкой фона
+            //запускаем функцию с прорисовкой фона
             bg();
+            
             //при изменении URL подгружается нужная разметка
             window.onhashchange=switchToStateFromURLHash; 
 

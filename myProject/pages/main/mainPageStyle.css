@@ -4,3 +4,9 @@
 .mainPage a{
     margin-top: 50px;
 }
+img{
+    position: absolute;
+    width: 300px;
+    transform: rotate(45deg);
+    top: 0;  
+}
