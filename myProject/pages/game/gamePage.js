@@ -16,12 +16,18 @@ function gamePageLoading (){
     let goDown=false;
     let goRight=false;
     let goLeft=false;
+    let shoot=false;
 
     //объявим переменную для ракеты
     let rocket=new Image();
     rocket.src='assets/rocket.png';
     rocket.Y=h-400;
     rocket.X=0;
+
+    //параметры пули
+    let bullets = [];
+    let bullet=new Image();
+    bullet.src='assets/bullet.png'
 
     //объявим переменную для взрыва
     let boom=new Image();
@@ -189,6 +195,48 @@ function gamePageLoading (){
             }
         }
     }
+
+    //функция для отрисовки стрельбы
+    function shooting (){
+        //создадим класс,который будет хранить параметры для каждой пули
+        class Bullet {
+            constructor(){
+                this.w = 463*0.03;
+                this.h = 539*0.03;
+                this.x = rocket.X+rocket.w/2-this.w/2;
+                this.y = rocket.Y-10;
+                bullets.push(this);
+            }
+            draw(){
+                this.y-=5;
+                //при выходе за пределы холста удаляем пулю из массива
+                if(this.y < 0-this.h){
+                    //удаляем из массива больше ненужный элемент
+                    bullets.splice(bullets.indexOf(this));
+                }
+                //при попадании в препятствие удаляем пулю и препятствие, запускаем анимацию взрыва
+                for (let i=0; i<obstaclesNumber; i++){
+                    if( this.y<(obstacles[i].Y+obstacles[i].h) && obstacles[i].Y<(this.y+this.h) && (obstacles[i].X+obstacles[i].w)>this.x && obstacles[i].X<(this.x+this.w)){
+                        //удаляем из массива больше ненужный элемент
+                        bullets.splice(bullets.indexOf(this));
+                        //при столкновении запускаем анимацию взрава препятствий
+                        drawObstacleBoom(obstacles[i].X,obstacles[i].Y);
+                       //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
+                        obstacles[i].Y=h;
+                        obstacles[i].X=Math.floor(Math.random()*w);
+                    }
+                }
+                ctx.drawImage(bullet, 0,0, 463,539, this.x,this.y,this.w,this.h); 
+            }
+        }
+        //описываем условие создания пули
+        if(shoot==true){
+            //создаем новую пулю
+            new Bullet();
+        }
+        // рисуем пули
+        bullets.forEach(bullet => bullet.draw());
+    }
     
     //функция для отрисовки игры
     function render(){
@@ -206,6 +254,8 @@ function gamePageLoading (){
         for (let i=0; i<obstaclesNumber; i++){
             drawObstacles(i);
         }
+
+        shooting();
 
         livesCounting();
 
@@ -233,6 +283,9 @@ function gamePageLoading (){
         if(direction===40){
             goDown=true;
         }
+        if(direction===32){
+            shoot=true;
+        }
     })
      //отжатия клавиши
      addEventListener('keyup', function(e){
@@ -248,6 +301,9 @@ function gamePageLoading (){
         }
         if(direction===37){
             goLeft=false;
+        }
+        if(direction===32){
+            shoot=false;
         }
     })  
 }
