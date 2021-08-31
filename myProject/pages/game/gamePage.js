@@ -178,6 +178,7 @@ function gamePageLoading (){
     }
    
     //функция для отрисовки препятствий
+    let scale = 0.2;
     function drawObstacles (num){
         //пропишем условие столкновения ракеты с препятствием
         if((obstacles[num].X+obstacles[num].w>rocket.X) && obstacles[num].X<(rocket.X+rocket.w) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
@@ -195,13 +196,18 @@ function gamePageLoading (){
         } else {crash=false;}
         if (!crash){
             //отрисовываем препятствие и заставляем его двигаться вверх
-            ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*0.3,900*0.3);
-            obstacles[num].w=obstacles[num].width*0.3;
-            obstacles[num].h=obstacles[num].height*0.3-30;//-30 -это погрешность на торчащие лапки
+            ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*scale,900*scale);
+            //чтобы монстры получались разного размера, добавим изменение переменной scale
+            scale += 0.05;
+            if (scale > 0.4) {
+                scale = 0.2;
+            }
+            obstacles[num].w=obstacles[num].width*scale;
+            obstacles[num].h=obstacles[num].height*scale-30;//-30 -это погрешность на торчащие лапки
             obstacles[num].Y++;
             //если препятствия выходят за пределы поля, то меняем координаты
             if (obstacles[num].Y>h){
-                obstacles[num].Y=0-obstacles[num].height*0.3;
+                obstacles[num].Y=0-obstacles[num].height*scale;
                 obstacles[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
             }
         }
