@@ -34,6 +34,10 @@
             //при изменении URL подгружается нужная разметка
             window.onhashchange=switchToStateFromURLHash; 
 
+            //введем переменные для сохранения рекордов "пятерки лучших игроков"
+            let record1=0, record2=0, record3=0, record4=0, record5=0;
+            let name1="", name2="", name3="", name4="", name5="";
+
             //при нажатии на кнопку меняется хэш (т.е. часть URL после знака #)
             function switchToMainPage() {
                 location.hash={pagename:'Main'}.pagename;

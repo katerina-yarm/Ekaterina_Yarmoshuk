@@ -91,7 +91,6 @@ function gamePageLoading (){
         ctx.fillStyle='#900000';
         ctx.fillText('Game over', w/2-220,h/2);
         gameOver = true;
-
     }
 
     //функция для отрисовки ракеты
@@ -255,16 +254,133 @@ function gamePageLoading (){
         bullets.forEach(bullet => bullet.draw());
     }
     
+    //пропишем условия для сохранения рекордов игры
+    function recordsCheck (){
+         if(score>localStorage.getItem('top5')){
+            if(score>localStorage.getItem('top4')){
+                if(score>localStorage.getItem('top3')){
+                    if(score>localStorage.getItem('top2')){
+                        if(score>localStorage.getItem('top1')){
+                            name5=name4;
+                            localStorage.setItem('name5', name5);
+                            name4=name3;
+                            localStorage.setItem('name4', name4);
+                            name3=name2;
+                            localStorage.setItem('name3', name3);
+                            name2=name1;
+                            localStorage.setItem('name2', name2);
+                            name1 = document.getElementById('IName').value;
+                            localStorage.setItem('name1', name1);
+                            record5=record4;
+                            localStorage.setItem('top5', record5);
+                            record4=record3;
+                            localStorage.setItem('top4', record4);
+                            record3=record2;
+                            localStorage.setItem('top3', record3);
+                            record2=record1;
+                            localStorage.setItem('top2', record2);
+                            record1=score;
+                            localStorage.setItem('top1', record1);
+                        } else {
+                            name5=name4;
+                            localStorage.setItem('name5', name5);
+                            name4=name3;
+                            localStorage.setItem('name4', name4);
+                            name3=name2;
+                            localStorage.setItem('name3', name3);
+                            name2 = document.getElementById('IName').value;
+                            localStorage.setItem('name2', name2);
+                            record5=record4;
+                            localStorage.setItem('top5', record5);
+                            record4=record3;
+                            localStorage.setItem('top4', record4);
+                            record3=record2
+                            localStorage.setItem('top3', record3);
+                            record2=score;
+                            localStorage.setItem('top2', record2);
+                        }
+                    } else {
+                        name5=name4;
+                        localStorage.setItem('name5', name5);
+                        name4=name3;
+                        localStorage.setItem('name4', name4);
+                        name3 = document.getElementById('IName').value;
+                        localStorage.setItem('name3', name3);
+                        record5=record4;
+                        localStorage.setItem('top5', record5);
+                        record4=record3;
+                        localStorage.setItem('top4', record4);
+                        record3=score;
+                        localStorage.setItem('top3', record3);
+                    }
+                }else {
+                    name5=name4;
+                    localStorage.setItem('name5', name5);
+                    name4 = document.getElementById('IName').value;
+                    localStorage.setItem('name4', name4);
+                    record5=record4;
+                    localStorage.setItem('top5', record5);
+                    record4=score;
+                    localStorage.setItem('top4', record4);
+                }
+            }else {
+                name5 = document.getElementById('IName').value;
+                localStorage.setItem('name5', name5);
+                record5=score;
+                localStorage.setItem('top5', record5);
+            }  
+        }
+        //удаляется ненужное окно
+        document.body.removeChild(document.getElementsByClassName('chempionWindow')[0]);
+        //и появляется нужное
+        pageHTML=buttonsDraw();
+        document.getElementById('app').innerHTML=pageHTML;
+    }
+    //функция для отрисовки окна с вводом имени победителя
+    function getChempionsName () {
+        let chempionWindow = document.createElement('div');
+        document.body.appendChild(chempionWindow).classList = "chempionWindow";
+
+        let div1 = document.createElement('div');
+        chempionWindow.appendChild(div1).classList = 'div';
+        let div1Text = document.createTextNode('Сongratulations! You are in the high score table!');
+        div1.appendChild(div1Text);
+
+        let div2 = document.createElement('div');
+        chempionWindow.appendChild(div2).classList = 'div';
+        let div2Text = document.createTextNode('Please, enter your name!');
+        div2.appendChild(div2Text);
+
+        let inputField = document.createElement('input');
+        chempionWindow.appendChild(inputField).setAttribute('id','IName');
+        inputField.setAttribute('autocomplete', 'off');
+
+
+        let button = document.createElement('a');
+        chempionWindow.appendChild(button).classList = 'fciA navItem';
+        //при нажатии на кнопку осуществляется проверка позиции игрока в таблице рекордов
+        button.addEventListener('click',  recordsCheck); 
+
+        let buttonName = document.createElement('span');
+        button.appendChild(buttonName).classList = 'fciSpan';
+        let buttonText = document.createTextNode('Remember me');
+        buttonName.appendChild(buttonText);
+    }
+    
     //функция для отрисовки игры
     function render(){
         //для того, чтобы при старте новой игры исчезали кнопки
         document.getElementById('app').innerHTML='';
         //проверяем, если gameOver ==true, то останавливаем функцию render
         if(gameOver===true){
-            //при окончании игры отрисовываем кнопки
-            pageHTML=buttonsDraw();
-            document.getElementById('app').innerHTML=pageHTML;
-            return
+            if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
+                getChempionsName();
+                return;
+            } else {
+                pageHTML=buttonsDraw();
+                document.getElementById('app').innerHTML=pageHTML;
+                return;
+            }
         }
 
         ctx.clearRect(0,0,w,h);

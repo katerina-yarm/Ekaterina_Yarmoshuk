@@ -22,3 +22,39 @@
         transform: scale(1);
     }
 }
+
+.chempionWindow {
+    padding-top: 10vh;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(7, 7, 7, 0.4);
+    animation-duration: 3s;
+    animation-name: scaleTransform;
+}
+.div{
+    margin: auto;
+    font-family: 'Gowun Batang', serif;
+    color:#f5f1f1;
+    font-size: 4vh;
+    text-align: center;
+    font-weight: 400;
+    padding-bottom: 5vh;
+}
+input{
+    font-family: 'Gowun Batang', serif;
+    display: block;
+    margin: auto;
+    font-size: 6vh;
+    color:#f5f1f1;
+    height: 7vh;
+    width: 50vw;
+    background:rgba(131, 106, 106, 0.24);
+    margin-bottom: 10vh; 
+    text-align: center; 
+    letter-spacing: 3px;
+    outline:none;
+}
+input:focus {
+    outline:none;
+    background:rgba(252, 250, 250, 0.24);
+}
