@@ -61,13 +61,22 @@ function gamePageLoading (){
         obstacles[i].scale=scale;
     }
 
+    let soundOn=true;
     // создадим элемент аудио для выстрела
     let shootingAudio=new Audio;
     shootingAudio.src="assets/audio/shoot.mp3";
 
+    // создадим элемент аудио для удара с препятствием
+    let boomAudio=new Audio;
+    boomAudio.src="assets/audio/boom.mp3";
+
     // создадим элемент аудио для столкновения с монетой
     let coinAudio=new Audio;
     coinAudio.src="assets/audio/coin.mp3";
+
+    // создадим элемент аудио для окончания игры
+    let gameOverAudio=new Audio;
+    gameOverAudio.src="assets/audio/gameOver.mp3";
 
     //переменная для фоновой музыки
    /* let fonAudio=new Audio;
@@ -78,18 +87,6 @@ function gamePageLoading (){
     }, false);
     fonAudio.play();
     fonAudio.volume=0.1;*/
-
-    //функция воспроизводит звук монеты
-    function coinSound() {
-        coinAudio.currentTime=0; // в секундах
-        coinAudio.play();
-    }
-
-    //функция воспроизводит выстрел пулемета
-    function shootingSound() {
-        shootingAudio.currentTime=0; // в секундах
-        shootingAudio.play();
-    }
     
     //функция для отображения количества жизней
     function livesCounting (){
@@ -124,6 +121,9 @@ function gamePageLoading (){
         ctx.fillStyle='#900000';
         ctx.fillText('Game over', w/2-220,h/2);
         gameOver = true;
+        if(soundOn==true){
+            gameOverAudio.play();
+        }
     }
 
     //функция для отрисовки ракеты
@@ -177,7 +177,9 @@ function gamePageLoading (){
         if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
             bingo=true;
             //воспроизводим звук при столкновении с монетой
-            coinSound();
+            if(soundOn==true){
+                coinAudio.play();
+            }
             //меняем координаты монеты
             coins[num].Y=h;
             coins[num].X=Math.floor(Math.random()*w);
@@ -222,6 +224,9 @@ function gamePageLoading (){
         //пропишем условие столкновения ракеты с препятствием
         if((obstacles[num].X+obstacles[num].w>rocket.X) && obstacles[num].X<(rocket.X+rocket.w) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
             crash=true;
+            if(soundOn==true){
+                boomAudio.play();
+            }
             //при столкновении запускаем анимацию взрава препятствий
             drawBoom(obstacles[num].X,obstacles[num].Y);
             //меняем координаты препятствия, чтобы после столкновения оно исчезало и появлялось в другом месте
@@ -278,6 +283,9 @@ function gamePageLoading (){
                         bullets.splice(bullets.indexOf(this));
                         //при столкновении запускаем анимацию взрава препятствий
                         drawBoom(obstacles[i].X,obstacles[i].Y);
+                        if(soundOn==true){
+                            boomAudio.play();
+                        }
                        //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
                        obstacles[i].Y=0-obstacles[i].height*obstacles[i].scale;
                        obstacles[i].X=Math.floor(Math.random()*w);
@@ -294,6 +302,9 @@ function gamePageLoading (){
                         bullets.splice(bullets.indexOf(this));
                         //при столкновении запускаем анимацию взрава препятствий
                         drawBoom(coins[i].X-coins[i].w,coins[i].Y-coins[i].h);
+                        if(soundOn==true){
+                            boomAudio.play();
+                        }
                        //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
                        coins[i].Y=0-coins[i].h;
                        coins[i].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
@@ -488,7 +499,9 @@ function gamePageLoading (){
         if(direction===32){
             shoot=true;
             //при нажатии на кнопку запускаем звуковой файл
-            shootingSound();
+            if(soundOn==true){
+                shootingAudio.play();
+            }
         }
     })
      //отжатия клавиши
