@@ -51,11 +51,14 @@ function gamePageLoading (){
     //создадим переменную для массива с препятствиями
     let obstaclesNumber = 5;
     let obstacles = [];
+    let scale = 0.2;
     for (let i=0; i<obstaclesNumber; i++){
+        scale+=0.05;
         obstacles[i] = new Image();
         obstacles[i].src = 'assets/monster.png';
         obstacles[i].Y=0-Math.random()*h;
-        obstacles[i].X=Math.random()*(w-coins[i].width);
+        obstacles[i].X=Math.random()*(w-obstacles[i].width);
+        obstacles[i].scale=scale;
     }
 
     // создадим элемент аудио для выстрела
@@ -67,12 +70,14 @@ function gamePageLoading (){
     coinAudio.src="assets/audio/coin.mp3";
 
     //переменная для фоновой музыки
-    let fonAudio=new Audio;
+   /* let fonAudio=new Audio;
     fonAudio.src="assets/audio/fon.mp3";
     fonAudio.addEventListener('ended', function() {
         this.currentTime = 0;
         this.play();
     }, false);
+    fonAudio.play();
+    fonAudio.volume=0.1;*/
 
     //функция воспроизводит звук монеты
     function coinSound() {
@@ -151,12 +156,12 @@ function gamePageLoading (){
     }
     
     //функция для отрисовки взрыва при ударе с препятствием
-    function drawObstacleBoom (x,y) {
+    function drawBoom (x,y) {
         ctx.drawImage(boom,128*1,128*0, 128,128, x,y, 128,128);    
     }
 
     //функция с анимацией взрыва
-    function drawBoom (x,y) {
+    function drawanimationBoom (x,y) {
         ctx.drawImage(boom,128*currentBoomFrameX,128*currentBoomFrameY, 128,128, x,y, 128,128);
         if(currentBoomFrameX==boomFramesX){
             currentBoomFrameX=0;
@@ -176,6 +181,9 @@ function gamePageLoading (){
             //меняем координаты монеты
             coins[num].Y=h;
             coins[num].X=Math.floor(Math.random()*w);
+            while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
+                coins[num].X=Math.floor(Math.random()*w);
+            }
             //увеличиваем счет
             score++;
         } else {bingo=false;}
@@ -201,22 +209,27 @@ function gamePageLoading (){
             if (coins[num].Y>h){
                 coins[num].Y=0-coins[num].h;
                 coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
+                while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
+                    coins[num].X=Math.floor(Math.random()*w);
+                }
             }
         }
         
     }
    
     //функция для отрисовки препятствий
-    let scale = 0.2;
     function drawObstacles (num){
         //пропишем условие столкновения ракеты с препятствием
         if((obstacles[num].X+obstacles[num].w>rocket.X) && obstacles[num].X<(rocket.X+rocket.w) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
             crash=true;
             //при столкновении запускаем анимацию взрава препятствий
-            drawObstacleBoom(obstacles[num].X,obstacles[num].Y);
-            //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
-            obstacles[num].Y=h;
+            drawBoom(obstacles[num].X,obstacles[num].Y);
+            //меняем координаты препятствия, чтобы после столкновения оно исчезало и появлялось в другом месте
+            obstacles[num].Y=0-obstacles[num].height*obstacles[num].scale;
             obstacles[num].X=Math.floor(Math.random()*w);
+            while (obstacles[num].X>(w-obstacles[num].width*obstacles[num].scale)){//чтобы не выходили за пределы области видимости
+                obstacles[num].X=Math.floor(Math.random()*w);
+            }
             //забираем жизнь
             lives--;
             if (lives<1){
@@ -224,20 +237,18 @@ function gamePageLoading (){
             }
         } else {crash=false;}
         if (!crash){
-            //отрисовываем препятствие и заставляем его двигаться вверх
-            ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*scale,900*scale);
-            //чтобы монстры получались разного размера, добавим изменение переменной scale
-            scale += 0.05;
-            if (scale > 0.4) {
-                scale = 0.2;
-            }
-            obstacles[num].w=obstacles[num].width*scale;
-            obstacles[num].h=obstacles[num].height*scale-30;//-30 -это погрешность на торчащие лапки
+            //отрисовываем препятствие и заставляем его двигаться вниз
+            ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*obstacles[num].scale,900*obstacles[num].scale);
+            obstacles[num].w=obstacles[num].width*obstacles[num].scale;
+            obstacles[num].h=(obstacles[num].height-40)*obstacles[num].scale;//-30 -это погрешность на торчащие лапки
             obstacles[num].Y++;
             //если препятствия выходят за пределы поля, то меняем координаты
             if (obstacles[num].Y>h){
-                obstacles[num].Y=0-obstacles[num].height*scale;
-                obstacles[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
+                obstacles[num].Y=0-obstacles[num].height*obstacles[num].scale;
+                obstacles[num].X=Math.floor(Math.random()*w);
+                while (obstacles[num].X>(w-obstacles[num].width*obstacles[num].scale)){//чтобы не выходили за пределы области видимости
+                    obstacles[num].X=Math.floor(Math.random()*w);
+                }
             }
         }
     }
@@ -266,12 +277,32 @@ function gamePageLoading (){
                         //удаляем из массива больше ненужный элемент
                         bullets.splice(bullets.indexOf(this));
                         //при столкновении запускаем анимацию взрава препятствий
-                        drawObstacleBoom(obstacles[i].X,obstacles[i].Y);
+                        drawBoom(obstacles[i].X,obstacles[i].Y);
                        //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
-                        obstacles[i].Y=h;
-                        obstacles[i].X=Math.floor(Math.random()*w);
+                       obstacles[i].Y=0-obstacles[i].height*obstacles[i].scale;
+                       obstacles[i].X=Math.floor(Math.random()*w);
+                       while (obstacles[i].X>(w-obstacles[i].width*obstacles[i].scale)){//чтобы не выходили за пределы области видимости
+                           obstacles[i].X=Math.floor(Math.random()*w);
+                       }
                     }
                 }
+
+                //при попадании в монету удаляем пулю и монету, запускаем анимацию взрыва
+                for (let i=0; i<coinsNumber; i++){
+                    if( this.y<(coins[i].Y+coins[i].h) && coins[i].Y<(this.y+this.h) && (coins[i].X+coins[i].w)>this.x && coins[i].X<(this.x+this.w)){
+                        //удаляем из массива больше ненужный элемент
+                        bullets.splice(bullets.indexOf(this));
+                        //при столкновении запускаем анимацию взрава препятствий
+                        drawBoom(coins[i].X-coins[i].w,coins[i].Y-coins[i].h);
+                       //меняем координаты препятствия, чтобы посте столкновения оно исчезало и появлялось в другом месте
+                       coins[i].Y=0-coins[i].h;
+                       coins[i].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
+                       while (coins[i].X>(w-coins[i].w)){//чтобы не выходили за пределы области видимости
+                           coins[i].X=Math.floor(Math.random()*w);
+                       }
+                    }
+                }
+
                 ctx.drawImage(bullet, 0,0, 463,539, this.x,this.y,this.w,this.h); 
             }
         }
@@ -400,15 +431,10 @@ function gamePageLoading (){
     
     //функция для отрисовки игры
     function render(){
-        //при старте игры включаем музыку
-        fonAudio.play();
-        fonAudio.volume=0.1;
-        
         //для того, чтобы при старте новой игры исчезали кнопки
         document.getElementById('app').innerHTML='';
         //проверяем, если gameOver ==true, то останавливаем функцию render
         if(gameOver===true){
-            fonAudio.pause();
             if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
                 getChempionsName();
                 return;
