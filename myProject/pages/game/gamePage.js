@@ -57,6 +57,34 @@ function gamePageLoading (){
         obstacles[i].Y=0-Math.random()*h;
         obstacles[i].X=Math.random()*(w-coins[i].width);
     }
+
+    // создадим элемент аудио для выстрела
+    let shootingAudio=new Audio;
+    shootingAudio.src="assets/audio/shoot.mp3";
+
+    // создадим элемент аудио для столкновения с монетой
+    let coinAudio=new Audio;
+    coinAudio.src="assets/audio/coin.mp3";
+
+    //переменная для фоновой музыки
+    let fonAudio=new Audio;
+    fonAudio.src="assets/audio/fon.mp3";
+    fonAudio.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+
+    //функция воспроизводит звук монеты
+    function coinSound() {
+        coinAudio.currentTime=0; // в секундах
+        coinAudio.play();
+    }
+
+    //функция воспроизводит выстрел пулемета
+    function shootingSound() {
+        shootingAudio.currentTime=0; // в секундах
+        shootingAudio.play();
+    }
     
     //функция для отображения количества жизней
     function livesCounting (){
@@ -143,6 +171,8 @@ function gamePageLoading (){
         //пропишем условие столкновения ракеты с монетами
         if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
             bingo=true;
+            //воспроизводим звук при столкновении с монетой
+            coinSound();
             //меняем координаты монеты
             coins[num].Y=h;
             coins[num].X=Math.floor(Math.random()*w);
@@ -256,6 +286,7 @@ function gamePageLoading (){
     
     //пропишем условия для сохранения рекордов игры
     function recordsCheck (){
+        
          if(score>localStorage.getItem('top5')){
             if(score>localStorage.getItem('top4')){
                 if(score>localStorage.getItem('top3')){
@@ -363,16 +394,21 @@ function gamePageLoading (){
 
         let buttonName = document.createElement('span');
         button.appendChild(buttonName).classList = 'fciSpan';
-        let buttonText = document.createTextNode('Remember me');
+        let buttonText = document.createTextNode('Enter');
         buttonName.appendChild(buttonText);
     }
     
     //функция для отрисовки игры
     function render(){
+        //при старте игры включаем музыку
+        fonAudio.play();
+        fonAudio.volume=0.1;
+        
         //для того, чтобы при старте новой игры исчезали кнопки
         document.getElementById('app').innerHTML='';
         //проверяем, если gameOver ==true, то останавливаем функцию render
         if(gameOver===true){
+            fonAudio.pause();
             if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
                 getChempionsName();
                 return;
@@ -425,6 +461,8 @@ function gamePageLoading (){
         }
         if(direction===32){
             shoot=true;
+            //при нажатии на кнопку запускаем звуковой файл
+            shootingSound();
         }
     })
      //отжатия клавиши
