@@ -11,12 +11,22 @@ function gamePageLoading (){
     let lives = 10;
     let score =0;
 
+    //переменные для таймера игры
+    let hours=0;
+    let minutes=0;
+    let seconds=0;
+    let counter=0;
+
     //переменные для управления ракетой
     let goUp=false;
     let goDown=false;
     let goRight=false;
     let goLeft=false;
     let shoot=false;
+
+    //объявим переменную кнопки со звуком
+    let soundButton=new Image();
+    soundButton.src='assets/buttonOn.png';
 
     //объявим переменную для ракеты
     let rocket=new Image();
@@ -61,33 +71,69 @@ function gamePageLoading (){
         obstacles[i].scale=scale;
     }
 
+    //функция для отрисовки кнопки включения/выключения звука
     let soundOn=true;
-    // создадим элемент аудио для выстрела
-    let shootingAudio=new Audio;
-    shootingAudio.src="assets/audio/shoot.mp3";
-
-    // создадим элемент аудио для удара с препятствием
-    let boomAudio=new Audio;
-    boomAudio.src="assets/audio/boom.mp3";
-
-    // создадим элемент аудио для столкновения с монетой
-    let coinAudio=new Audio;
-    coinAudio.src="assets/audio/coin.mp3";
-
-    // создадим элемент аудио для окончания игры
-    let gameOverAudio=new Audio;
-    gameOverAudio.src="assets/audio/gameOver.mp3";
-
-    //переменная для фоновой музыки
-   /* let fonAudio=new Audio;
-    fonAudio.src="assets/audio/fon.mp3";
-    fonAudio.addEventListener('ended', function() {
-        this.currentTime = 0;
-        this.play();
-    }, false);
-    fonAudio.play();
-    fonAudio.volume=0.1;*/
+    function playStopSound (){
+        if (soundOn==true){
+            ctx.drawImage(soundButton, 0,0, 500,500,10,5, 500*0.12,500*0.12);
+        } 
+        if (soundOn==false){
+            ctx.drawImage(soundButton, 0,0, 500,500,10,5, 500*0.12,500*0.12);
+            ctx.strokeStyle="white";
+            ctx.lineWidth=2;
+            ctx.beginPath();
+            ctx.moveTo(50,20);
+            ctx.lineTo(25,50);
+            ctx.stroke();
+        }
+    }
+    //навесим слушатель событий на кнопку(чтобы при нажатии включать/отключать звук)
+    canvas.addEventListener( "click", e => {
+        if(e.offsetX > 10 && e.offsetX < 60 && e.offsetY > 10 && e.offsetY < 60) {
+            if (soundOn==true){
+                return soundOn=false;
+            }
+            if (soundOn==false){
+                return soundOn=true;
+            }
+        }
+    });
+   
+    //функция рассчитывает продолжительность игры и задает нужный формат
+    function getGameTime () {
+        counter++;
+        if (counter == 60) { //так как анимацию мы отрисовываем requestAnimationFrame, а это 60 кадров в секунду
+            counter = 0;
+            seconds++;
+        }
+        if (seconds == 60) {
+            seconds = 0;
+            minutes++;
+        }
+        if (minutes == 60) {
+            minutes = 0;
+            hours++;
+        }  
+        
+        // дополняем строку val слева нулями до длины Len
+        function str0l(val,len) {
+            let strVal=val.toString();
+            while ( strVal.length < len )
+                strVal='0'+strVal;
+            return strVal;
+        }
+        // форматируем переданную дату-время в формате дд.мм.гггг чч:мм:сс
+        let t = `${str0l(hours,2)}:${str0l(minutes,2)}:${str0l(seconds,2)}`;
+        return t;
+    }
     
+    //функция для отображения продолжительности игры
+    function gameTimeDraw (){
+        ctx.font ='40px Gowun Batang';
+        ctx.fillStyle ='#a09e9e';
+        ctx.fillText('Time:'+getGameTime(),90,50);
+    }
+
     //функция для отображения количества жизней
     function livesCounting (){
         ctx.font ='40px Gowun Batang';
@@ -328,7 +374,6 @@ function gamePageLoading (){
     
     //пропишем условия для сохранения рекордов игры
     function recordsCheck (){
-        
          if(score>localStorage.getItem('top5')){
             if(score>localStorage.getItem('top4')){
                 if(score>localStorage.getItem('top3')){
@@ -409,6 +454,7 @@ function gamePageLoading (){
         pageHTML=buttonsDraw();
         document.getElementById('app').innerHTML=pageHTML;
     }
+    
     //функция для отрисовки окна с вводом имени победителя
     function getChempionsName () {
         let chempionWindow = document.createElement('div');
@@ -469,6 +515,10 @@ function gamePageLoading (){
         }
 
         shooting();
+
+        playStopSound();
+
+        gameTimeDraw ()
 
         livesCounting();
 

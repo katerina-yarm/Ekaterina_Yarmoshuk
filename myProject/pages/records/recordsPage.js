@@ -1,4 +1,5 @@
 function recordsPageLoading (){
+    
     //очищаем холст, чтобы не отображался финальный кадр игры
     let ctx = document.getElementById('game').getContext('2d');
     ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
