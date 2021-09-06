@@ -1,6 +1,6 @@
 
 .gameButtons a{
-    margin-top: 15vh;
+    margin-top: 13vh;
 }
 
 .gameButtons{
@@ -11,6 +11,19 @@
     padding: 2vw;
     animation-duration: 3s;
     animation-name: scaleTransform;
+}
+
+.pauseButtons{
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    background-color: rgba(7, 7, 7, 0.4);
+    padding: 2vw;
+    animation-duration: 3s;
+    animation-name: scaleTransform;
+}
+.pauseButtons a{
+    margin-top: 10vh;
 }
 
 @keyframes scaleTransform {

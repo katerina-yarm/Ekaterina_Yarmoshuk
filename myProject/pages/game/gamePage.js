@@ -11,6 +11,9 @@ function gamePageLoading (){
     let lives = 10;
     let score =0;
 
+    let pauseOn=false;
+    let soundOn=true;
+
     //переменные для таймера игры
     let hours=0;
     let minutes=0;
@@ -27,6 +30,10 @@ function gamePageLoading (){
     //объявим переменную кнопки со звуком
     let soundButton=new Image();
     soundButton.src='assets/buttonOn.png';
+
+    //объявим переменную кнопки паузы
+    let pauseButton=new Image();
+    pauseButton.src='assets/pause.png';
 
     //объявим переменную для ракеты
     let rocket=new Image();
@@ -72,7 +79,6 @@ function gamePageLoading (){
     }
 
     //функция для отрисовки кнопки включения/выключения звука
-    let soundOn=true;
     function playStopSound (){
         if (soundOn==true){
             ctx.drawImage(soundButton, 0,0, 500,500,10,5, 500*0.12,500*0.12);
@@ -87,7 +93,7 @@ function gamePageLoading (){
             ctx.stroke();
         }
     }
-    //навесим слушатель событий на кнопку(чтобы при нажатии включать/отключать звук)
+    //навесим слушатель событий на кнопку Звука(чтобы при нажатии включать/отключать звук)
     canvas.addEventListener( "click", e => {
         if(e.offsetX > 10 && e.offsetX < 60 && e.offsetY > 10 && e.offsetY < 60) {
             if (soundOn==true){
@@ -98,23 +104,45 @@ function gamePageLoading (){
             }
         }
     });
+
+    //функция для отрисовки кнопки паузы
+    function drawPauseButton (){
+        ctx.drawImage(pauseButton, 0,0, 388,390,80,2, 388*0.16,390*0.16);
+    }
+    //навесим слушатель событий на кнопку Паузы(чтобы при нажатии ставить игру на паузу)
+    canvas.addEventListener( "click", e => {
+        if(e.offsetX > 80 && e.offsetX < 140 && e.offsetY > 10 && e.offsetY < 60) {
+            if (pauseOn==false){
+                pauseOn=true;
+            }else if (pauseOn==true){
+                pauseOn=false;
+            }
+        }
+    });
+    //функция для отрисовки надписи во время паузы
+    function pauseDraw (){
+        ctx.font ='100px Gowun Batang';
+        ctx.fillStyle='#900000';
+        ctx.fillText('Pause', w/2-100,h/2);
+    }
    
     //функция рассчитывает продолжительность игры и задает нужный формат
     function getGameTime () {
-        counter++;
-        if (counter == 60) { //так как анимацию мы отрисовываем requestAnimationFrame, а это 60 кадров в секунду
-            counter = 0;
-            seconds++;
+        if(pauseOn==false){
+            counter++;
+            if (counter == 60) { //так как анимацию мы отрисовываем requestAnimationFrame, а это 60 кадров в секунду
+                counter = 0;
+                seconds++;
+            }
+            if (seconds == 60) {
+                seconds = 0;
+                minutes++;
+            }
+            if (minutes == 60) {
+                minutes = 0;
+                hours++;
+            }  
         }
-        if (seconds == 60) {
-            seconds = 0;
-            minutes++;
-        }
-        if (minutes == 60) {
-            minutes = 0;
-            hours++;
-        }  
-        
         // дополняем строку val слева нулями до длины Len
         function str0l(val,len) {
             let strVal=val.toString();
@@ -131,7 +159,7 @@ function gamePageLoading (){
     function gameTimeDraw (){
         ctx.font ='40px Gowun Batang';
         ctx.fillStyle ='#a09e9e';
-        ctx.fillText('Time:'+getGameTime(),90,50);
+        ctx.fillText('Time:'+getGameTime(),160,50);
     }
 
     //функция для отображения количества жизней
@@ -174,18 +202,20 @@ function gamePageLoading (){
 
     //функция для отрисовки ракеты
     function drawRocket () {
-        //описываем условия движения ракеты
-        if(goLeft==true && rocket.X>0){
-            rocket.X-=5
-        }
-        if(goRight==true && rocket.X<(w-rocket.w)){
-            rocket.X+=5
-        }
-        if(goUp==true && rocket.Y>0){
-            rocket.Y-=5
-        }
-        if(goDown==true && rocket.Y<(h-rocket.h)){
-            rocket.Y+=5
+        if(pauseOn==false){
+            //описываем условия движения ракеты
+            if(goLeft==true && rocket.X>0){
+                rocket.X-=5
+            }
+            if(goRight==true && rocket.X<(w-rocket.w)){
+                rocket.X+=5
+            }
+            if(goUp==true && rocket.Y>0){
+                rocket.Y-=5
+            }
+            if(goDown==true && rocket.Y<(h-rocket.h)){
+                rocket.Y+=5
+            }
         }
         //ctx.save(); // Сохраняем настройки канваса до всяких манипуляций с ним
         // Сдвигаем в центр изображения,которое хотим повернуть.Все дело в работе метода rotate.
@@ -219,50 +249,52 @@ function gamePageLoading (){
     
     //функция для отрисовки появляющихся монет
     function drawCoins (num){
-        //пропишем условие столкновения ракеты с монетами
-        if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
-            bingo=true;
-            //воспроизводим звук при столкновении с монетой
-            if(soundOn==true){
-                coinAudio.play();
-            }
-            //меняем координаты монеты
-            coins[num].Y=h;
-            coins[num].X=Math.floor(Math.random()*w);
-            while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
-                coins[num].X=Math.floor(Math.random()*w);
-            }
-            //увеличиваем счет
-            score++;
-        } else {bingo=false;}
-        if (!bingo){
-            //отрисовываем монету и заставляем ее двигаться вниз
-            ctx.drawImage(coins[num],100*currentFrame/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
-                0, 100,100, coins[num].X,coins[num].Y, 100*0.6,100*0.6);
-            //пропишем условие,чтобы спрайт вращался и замедлим анимацию
-            let currentTime = new Date().getTime();
-            if ((currentTime-time)>16){
-                if(currentFrame==frames){
-                    currentFrame=0;
-                } else {
-                    currentFrame++;
+            //пропишем условие столкновения ракеты с монетами
+            if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
+                bingo=true;
+                //воспроизводим звук при столкновении с монетой
+                if(soundOn==true){
+                    coinAudio.play();
                 }
-                time=currentTime;
-            } else {time=currentTime}
-            //чтобы вдальнейшем было проще писать логику столкновений,укажем для монет ширину и высоту
-            coins[num].w=coins[num].width*0.6*0.1;
-            coins[num].h=coins[num].height*0.6;
-            coins[num].Y++;
-            //если монеты выходит за пределы поля, то меняем координаты
-            if (coins[num].Y>h){
-                coins[num].Y=0-coins[num].h;
-                coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
+                //меняем координаты монеты
+                coins[num].Y=h;
+                coins[num].X=Math.floor(Math.random()*w);
                 while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
                     coins[num].X=Math.floor(Math.random()*w);
                 }
+                //увеличиваем счет
+                score++;
+            } else {bingo=false;}
+            if (!bingo){
+                //отрисовываем монету и заставляем ее двигаться вниз
+                ctx.drawImage(coins[num],100*currentFrame/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
+                    0, 100,100, coins[num].X,coins[num].Y, 100*0.6,100*0.6);
+                //пропишем условие,чтобы спрайт вращался и замедлим анимацию
+                let currentTime = new Date().getTime();
+                if ((currentTime-time)>16){
+                    if(currentFrame==frames){
+                        currentFrame=0;
+                    } else {
+                        currentFrame++;
+                    }
+                    time=currentTime;
+                } else {time=currentTime}
+                //чтобы вдальнейшем было проще писать логику столкновений,укажем для монет ширину и высоту
+                coins[num].w=coins[num].width*0.6*0.1;
+                coins[num].h=coins[num].height*0.6;
+                if(pauseOn==false){
+                    coins[num].Y++;
+                }
+                //если монеты выходит за пределы поля, то меняем координаты
+                if (coins[num].Y>h){
+                    coins[num].Y=0-coins[num].h;
+                    coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
+                    while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
+                        coins[num].X=Math.floor(Math.random()*w);
+                    }
+                }
             }
-        }
-        
+
     }
    
     //функция для отрисовки препятствий
@@ -292,7 +324,9 @@ function gamePageLoading (){
             ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*obstacles[num].scale,900*obstacles[num].scale);
             obstacles[num].w=obstacles[num].width*obstacles[num].scale;
             obstacles[num].h=(obstacles[num].height-40)*obstacles[num].scale;//-30 -это погрешность на торчащие лапки
-            obstacles[num].Y++;
+            if(pauseOn==false){
+                obstacles[num].Y++;
+            }
             //если препятствия выходят за пределы поля, то меняем координаты
             if (obstacles[num].Y>h){
                 obstacles[num].Y=0-obstacles[num].height*obstacles[num].scale;
@@ -454,7 +488,7 @@ function gamePageLoading (){
         pageHTML=buttonsDraw();
         document.getElementById('app').innerHTML=pageHTML;
     }
-    
+
     //функция для отрисовки окна с вводом имени победителя
     function getChempionsName () {
         let chempionWindow = document.createElement('div');
@@ -514,7 +548,10 @@ function gamePageLoading (){
             drawObstacles(i);
         }
 
+
         shooting();
+
+        drawPauseButton();
 
         playStopSound();
 
@@ -523,6 +560,10 @@ function gamePageLoading (){
         livesCounting();
 
         scoreCounting ();
+
+        if(pauseOn==true){
+            pauseDraw();
+        }
 
         //для отрисовки анимации
         timer=requestAnimationFrame(render);
