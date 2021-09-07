@@ -1,12 +1,12 @@
 .mainPage{
-    margin-top: 180px;
+    margin-top: 20vh;
 }
 .mainPage a{
-    margin-top: 50px;
+    margin-top: 10vh;
 }
 img{
     position: absolute;
-    width: 300px;
+    width: 20vw;
     transform: rotate(45deg);
     top: 0;  
 }

@@ -11,7 +11,8 @@
     padding: 2vw;
     font-family: 'Gowun Batang', serif;
     color:#f5f1f1;
-    font-size: 2.5vh;
+    font-size: 20px;
+    line-height: 5vh;
     font-weight: 400;
     animation-duration: 3s;
     animation-name: scaleTransform;
@@ -19,7 +20,7 @@
 h3{
     color:#f5f1f1;
     font-family: 'Gowun Batang', serif;
-    font-size: 4vh;
+    font-size: 25px;
     font-weight: 400;
     letter-spacing: 2px;
    
@@ -34,3 +35,41 @@ h3{
     }
 }
 
+@media (max-width: 1200px) {
+    .rules{
+        width: 80vw;
+        font-size: 18px;
+        line-height: 30px;
+    }
+
+}
+@media (max-width: 992px) {
+    .rulesPage{
+        margin: 2vh;
+    }
+    .rules{
+        height: 60vh;
+        width: 100vw;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    h3{
+        padding-top: 20px; 
+    }
+}
+
+@media (max-width: 650px) {
+    .rulesPage{
+        margin: 2vh;
+    }
+    .rules{
+        height: 60vh;
+        width: 100vw;
+        font-size: 14px;
+        line-height: 20px;
+    }
+    h3{
+        padding-top: 20px; 
+    }
+
+}
