@@ -12,7 +12,6 @@ function gamePageLoading (){
     let score =0;
 
     let pauseOn=false;
-    let soundOn=true;
 
     //переменные для таймера игры
     let hours=0;
@@ -97,9 +96,18 @@ function gamePageLoading (){
     canvas.addEventListener( "click", e => {
         if(e.offsetX > 10 && e.offsetX < 60 && e.offsetY > 10 && e.offsetY < 60) {
             if (soundOn==true){
+                if(soundOn==true){
+                    buttonClick.play();
+                }
+                fonAudio.pause();
+                fonAudio.currentTime = 0;
                 return soundOn=false;
             }
             if (soundOn==false){
+                if(soundOn==true){
+                    buttonClick.play();
+                }
+                fonAudio.play();
                 return soundOn=true;
             }
         }
@@ -113,8 +121,14 @@ function gamePageLoading (){
     canvas.addEventListener( "click", e => {
         if(e.offsetX > 80 && e.offsetX < 140 && e.offsetY > 10 && e.offsetY < 60) {
             if (pauseOn==false){
+                if(soundOn==true){
+                    buttonClick.play();
+                }
                 pauseOn=true;
             }else if (pauseOn==true){
+                if(soundOn==true){
+                    buttonClick.play();
+                }
                 pauseOn=false;
             }
         }
@@ -178,6 +192,9 @@ function gamePageLoading (){
 
     //функция для отрисовки кнопок после окончания игры
     function buttonsDraw (){
+        //убираем холст с прорисовкой игры, чтобы отображалась фоновая анимация
+        canvas.setAttribute('width',0);
+        canvas.setAttribute('height',0);
         let buttonsHtml = `
             <div class="gameButtons">
                 <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Main page</span></a>

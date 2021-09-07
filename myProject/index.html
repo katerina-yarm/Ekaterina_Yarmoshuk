@@ -24,23 +24,14 @@
     <title>My Game</title>
 </head>
     <body>
-        <audio id=fonAudio autoplay="autoplay"> 
-            <source src="assets/audio/fon.mp3" type="audio/mpeg">
-        </audio>
         <div id=app></div>
         <canvas id="background"></canvas>
         <canvas id="game"></canvas>
 
         <script>
+            
             //запускаем функцию с прорисовкой фона
             bg();
-            //переменная для фоновой музыки
-            let fonAudio = document.getElementById("fonAudio");
-            fonAudio.addEventListener('ended', function() {
-                this.currentTime = 0;
-                this.play();
-            }, false);
-            //fonAudio.play();
             
             //при изменении URL подгружается нужная разметка
             window.onhashchange=switchToStateFromURLHash; 
@@ -94,7 +85,6 @@
                 case 'Records':
                     pageHTML+= recordsPageLoading ();  
                     break;
-          
                 }
                 document.getElementById('app').innerHTML=pageHTML;
             }
