@@ -701,15 +701,13 @@ function gamePageLoading (){
     function TouchMove(e){
         //Получаем новую позицию
         touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        Draw(touchPosition.x, touchPosition.y, 2); //Рисуем точку текущей позиции
+        rocket.X=touchPosition.x;
+        rocket.Y=touchPosition.y;
+        //Draw(touchPosition.x, touchPosition.y, 2); //Рисуем точку текущей позиции
     }
 
-    function TouchEnd(e, color){
-        DrawLine(); //Рисуем линию между стартовой и конечной точками
-        Draw(touchPosition.x, touchPosition.y, 6, color); //Рисуем конечную точку
-
-        CheckAction(); //Определяем, какой жест совершил пользователь
-
+    function TouchEnd(e){
+        //CheckAction(); //Определяем, какой жест совершил пользователь
         //Очищаем позиции
         touchStart = null;
         touchPosition = null;
@@ -756,16 +754,6 @@ function gamePageLoading (){
         msgBox.innerText = msg; //Выводим сообщение
 
     }
-    function DrawLine() //Функция рисования линии
-    {
-        ctx.strokeStyle = "#ccc";
-
-        ctx.beginPath();
-
-        ctx.moveTo(touchStart.x, touchStart.y);
-        ctx.lineTo(touchPosition.x, touchPosition.y);
-
-        ctx.stroke();
-    }
+    
 
 }
