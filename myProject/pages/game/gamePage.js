@@ -598,12 +598,11 @@ function gamePageLoading (){
         buttonName.appendChild(buttonText);
     }
     
-    //                          ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
+    //                                        ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
     //функция для отрисовки кнопки стрельбы
     function drawShootingButton (){
         ctx.drawImage(shootingButton, 0,0, 1610,1610,(window.innerWidth/2-shootingButton.width*0.05/2),(window.innerHeight-shootingButton.height*0.05-70), 1610*0.05,1610*0.05);
     }
-
     //кнопки управления
     function drawUpButton (){
         ctx.drawImage(up, 200,0, 260,150,(window.innerWidth-150),(window.innerHeight-200), 586*0.2,426*0.18);
@@ -617,11 +616,13 @@ function gamePageLoading (){
     function drawRightButton (){
         ctx.drawImage(right, 330,160, 260,150,(window.innerWidth-150),(window.innerHeight-100), 586*0.2,426*0.16);
     }
-    //навесим слушатель событий на кнопку Стрельбы
-    canvas.addEventListener( "touchstart", e => {
+    //навесим слушатель событий на кнопки управления
+    canvas.addEventListener( "touchstart", function (e) { touchButtonStart(e); });
+    canvas.addEventListener( "touchend", function (e) { touchButtonEnd(e); });
+    function touchButtonStart(e) {
         if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05-70) && e.offsetY < window.innerHeight) {
             shoot=true;
-            //при нажатии на кнопку запускаем звуковой файл
+            //при нажатии на область запускаем звуковой файл
             if(soundOn==true){
                 shootingAudio.play();
             }
@@ -638,8 +639,8 @@ function gamePageLoading (){
         if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
             goLeft=true;
         }
-    });
-    canvas.addEventListener( "touchend", e => {
+    }
+    function touchButtonEnd (e) {
         if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.2) && e.offsetY < window.innerHeight) {
            shoot=false; 
         }
@@ -655,7 +656,7 @@ function gamePageLoading (){
         if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
             goLeft=false;
         }
-    });
+    }
 
     //функция для отрисовки игры
     function render(){
