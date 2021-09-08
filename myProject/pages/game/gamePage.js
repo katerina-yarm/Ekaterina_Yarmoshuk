@@ -686,26 +686,32 @@ function gamePageLoading (){
     //Пользователь отпустил экран
     canvas.addEventListener("touchend", function (e) { TouchEnd(e); });
 
+    let touch = false;
     function TouchStart(e){
         //Получаем текущую позицию касания
         touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        touchPosition = { x: touchStart.x, y: touchStart.y };
-
-        rocket.X=touchPosition.x-rocket.h/2;
-        rocket.Y=touchPosition.y-rocket.w/2;
+        if (touchStart.x==(rocket.X+rocket.w/2)&&touchStart.Y==(rocket.Y+rocket.h/2)){
+            touchPosition = { x: touchStart.x, y: touchStart.y };
+            touch=true;
+            rocket.X=touchPosition.x-rocket.w/2;
+            rocket.Y=touchPosition.y-rocket.h/2;
+        }
     }
 
     function TouchMove(e){
         //Получаем новую позицию
-        touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        rocket.X=touchPosition.x-rocket.h/2;
-        rocket.Y=touchPosition.y-rocket.w/2;
+        if (touch==true){
+            touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+            rocket.X=touchPosition.x-rocket.w/2;
+            rocket.Y=touchPosition.y-rocket.h/2;
+        }
     }
 
     function TouchEnd(e){
         //Очищаем позиции
         touchStart = null;
         touchPosition = null;
+        touch=false;
     }
     
     
