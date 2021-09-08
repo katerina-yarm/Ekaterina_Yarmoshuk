@@ -656,7 +656,7 @@ function gamePageLoading (){
     canvas.addEventListener( "touchend", function (e) { touchButtonEnd(e); });
     function touchButtonStart(e) {
         touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        if(touchStart.x > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05-70) && e.offsetY < window.innerHeight) {
+        if(touchStart.x > (window.innerWidth/2-shootingButton.width*0.05/2) && touchStart.x < (window.innerWidth/2+shootingButton.width*0.05/2) && touchStart.y >(window.innerHeight-shootingButton.height*0.05-70) && touchStart.y < window.innerHeight) {
             shoot=true;
             //при нажатии на область запускаем звуковой файл
             if(soundOn==true){
