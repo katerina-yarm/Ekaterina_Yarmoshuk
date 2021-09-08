@@ -32,6 +32,9 @@ function gamePageLoading (){
     //объявим переменную кнопки паузы
     let pauseButton=new Image();
     pauseButton.src='assets/pause.png';
+    //объявим переменную кнопки стрельбы
+    let shootingButton=new Image();
+    shootingButton.src='assets/shootingButton.png';
 
     //объявим переменную для ракеты
     let rocket=new Image();
@@ -165,7 +168,7 @@ function gamePageLoading (){
 
     //функция для отрисовки кнопки стрельбы
     function drawShootingButton (){
-        ctx.drawImage(pauseButton, 0,0, 388,390,80,window.innerHeight-80, 388*0.16,390*0.16);
+        ctx.drawImage(shootingButton, 0,0, 1610,1610,(window.innerWidth/2-shootingButton.width*0.1/2),(window.innerHeight-window.innerHeight*0.25), 1610*0.1,1610*0.1);
     }
     //навесим слушатель событий на кнопку Стрельбы
     canvas.addEventListener( "touchstart", e => {
