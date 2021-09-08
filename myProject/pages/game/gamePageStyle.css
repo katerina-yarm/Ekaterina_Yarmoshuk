@@ -83,7 +83,7 @@ a.fciA.navItem{
     } 
     input{
         font-size: 20px;
-        height: 10vh;
+        height: 40px;
         width: 40vw;
         margin-bottom: 10px; 
     }  
@@ -97,7 +97,7 @@ a.fciA.navItem{
     } 
     input{
         font-size: 20px;
-        height: 10vh;
+        height: 35px;
         width: 40vw;
         margin-bottom: 10px; 
     } 
@@ -112,7 +112,7 @@ a.fciA.navItem{
     } 
     input{
         font-size: 18px;
-        height: 10vh;
+        height: 30px;
         width: 40vw;
         margin-bottom: 10px; 
     }

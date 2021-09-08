@@ -62,55 +62,52 @@ function gamePageLoading (){
         coins[i].Y=0-Math.random()*h;//чтобы монеты появлялись вразброс укажем для них рандомные координаты
         coins[i].X=Math.random()*w;
     }
-    //параметры для адаптива монет
-    let coinScale;
-    if (w>1000){
-        coinScale=0.6  
-    }
-    if (700<w<1000){
-        coinScale=0.5  
-    }
-    if (700>w){
-        coinScale=0.4  
-    }
     
     //создадим переменную для массива с препятствиями
-    let obstaclesNumber = 5;
+    let obstaclesNumber = 6;
+    let scaleChange=0;
     let obstacles = [];
-    //параметры для адаптива
-    let scale;
-    if (w>1000){
-        scale=0.2  
-    }
-    if (700<w<1000){
-        scale=0.1  
-    }
-    if (700>w){
-        scale=0.05  
-    }
     for (let i=0; i<obstaclesNumber; i++){
-        scale+=0.05;
         obstacles[i] = new Image();
         obstacles[i].src = 'assets/monster.png';
         obstacles[i].Y=0-Math.random()*h;
         obstacles[i].X=Math.random()*(w-obstacles[i].width);
-        obstacles[i].scale=scale;
+        obstacles[i].scale=scaleChange;
+        scaleChange+=0.05;
+        if(scaleChange==0.2){
+            scaleChange=0;
+        }
     }
 
     //функция для отрисовки кнопки включения/выключения звука
     function playStopSound (){
+        //для адаптива кнопок
+        let x,y;
+        if (window.innerWidth<=812){
+            x=0.6;y=0.6;
+        } else if (812<window.innerWidth && window.innerWidth<1050) {
+            x=0.75;y=0.75; 
+        } else if (window.innerWidth>=1050){
+            x=1;y=1;
+        }
+        // Сохраняем настройки канваса до всяких манипуляций с ним
+        ctx.save();
         if (soundOn==true){
-            ctx.drawImage(soundButton, 0,0, 500,500,10,5, 500*0.12,500*0.12);
+            ctx.scale(x,y);
+            ctx.drawImage(soundButton, 0,0, 500,500,10,7, 500*0.12,500*0.12);
         } 
         if (soundOn==false){
-            ctx.drawImage(soundButton, 0,0, 500,500,10,5, 500*0.12,500*0.12);
+            ctx.scale(x,y);
+            ctx.drawImage(soundButton, 0,0, 500,500,10,7, 500*0.12,500*0.12);
             ctx.strokeStyle="white";
             ctx.lineWidth=2;
             ctx.beginPath();
-            ctx.moveTo(50,20);
-            ctx.lineTo(25,50);
-            ctx.stroke();
+            ctx.moveTo(50,21);
+            ctx.lineTo(25,51);
+            ctx.stroke(); 
         }
+        // Восстанавливаем настройки на момент когда делали `ctx.save`
+        ctx.restore();
     }
     //навесим слушатель событий на кнопку Звука(чтобы при нажатии включать/отключать звук)
     canvas.addEventListener( "click", e => {
@@ -135,11 +132,23 @@ function gamePageLoading (){
 
     //функция для отрисовки кнопки паузы
     function drawPauseButton (){
-        ctx.drawImage(pauseButton, 0,0, 388,390,80,2, 388*0.16,390*0.16);
+        //для адаптива кнопок
+        let x,y;
+        if (window.innerWidth<=812){
+            x=0.6;y=0.6;
+        } else if (812<window.innerWidth && window.innerWidth<1050) {
+            x=0.75;y=0.75; 
+        } else if (window.innerWidth>=1050){
+            x=1;y=1;
+        }
+        ctx.save();
+        ctx.scale(x,y);
+        ctx.drawImage(pauseButton, 0,0, 388,390,80,5, 388*0.16,390*0.16);
+        ctx.restore();
     }
     //навесим слушатель событий на кнопку Паузы(чтобы при нажатии ставить игру на паузу)
     canvas.addEventListener( "click", e => {
-        if(e.offsetX > 80 && e.offsetX < 140 && e.offsetY > 10 && e.offsetY < 60) {
+        if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY > 10 && e.offsetY < 60) {
             if (pauseOn==false){
                 if(soundOn==true){
                     buttonClick.play();
@@ -157,7 +166,7 @@ function gamePageLoading (){
     function pauseDraw (){
         ctx.font ='10vw Gowun Batang';
         ctx.fillStyle='#900000';
-        ctx.fillText('Pause', w/2-w/15.36,h/2);
+        ctx.fillText('Pause', w/2-w/10,h/2);
     }
    
     //функция рассчитывает продолжительность игры и задает нужный формат
@@ -191,21 +200,21 @@ function gamePageLoading (){
     
     //функция для отображения продолжительности игры
     function gameTimeDraw (){
-        ctx.font ='3vw Gowun Batang';
+        ctx.font ='2.5vw Gowun Batang';
         ctx.fillStyle ='#a09e9e';
         ctx.fillText('Time:'+getGameTime(),w/2,h/12);
     }
 
     //функция для отображения количества жизней
     function livesCounting (){
-        ctx.font ='3vw Gowun Batang';
+        ctx.font ='2.5vw Gowun Batang';
         ctx.fillStyle ='#a09e9e';
         ctx.fillText('Lives:'+lives,w-w/6.5,h/12);
     }
 
     //функция для отображения счета
     function scoreCounting (){
-        ctx.font ='3vw Gowun Batang';
+        ctx.font ='2.5vw Gowun Batang';
         ctx.fillStyle ='#a09e9e';
         ctx.fillText('Scores:'+score,w-w/3.5,h/12);
     }
@@ -228,13 +237,13 @@ function gamePageLoading (){
     //функция для остановки игры
     function gameOver (){
         cancelAnimationFrame(timer);
-        ctx.font ='10vw Gowun Batang';
-        ctx.fillStyle='#900000';
-        ctx.fillText('Game over', w/2-w/7,h/2);
         gameOver = true;
         if(soundOn==true){
             gameOverAudio.play();
         }
+        ctx.font ='10vw Gowun Batang';
+        ctx.fillStyle='#900000';
+        ctx.fillText('Game over', w/2-w/4,h/2);
     }
 
     //функция для отрисовки ракеты
@@ -255,16 +264,15 @@ function gamePageLoading (){
             }
         }
         //параметры для адаптива ракеты
-        let rocketScale=0.5;
-        /*if (window.innerWidth>1000){
-            rocketScale=1  
-        }*/
-       /* if (700<w<1000){
+        let rocketScale;
+        if (window.innerWidth<=812){
+            rocketScale=0.2 
+        } else if (812<window.innerWidth && window.innerWidth<1050) {
             rocketScale=0.3  
+        } else if (window.innerWidth>=1050){
+            rocketScale=0.4
         }
-        if (700>w){
-            rocketScale=0.2  
-        }*/
+
         ctx.drawImage(rocket, 0,0, rocket.width,rocket.height,rocket.X,rocket.Y, rocket.width*rocketScale,rocket.height*rocketScale/*сжали изображение до 30%*/);
         rocket.w=rocket.width*rocketScale;
         rocket.h=rocket.height*rocketScale-40;
@@ -288,8 +296,17 @@ function gamePageLoading (){
     
     //функция для отрисовки появляющихся монет
     function drawCoins (num){
-            //пропишем условие столкновения ракеты с монетами
-            if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
+        let coinScale;
+        //параметры для адаптива препятствий
+        if (window.innerWidth<=812){
+            coinScale=0.35; 
+        } else if (812<window.innerWidth && window.innerWidth<1050) {
+            coinScale=0.45; 
+        } else if (window.innerWidth>=1050){
+            coinScale=0.6;
+        }
+        //пропишем условие столкновения ракеты с монетами
+        if((coins[num].X+coins[num].w>rocket.X) && coins[num].X<(rocket.X+rocket.w) && (coins[num].Y+coins[num].h)>rocket.Y && coins[num].Y<(rocket.Y+rocket.h)){
                 bingo=true;
                 //воспроизводим звук при столкновении с монетой
                 if(soundOn==true){
@@ -304,42 +321,50 @@ function gamePageLoading (){
                 //увеличиваем счет
                 score++;
             } else {bingo=false;}
-            if (!bingo){
-                //отрисовываем монету и заставляем ее двигаться вниз
-                ctx.drawImage(coins[num],100*currentFrame/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
-                    0, 100,100, coins[num].X,coins[num].Y, 100*coinScale,100*coinScale);
-                //пропишем условие,чтобы спрайт вращался и замедлим анимацию
-                let currentTime = new Date().getTime();
-                if ((currentTime-time)>16){
-                    if(currentFrame==frames){
-                        currentFrame=0;
-                    } else {
-                        currentFrame++;
-                    }
-                    time=currentTime;
-                } else {time=currentTime}
-                //чтобы вдальнейшем было проще писать логику столкновений,укажем для монет ширину и высоту
-                coins[num].w=coins[num].width*coinScale*0.1;
-                coins[num].h=coins[num].height*coinScale;
-                if(pauseOn==false){
-                    coins[num].Y++;
+        if (!bingo){
+            //отрисовываем монету и заставляем ее двигаться вниз
+            ctx.drawImage(coins[num],100*currentFrame/*при увеличении этого значения на 100 отображаются разные кадры спрайта */,
+                0, 100,100, coins[num].X,coins[num].Y, 100*coinScale,100*coinScale);
+            //пропишем условие,чтобы спрайт вращался и замедлим анимацию
+            let currentTime = new Date().getTime();
+            if ((currentTime-time)>16){
+                if(currentFrame==frames){
+                    currentFrame=0;
+                } else {
+                    currentFrame++;
                 }
-                //если монеты выходит за пределы поля, то меняем координаты
-                if (coins[num].Y>h){
-                    coins[num].Y=0-coins[num].h;
-                    coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
-                    while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
-                        coins[num].X=Math.floor(Math.random()*w);
-                    }
+                time=currentTime;
+            } else {time=currentTime}
+            //чтобы вдальнейшем было проще писать логику столкновений,укажем для монет ширину и высоту
+            coins[num].w=coins[num].width*coinScale*0.1;
+            coins[num].h=coins[num].height*coinScale;
+            if(pauseOn==false){
+                coins[num].Y++;
+            }
+            //если монеты выходит за пределы поля, то меняем координаты
+            if (coins[num].Y>h){
+                coins[num].Y=0-coins[num].h;
+                coins[num].X=Math.floor(Math.random()*w);//получаем случайное число и округляем его до целого
+                while (coins[num].X>(w-coins[num].w)){//чтобы не выходили за пределы области видимости
+                    coins[num].X=Math.floor(Math.random()*w);
                 }
             }
-
+        }
     }
    
     //функция для отрисовки препятствий
     function drawObstacles (num){
+        let obstaclesScale;
+        //параметры для адаптива препятствий
+        if (window.innerWidth<=812){
+            obstaclesScale=0.02+scaleChange; 
+        } else if (812<window.innerWidth && window.innerWidth<1050) {
+            obstaclesScale=0.07+scaleChange; 
+        } else if (window.innerWidth>=1050){
+            obstaclesScale=0.15+scaleChange;
+        }
         //пропишем условие столкновения ракеты с препятствием
-        if((obstacles[num].X+obstacles[num].w>rocket.X) && obstacles[num].X<(rocket.X+rocket.w) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
+        if((obstacles[num].X+obstacles[num].w>(rocket.X+rocket.w/4)) && obstacles[num].X<(rocket.X+rocket.w-rocket.w/4) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
             crash=true;
             if(soundOn==true){
                 boomAudio.play();
@@ -347,9 +372,9 @@ function gamePageLoading (){
             //при столкновении запускаем анимацию взрава препятствий
             drawBoom(obstacles[num].X,obstacles[num].Y);
             //меняем координаты препятствия, чтобы после столкновения оно исчезало и появлялось в другом месте
-            obstacles[num].Y=0-obstacles[num].height*obstacles[num].scale;
+            obstacles[num].Y=0-2*obstacles[num].h;
             obstacles[num].X=Math.floor(Math.random()*w);
-            while (obstacles[num].X>(w-obstacles[num].width*obstacles[num].scale)){//чтобы не выходили за пределы области видимости
+            while (obstacles[num].X>(w-obstacles[num].w)){//чтобы не выходили за пределы области видимости
                 obstacles[num].X=Math.floor(Math.random()*w);
             }
             //забираем жизнь
@@ -360,17 +385,17 @@ function gamePageLoading (){
         } else {crash=false;}
         if (!crash){
             //отрисовываем препятствие и заставляем его двигаться вниз
-            ctx.drawImage(obstacles[num], 0,0, 900,900, obstacles[num].X,obstacles[num].Y, 900*obstacles[num].scale,900*obstacles[num].scale);
-            obstacles[num].w=obstacles[num].width*obstacles[num].scale;
-            obstacles[num].h=(obstacles[num].height-40)*obstacles[num].scale;//-30 -это погрешность на торчащие лапки
+            obstacles[num].w=obstacles[num].width*(obstaclesScale+obstacles[num].scale);
+            obstacles[num].h=obstacles[num].height*(obstaclesScale+obstacles[num].scale)-40;//-40 -это погрешность на торчащие лапки
+            ctx.drawImage(obstacles[num], 0,0, 460,302, obstacles[num].X,obstacles[num].Y, obstacles[num].w,obstacles[num].h+40);
             if(pauseOn==false){
                 obstacles[num].Y++;
             }
             //если препятствия выходят за пределы поля, то меняем координаты
             if (obstacles[num].Y>h){
-                obstacles[num].Y=0-obstacles[num].height*obstacles[num].scale;
+                obstacles[num].Y=0-2*obstacles[num].h;
                 obstacles[num].X=Math.floor(Math.random()*w);
-                while (obstacles[num].X>(w-obstacles[num].width*obstacles[num].scale)){//чтобы не выходили за пределы области видимости
+                while (obstacles[num].X>(w-obstacles[num].w)){//чтобы не выходили за пределы области видимости
                     obstacles[num].X=Math.floor(Math.random()*w);
                 }
             }
@@ -382,8 +407,8 @@ function gamePageLoading (){
         //создадим класс,который будет хранить параметры для каждой пули
         class Bullet {
             constructor(){
-                this.w = 463*0.03;
-                this.h = 539*0.03;
+                this.w = 463*0.02;
+                this.h = 539*0.02;
                 this.x = rocket.X+rocket.w/2-this.w/2;
                 this.y = rocket.Y-10;
                 bullets.push(this);
@@ -559,6 +584,7 @@ function gamePageLoading (){
         buttonName.appendChild(buttonText);
     }
     
+
     //функция для отрисовки игры
     function render(){
         //для того, чтобы при старте новой игры исчезали кнопки
@@ -585,7 +611,6 @@ function gamePageLoading (){
         for (let i=0; i<obstaclesNumber; i++){
             drawObstacles(i);
         }
-
 
         shooting();
 
