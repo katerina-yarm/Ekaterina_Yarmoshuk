@@ -172,7 +172,7 @@ function gamePageLoading (){
     }
     //навесим слушатель событий на кнопку Стрельбы
     canvas.addEventListener( "touchstart", e => {
-        if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY >(window.innerHeight-80) && e.offsetY < window.innerHeight) {
+        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.1/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.1/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.25) && e.offsetY < window.innerHeight) {
             shoot=true;
             //при нажатии на кнопку запускаем звуковой файл
             if(soundOn==true){
@@ -181,8 +181,8 @@ function gamePageLoading (){
         }
     });
     canvas.addEventListener( "touchend", e => {
-        if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY >(window.innerHeight-80) && e.offsetY < window.innerHeight) {
-            shoot=false; 
+        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.1/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.1/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.25) && e.offsetY < window.innerHeight) {
+           shoot=false; 
         }
     });
 
