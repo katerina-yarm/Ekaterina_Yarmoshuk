@@ -32,9 +32,19 @@ function gamePageLoading (){
     //объявим переменную кнопки паузы
     let pauseButton=new Image();
     pauseButton.src='assets/pause.png';
+
     //объявим переменную кнопки стрельбы
     let shootingButton=new Image();
     shootingButton.src='assets/shootingButton.png';
+    //кнопки управления
+    let left=new Image();
+    left.src='assets/arrows.png';
+    let right=new Image();
+    right.src='assets/arrows.png';
+    let up=new Image();
+    up.src='assets/arrows.png';
+    let down=new Image();
+    down.src='assets/arrows.png';
 
     //объявим переменную для ракеты
     let rocket=new Image();
@@ -163,26 +173,6 @@ function gamePageLoading (){
                 }
                 pauseOn=false;
             }
-        }
-    });
-
-    //функция для отрисовки кнопки стрельбы
-    function drawShootingButton (){
-        ctx.drawImage(shootingButton, 0,0, 1610,1610,(window.innerWidth/2-shootingButton.width*0.1/2),(window.innerHeight-window.innerHeight*0.25), 1610*0.1,1610*0.1);
-    }
-    //навесим слушатель событий на кнопку Стрельбы
-    canvas.addEventListener( "touchstart", e => {
-        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.1/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.1/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.25) && e.offsetY < window.innerHeight) {
-            shoot=true;
-            //при нажатии на кнопку запускаем звуковой файл
-            if(soundOn==true){
-                shootingAudio.play();
-            }
-        }
-    });
-    canvas.addEventListener( "touchend", e => {
-        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.1/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.1/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.25) && e.offsetY < window.innerHeight) {
-           shoot=false; 
         }
     });
 
@@ -608,6 +598,65 @@ function gamePageLoading (){
         buttonName.appendChild(buttonText);
     }
     
+    //                          ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
+    //функция для отрисовки кнопки стрельбы
+    function drawShootingButton (){
+        ctx.drawImage(shootingButton, 0,0, 1610,1610,(window.innerWidth/2-shootingButton.width*0.05/2),(window.innerHeight-shootingButton.height*0.05-70), 1610*0.05,1610*0.05);
+    }
+
+    //кнопки управления
+    function drawUpButton (){
+        ctx.drawImage(up, 200,0, 260,150,(window.innerWidth-150),(window.innerHeight-200), 586*0.2,426*0.18);
+    }
+    function drawDownButton (){
+        ctx.drawImage(down, 200,300, 260,160,50,(window.innerHeight-100), 586*0.2,426*0.2);
+    }
+    function drawLeftButton (){
+        ctx.drawImage(left, 0,130, 260,190,20,(window.innerHeight-200), 586*0.2,426*0.2);
+    }
+    function drawRightButton (){
+        ctx.drawImage(right, 330,160, 260,150,(window.innerWidth-150),(window.innerHeight-100), 586*0.2,426*0.16);
+    }
+    //навесим слушатель событий на кнопку Стрельбы
+    canvas.addEventListener( "touchstart", e => {
+        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05-70) && e.offsetY < window.innerHeight) {
+            shoot=true;
+            //при нажатии на кнопку запускаем звуковой файл
+            if(soundOn==true){
+                shootingAudio.play();
+            }
+        }
+        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goRight=true;
+        }
+        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goDown=true;
+        }
+        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goUp=true;
+        }
+        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goLeft=true;
+        }
+    });
+    canvas.addEventListener( "touchend", e => {
+        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.2) && e.offsetY < window.innerHeight) {
+           shoot=false; 
+        }
+        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goRight=false;
+        }
+        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goDown=false;
+        }
+        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goUp=false;
+        }
+        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
+            goLeft=false;
+        }
+    });
+
     //функция для отрисовки игры
     function render(){
         //для того, чтобы при старте новой игры исчезали кнопки
@@ -639,8 +688,6 @@ function gamePageLoading (){
 
         drawPauseButton();
 
-        drawShootingButton ();
-
         playStopSound();
 
         gameTimeDraw ()
@@ -651,6 +698,14 @@ function gamePageLoading (){
 
         if(pauseOn==true){
             pauseDraw();
+        }
+
+        if(window.innerWidth<769){
+            drawShootingButton ();
+            drawUpButton();
+            drawDownButton();
+            drawLeftButton();
+            drawRightButton();
         }
 
         //для отрисовки анимации
