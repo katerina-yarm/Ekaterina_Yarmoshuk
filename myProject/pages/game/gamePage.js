@@ -690,7 +690,7 @@ function gamePageLoading (){
     function TouchStart(e){
         //Получаем текущую позицию касания
         touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        if (touchStart.x>rocket.X && touchStart.x<(rocket.X+rocket.w) && touchStart.y>rocket.Y && + touchStart.y<(rocket.Y+rocket.h)){
+        if (touchStart.x>rocket.X && touchStart.x<(rocket.X+rocket.w) && touchStart.y>rocket.Y && touchStart.y<(rocket.Y+rocket.h)){
             touchPosition = { x: touchStart.x, y: touchStart.y };
             touch=true;
             rocket.X=touchPosition.x-rocket.w/2;
