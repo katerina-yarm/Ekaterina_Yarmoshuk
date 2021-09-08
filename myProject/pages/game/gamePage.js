@@ -599,6 +599,41 @@ function gamePageLoading (){
     }
     
     //                                        ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
+    //пропишем обработчики тач событий для движения ракетой
+    let touchStart = null; //Точка начала касания
+    let touchPosition = null; //Текущая позиция
+    //Перехватываем события
+    canvas.addEventListener("touchstart", function (e) { TouchStart(e); }); //Начало касания
+    canvas.addEventListener("touchmove", function (e) { TouchMove(e); }); //Движение пальцем по экрану
+    //Пользователь отпустил экран
+    canvas.addEventListener("touchend", function (e) { TouchEnd(e); });
+
+    let touch = false;
+    function TouchStart(e){
+        //Получаем текущую позицию касания
+        touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+        if (touchStart.x>rocket.X && touchStart.x<(rocket.X+rocket.w) && touchStart.y>rocket.Y && touchStart.y<(rocket.Y+rocket.h)){
+            touchPosition = { x: touchStart.x, y: touchStart.y };
+            touch=true;
+            rocket.X=touchPosition.x-rocket.w/2;
+            rocket.Y=touchPosition.y-rocket.h/2;
+        }
+    }
+    function TouchMove(e){
+        //Получаем новую позицию
+        if (touch==true){
+            touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+            rocket.X=touchPosition.x-rocket.w/2;
+            rocket.Y=touchPosition.y-rocket.h/2;
+        }
+    }
+    function TouchEnd(e){
+        //Очищаем позиции
+        touchStart = null;
+        touchPosition = null;
+        touch=false;
+    }
+    
     //функция для отрисовки кнопки стрельбы
     function drawShootingButton (){
         ctx.drawImage(shootingButton, 0,0, 1610,1610,(window.innerWidth/2-shootingButton.width*0.05/2),(window.innerHeight-shootingButton.height*0.05-70), 1610*0.05,1610*0.05);
@@ -620,42 +655,34 @@ function gamePageLoading (){
     canvas.addEventListener( "touchstart", function (e) { touchButtonStart(e); });
     canvas.addEventListener( "touchend", function (e) { touchButtonEnd(e); });
     function touchButtonStart(e) {
-        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05-70) && e.offsetY < window.innerHeight) {
+        touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+        if(touchStart.x > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05-70) && e.offsetY < window.innerHeight) {
             shoot=true;
             //при нажатии на область запускаем звуковой файл
             if(soundOn==true){
                 shootingAudio.play();
             }
         }
-        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
+        if(touchStart.x > (window.innerWidth/2+shootingButton.width*0.05/2) && touchStart.y>(window.innerHeight-shootingButton.height*0.05/2-70)) {
             goRight=true;
         }
-        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
+        if(touchStart.x < (window.innerWidth/2-shootingButton.width*0.05/2) && touchStart.y>(window.innerHeight-shootingButton.height*0.05/2-70)) {
             goDown=true;
         }
-        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
+        if(touchStart.x > (window.innerWidth/2+shootingButton.width*0.05/2) && touchStart.y<(window.innerHeight-shootingButton.height*0.05/2-70)) {
             goUp=true;
         }
-        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
+        if(touchStart.x < (window.innerWidth/2-shootingButton.width*0.05/2) && touchStart.y<(window.innerHeight-shootingButton.height*0.05/2-70)) {
             goLeft=true;
         }
     }
     function touchButtonEnd (e) {
-        if(e.offsetX > (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetX < (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-window.innerHeight*0.2) && e.offsetY < window.innerHeight) {
-           shoot=false; 
-        }
-        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goRight=false;
-        }
-        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY >(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goDown=false;
-        }
-        if(e.offsetX > (window.innerWidth/2+shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goUp=false;
-        }
-        if(e.offsetX < (window.innerWidth/2-shootingButton.width*0.05/2) && e.offsetY<(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goLeft=false;
-        }
+        touchStart = null;
+        shoot=false; 
+        goRight=false;
+        goDown=false;
+        goUp=false;
+        goLeft=false;
     }
 
     //функция для отрисовки игры
@@ -758,43 +785,5 @@ function gamePageLoading (){
             shoot=false;
         }
     })
-    
-    //пропишем обработчики тач событий
-    let touchStart = null; //Точка начала касания
-    let touchPosition = null; //Текущая позиция
-    //Перехватываем события
-    canvas.addEventListener("touchstart", function (e) { TouchStart(e); }); //Начало касания
-    canvas.addEventListener("touchmove", function (e) { TouchMove(e); }); //Движение пальцем по экрану
-    //Пользователь отпустил экран
-    canvas.addEventListener("touchend", function (e) { TouchEnd(e); });
-
-    let touch = false;
-    function TouchStart(e){
-        //Получаем текущую позицию касания
-        touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        if (touchStart.x>rocket.X && touchStart.x<(rocket.X+rocket.w) && touchStart.y>rocket.Y && touchStart.y<(rocket.Y+rocket.h)){
-            touchPosition = { x: touchStart.x, y: touchStart.y };
-            touch=true;
-            rocket.X=touchPosition.x-rocket.w/2;
-            rocket.Y=touchPosition.y-rocket.h/2;
-        }
-    }
-
-    function TouchMove(e){
-        //Получаем новую позицию
-        if (touch==true){
-            touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-            rocket.X=touchPosition.x-rocket.w/2;
-            rocket.Y=touchPosition.y-rocket.h/2;
-        }
-    }
-
-    function TouchEnd(e){
-        //Очищаем позиции
-        touchStart = null;
-        touchPosition = null;
-        touch=false;
-    }
-    
-    
+      
 }
