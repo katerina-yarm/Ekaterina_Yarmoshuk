@@ -691,15 +691,15 @@ function gamePageLoading (){
         touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
         touchPosition = { x: touchStart.x, y: touchStart.y };
 
-        rocket.X=touchPosition.x;
-        rocket.Y=touchPosition.y;
+        rocket.X=touchPosition.x-rocket.h/2;
+        rocket.Y=touchPosition.y-rocket.w/2;
     }
 
     function TouchMove(e){
         //Получаем новую позицию
         touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        rocket.X=touchPosition.x;
-        rocket.Y=touchPosition.y;
+        rocket.X=touchPosition.x-rocket.h/2;
+        rocket.Y=touchPosition.y-rocket.w/2;
     }
 
     function TouchEnd(e){
