@@ -162,6 +162,39 @@ function gamePageLoading (){
             }
         }
     });
+
+    //функция для отрисовки кнопки стрельбы
+    function drawShootingButton (){
+        //для адаптива кнопок
+        let x,y;
+        if (window.innerWidth<=812){
+            x=0.6;y=0.6;
+        } else if (812<window.innerWidth && window.innerWidth<1050) {
+            x=0.75;y=0.75; 
+        } else if (window.innerWidth>=1050){
+            x=1;y=1;
+        }
+        ctx.save();
+        ctx.scale(x,y);
+        ctx.drawImage(pauseButton, 0,0, 388,390,80,window.innerHeight-80, 388*0.16,390*0.16);
+        ctx.restore();
+    }
+    //навесим слушатель событий на кнопку Стрельбы
+    canvas.addEventListener( "touchstart", e => {
+        if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY >(window.innerHeight-80) && e.offsetY < window.innerHeight) {
+            shoot=true;
+            //при нажатии на кнопку запускаем звуковой файл
+            if(soundOn==true){
+                shootingAudio.play();
+            }
+        }
+    });
+    canvas.addEventListener( "touchend", e => {
+        if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY >(window.innerHeight-80) && e.offsetY < window.innerHeight) {
+            shoot=false; 
+        }
+    });
+
     //функция для отрисовки надписи во время паузы
     function pauseDraw (){
         ctx.font ='10vw Gowun Batang';
@@ -614,6 +647,8 @@ function gamePageLoading (){
         shooting();
 
         drawPauseButton();
+
+        drawShootingButton ();
 
         playStopSound();
 
