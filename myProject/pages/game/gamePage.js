@@ -214,23 +214,41 @@ function gamePageLoading (){
     
     //функция для отображения продолжительности игры
     function gameTimeDraw (){
-        ctx.font ='2.5vw Gowun Batang';
-        ctx.fillStyle ='#a09e9e';
-        ctx.fillText('Time:'+getGameTime(),w/2,h/12);
+        if (window.innerWidth<560){
+            ctx.font ='18px Gowun Batang';
+            ctx.fillStyle ='#a09e9e';
+            ctx.fillText('Time:'+getGameTime(),w-130,35);     
+        } else if (window.innerWidth>=560){
+            ctx.font ='2.5vw Gowun Batang';
+            ctx.fillStyle ='#a09e9e';
+            ctx.fillText('Time:'+getGameTime(),w/2,h/12);
+        }
     }
 
     //функция для отображения количества жизней
     function livesCounting (){
-        ctx.font ='2.5vw Gowun Batang';
-        ctx.fillStyle ='#a09e9e';
-        ctx.fillText('Lives:'+lives,w-w/6.5,h/12);
+        if (window.innerWidth<560){
+            ctx.font ='18px Gowun Batang';
+            ctx.fillStyle ='#a09e9e';
+            ctx.fillText('Lives:'+lives,w-130,60);     
+        } else if (window.innerWidth>=560){
+            ctx.font ='2.5vw Gowun Batang';
+            ctx.fillStyle ='#a09e9e';
+            ctx.fillText('Lives:'+lives,w-w/6.5,h/12);
+        }
     }
 
     //функция для отображения счета
     function scoreCounting (){
-        ctx.font ='2.5vw Gowun Batang';
-        ctx.fillStyle ='#a09e9e';
-        ctx.fillText('Scores:'+score,w-w/3.5,h/12);
+        if (window.innerWidth<560){
+            ctx.font ='18px Gowun Batang';
+            ctx.fillStyle ='#a09e9e';
+            ctx.fillText('Scores:'+score,w-130,85);     
+        } else if (window.innerWidth>=560){
+            ctx.font ='2.5vw Gowun Batang';
+            ctx.fillStyle ='#a09e9e';
+            ctx.fillText('Scores:'+score,w-w/3.5,h/12);
+        }
     }
 
     //функция для отрисовки кнопок после окончания игры
