@@ -591,6 +591,7 @@ function gamePageLoading (){
         result.sort((prev, next) => next.record - prev.record);
         //сохраняем новые данные
         lockgetAndUpdateInfo();
+        readInfo();
         
         //удаляется ненужное окно
         document.body.removeChild(document.getElementsByClassName('chempionWindow')[0]);

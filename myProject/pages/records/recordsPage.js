@@ -27,7 +27,6 @@ function recordsPageLoading (){
         }
     }
 
-    lockgetAndUpdateInfo();
     readInfo();
     let recordsHtml = `
         <div class="recordsPage">
