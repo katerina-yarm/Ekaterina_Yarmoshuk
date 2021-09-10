@@ -1,31 +1,33 @@
 function recordsPageLoading (){
-    
     //очищаем холст, чтобы не отображался финальный кадр игры
     let ctx = document.getElementById('game').getContext('2d');
     ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
 
-    //пропишем условие для установки значения переменной record
-    //эта проверка нужна если данные сохраняются в локальном хранилище
-    /*if (parseInt(localStorage.getItem('top1'))>0){
-        records[0].record=localStorage.getItem('top1');
-        records[0].name = localStorage.getItem('name1');
-        if (parseInt(localStorage.getItem('top2'))>0){
-            records[1].record=localStorage.getItem('top2');
-            records[1].name = localStorage.getItem('name2');
-            if (parseInt(localStorage.getItem('top3'))>0){
-                records[2].record=localStorage.getItem('top3');
-                records[2].name = localStorage.getItem('name3');
-                if (parseInt(localStorage.getItem('top4'))>0){
-                    records[3].record=localStorage.getItem('top4');
-                    records[3].name = localStorage.getItem('name4');
-                    if (parseInt(localStorage.getItem('top5'))>0){
-                        records[4].record=localStorage.getItem('top5');
-                        records[4].name = localStorage.getItem('name5');
+    //установка значений переменной records из локального хранилища
+    function getDataFromLocalStorage () {
+        if (parseInt(localStorage.getItem('top1'))>0){
+            records[0].record=localStorage.getItem('top1');
+            records[0].name = localStorage.getItem('name1');
+            if (parseInt(localStorage.getItem('top2'))>0){
+                records[1].record=localStorage.getItem('top2');
+                records[1].name = localStorage.getItem('name2');
+                if (parseInt(localStorage.getItem('top3'))>0){
+                    records[2].record=localStorage.getItem('top3');
+                    records[2].name = localStorage.getItem('name3');
+                    if (parseInt(localStorage.getItem('top4'))>0){
+                        records[3].record=localStorage.getItem('top4');
+                        records[3].name = localStorage.getItem('name4');
+                        if (parseInt(localStorage.getItem('top5'))>0){
+                            records[4].record=localStorage.getItem('top5');
+                            records[4].name = localStorage.getItem('name5');
+                        }
                     }
                 }
             }
         }
-    }*/
+    }
+
+    lockgetAndUpdateInfo();
     readInfo();
     let recordsHtml = `
         <div class="recordsPage">
@@ -39,12 +41,12 @@ function recordsPageLoading (){
                 <th>Name</th>
                 <th>Score</th>
             </tr>`
-            for (let i = 0; i < records.length; i++) {
+            for (let i = 0; i < result.length; i++) {
                 recordsHtml += 
                     `<tr>
                         <td>${i}</td>
-                        <td>${records[i].name}</td>
-                        <td>${records[i].record}</td>
+                        <td>${result[i].name}</td>
+                        <td>${result[i].record}</td>
                     </tr>`
             } recordsHtml += '</table>';
     return recordsHtml;

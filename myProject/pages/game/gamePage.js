@@ -585,6 +585,13 @@ function gamePageLoading (){
         //localStorageSort(); //если нужно сохранять данные в локальном хранилище, то вызываем эту функцию
         
         userName = document.getElementById('IName').value;
+        result[result.length-1].record = score;
+        result[result.length-1].name = userName;
+        //сортирует от большего к меньшему
+        result.sort((prev, next) => next.record - prev.record);
+        //сохраняем новые данные
+        lockgetAndUpdateInfo();
+        
         //удаляется ненужное окно
         document.body.removeChild(document.getElementsByClassName('chempionWindow')[0]);
         //и появляется нужное
@@ -624,92 +631,20 @@ function gamePageLoading (){
         buttonName.appendChild(buttonText);
     }
     
-    //                                        ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
+    //                                        ПЕРЕМЕННЫЕ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
     //пропишем обработчики тач событий для движения ракетой
     let touchStart = null; //Точка начала касания
     let touchPosition = null; //Текущая позиция
+    let touch = false;
     //Перехватываем события
     canvas.addEventListener("touchstart", function (e) { TouchStart(e); }); //Начало касания
     canvas.addEventListener("touchmove", function (e) { TouchMove(e); }); //Движение пальцем по экрану
     //Пользователь отпустил экран
     canvas.addEventListener("touchend", function (e) { TouchEnd(e); });
-
-    let touch = false;
-    function TouchStart(e){
-        //Получаем текущую позицию касания
-        touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        if (touchStart.x>rocket.X && touchStart.x<(rocket.X+rocket.w) && touchStart.y>rocket.Y && touchStart.y<(rocket.Y+rocket.h)){
-            touchPosition = { x: touchStart.x, y: touchStart.y };
-            touch=true;
-            rocket.X=touchPosition.x-rocket.w/2;
-            rocket.Y=touchPosition.y-rocket.h/2;
-        }
-    }
-    function TouchMove(e){
-        //Получаем новую позицию
-        if (touch==true){
-            touchPosition = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-            rocket.X=touchPosition.x-rocket.w/2;
-            rocket.Y=touchPosition.y-rocket.h/2;
-        }
-    }
-    function TouchEnd(e){
-        //Очищаем позиции
-        touchStart = null;
-        touchPosition = null;
-        touch=false;
-    }
-    
-    //функция для отрисовки кнопки стрельбы
-    function drawShootingButton (){
-        ctx.drawImage(shootingButton, 0,0, 1610,1610,(window.innerWidth/2-shootingButton.width*0.05/2),(window.innerHeight-shootingButton.height*0.05-70), 1610*0.05,1610*0.05);
-    }
-    //кнопки управления
-    function drawUpButton (){
-        ctx.drawImage(up, 200,0, 260,150,(window.innerWidth-150),(window.innerHeight-200), 586*0.2,426*0.18);
-    }
-    function drawDownButton (){
-        ctx.drawImage(down, 200,300, 260,160,50,(window.innerHeight-100), 586*0.2,426*0.2);
-    }
-    function drawLeftButton (){
-        ctx.drawImage(left, 0,130, 260,190,20,(window.innerHeight-200), 586*0.2,426*0.2);
-    }
-    function drawRightButton (){
-        ctx.drawImage(right, 330,160, 260,150,(window.innerWidth-150),(window.innerHeight-100), 586*0.2,426*0.16);
-    }
     //навесим слушатель событий на кнопки управления
     canvas.addEventListener( "touchstart", function (e) { touchButtonStart(e); });
     canvas.addEventListener( "touchend", function (e) { touchButtonEnd(e); });
-    function touchButtonStart(e) {
-        touchStart = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-        if(touchStart.x > (window.innerWidth/2-40) && touchStart.x < (window.innerWidth/2+40) && touchStart.y >(window.innerHeight-shootingButton.height*0.05-70)) {
-            shoot=true;
-            //при нажатии на область запускаем звуковой файл
-            if(soundOn==true){
-                shootingAudio.play();
-            }
-        }
-        if(touchStart.x > (window.innerWidth/2+shootingButton.width*0.05/2) && touchStart.y>(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goRight=true;
-        }
-        if(touchStart.x < (window.innerWidth/2-shootingButton.width*0.05/2) && touchStart.y>(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goDown=true;
-        }
-        if(touchStart.x > (window.innerWidth/2+shootingButton.width*0.05/2) && touchStart.y<(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goUp=true;
-        }
-        if(touchStart.x < (window.innerWidth/2-shootingButton.width*0.05/2) && touchStart.y<(window.innerHeight-shootingButton.height*0.05/2-70)) {
-            goLeft=true;
-        }
-    }
-    function touchButtonEnd (e) {
-        touchStart = null;
-        shoot=false; 
-        goRight=false;
-        goDown=false;
-        goUp=false;
-        goLeft=false;
-    }
+    
     //функция для отрисовки игры
     function render(){
         //для того, чтобы при старте новой игры исчезали кнопки
@@ -719,22 +654,17 @@ function gamePageLoading (){
             //получаем данные с сервера
             readInfo();
             //проверяем, является ли полученный результат больше наименьшего значения в таблице рекордов (если да, то заменяем его новым значением) 
-            for (let i = records.length; i > 0; i--) {
-                if (records[i].record < score) {
-                    getChempionsWindow();
-                    records[i].record = score;
-                    records[i].name = userName;
-                    lockgetAndUpdateInfo();
-                    return;
-                /*} if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
-                    getChempionsName();
-                    return;*/
-                } else {
-                    pageHTML=buttonsDraw();
-                    document.getElementById('app').innerHTML=pageHTML;
-                    return;
-                }
-            }   
+            if (records[records.length-1].record < score) {
+                getChempionsWindow();
+                return;
+            /*} if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
+                getChempionsName();
+                return;*/
+            } else {
+                pageHTML=buttonsDraw();
+                document.getElementById('app').innerHTML=pageHTML;
+                return;
+            }  
         }
 
         ctx.clearRect(0,0,w,h);
@@ -821,5 +751,7 @@ function gamePageLoading (){
             shoot=false;
         }
     })
+
+   
       
 }
