@@ -5,65 +5,47 @@ function recordsPageLoading (){
     ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
 
     //пропишем условие для установки значения переменной record
-    if (parseInt(localStorage.getItem('top1'))>0){
-        record1=localStorage.getItem('top1');
-        name1 = localStorage.getItem('name1');
+    //эта проверка нужна если данные сохраняются в локальном хранилище
+    /*if (parseInt(localStorage.getItem('top1'))>0){
+        records[0].record=localStorage.getItem('top1');
+        records[0].name = localStorage.getItem('name1');
         if (parseInt(localStorage.getItem('top2'))>0){
-            record2=localStorage.getItem('top2');
-            name2 = localStorage.getItem('name2');
+            records[1].record=localStorage.getItem('top2');
+            records[1].name = localStorage.getItem('name2');
             if (parseInt(localStorage.getItem('top3'))>0){
-                record3=localStorage.getItem('top3');
-                name3 = localStorage.getItem('name3');
+                records[2].record=localStorage.getItem('top3');
+                records[2].name = localStorage.getItem('name3');
                 if (parseInt(localStorage.getItem('top4'))>0){
-                    record4=localStorage.getItem('top4');
-                    name4 = localStorage.getItem('name4');
+                    records[3].record=localStorage.getItem('top4');
+                    records[3].name = localStorage.getItem('name4');
                     if (parseInt(localStorage.getItem('top5'))>0){
-                        record5=localStorage.getItem('top5');
-                        name5 = localStorage.getItem('name5');
+                        records[4].record=localStorage.getItem('top5');
+                        records[4].name = localStorage.getItem('name5');
                     }
                 }
             }
         }
-    }
-
-   
+    }*/
+    readInfo();
     let recordsHtml = `
         <div class="recordsPage">
             <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Main page</span></a>
             <a href="#Game" class="fciA navItem" onclick="switchToGamePage()"><span class="fciSpan">New Game</span></a>
             <a href="#Rules" class="fciA navItem" onclick="switchToRecordsPage()"><span class="fciSpan">Rules</span></a>
         </div>
-        <table class="zebra">
+        <table>
             <tr>
                 <th></th>
                 <th>Name</th>
                 <th>Score</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>${name1}</td>
-                <td>${record1}</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>${name2}</td>
-                <td>${record2}</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>${name3}</td>
-                <td>${record3}</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>${name4}</td>
-                <td>${record4}</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>${name5}</td>
-                <td>${record5}</td>
-            </tr>
-        </table>`;
+            </tr>`
+            for (let i = 0; i < records.length; i++) {
+                recordsHtml += 
+                    `<tr>
+                        <td>${i}</td>
+                        <td>${records[i].name}</td>
+                        <td>${records[i].record}</td>
+                    </tr>`
+            } recordsHtml += '</table>';
     return recordsHtml;
 }

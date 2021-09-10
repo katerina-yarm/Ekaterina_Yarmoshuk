@@ -11,6 +11,7 @@ function gamePageLoading (){
     //установим количество жизней
     let lives = 10;
     let score =0;
+    let userName;
     let pauseOn=false;
 
     //переменные для таймера игры
@@ -502,91 +503,98 @@ function gamePageLoading (){
         bullets.forEach(bullet => bullet.draw());
     }
     
-    //пропишем условия для сохранения рекордов игры
-    function recordsCheck (){
-         if(score>localStorage.getItem('top5')){
-            if(score>localStorage.getItem('top4')){
-                if(score>localStorage.getItem('top3')){
-                    if(score>localStorage.getItem('top2')){
-                        if(score>localStorage.getItem('top1')){
-                            name5=name4;
-                            localStorage.setItem('name5', name5);
-                            name4=name3;
-                            localStorage.setItem('name4', name4);
-                            name3=name2;
-                            localStorage.setItem('name3', name3);
-                            name2=name1;
-                            localStorage.setItem('name2', name2);
-                            name1 = document.getElementById('IName').value;
-                            localStorage.setItem('name1', name1);
-                            record5=record4;
-                            localStorage.setItem('top5', record5);
-                            record4=record3;
-                            localStorage.setItem('top4', record4);
-                            record3=record2;
-                            localStorage.setItem('top3', record3);
-                            record2=record1;
-                            localStorage.setItem('top2', record2);
-                            record1=score;
-                            localStorage.setItem('top1', record1);
+    //функция для получения имени игрока
+    function getUserName (){
+        //пропишем условия для сохранения рекордов игры в локальном хранилище
+        function localStorageSort () {
+            if(score>localStorage.getItem('top5')){
+                if(score>localStorage.getItem('top4')){
+                    if(score>localStorage.getItem('top3')){
+                        if(score>localStorage.getItem('top2')){
+                            if(score>localStorage.getItem('top1')){
+                                records[4].name=records[3].name;
+                                localStorage.setItem('name5', records[4].name);
+                                records[3].name=records[2].name;
+                                localStorage.setItem('name4', records[3].name);
+                                records[2].name=records[1].name;
+                                localStorage.setItem('name3', records[2].name);
+                                records[1].name=records[0].name;
+                                localStorage.setItem('name2', records[1].name);
+                                records[0].name = document.getElementById('IName').value;
+                                localStorage.setItem('name1', records[0].name);
+                                records[4].record=records[3].record;
+                                localStorage.setItem('top5', records[4].record);
+                                records[3].record=records[2].record;
+                                localStorage.setItem('top4', records[3].record);
+                                records[2].record=records[1].record;
+                                localStorage.setItem('top3', records[2].record);
+                                records[1].record=records[0].record;
+                                localStorage.setItem('top2', records[1].record);
+                                records[0].record=score;
+                                localStorage.setItem('top1', records[0].record);
+                            } else {
+                                records[4].name=records[3].name;
+                                localStorage.setItem('name5', records[4].name);
+                                records[3].name=records[2].name;
+                                localStorage.setItem('name4', records[3].name);
+                                records[2].name=records[1].name;
+                                localStorage.setItem('name3', records[2].name);
+                                records[1].name= document.getElementById('IName').value;
+                                localStorage.setItem('name2', records[1].name);
+                                records[4].record=records[3].record;
+                                localStorage.setItem('top5', records[4].record);
+                                records[3].record=records[2].record;
+                                localStorage.setItem('top4', records[3].record);
+                                records[2].record=records[1].record;
+                                localStorage.setItem('top3', records[2].record);
+                                records[1].record=score;
+                                localStorage.setItem('top2', records[1].record);
+                            }
                         } else {
-                            name5=name4;
-                            localStorage.setItem('name5', name5);
-                            name4=name3;
-                            localStorage.setItem('name4', name4);
-                            name3=name2;
-                            localStorage.setItem('name3', name3);
-                            name2 = document.getElementById('IName').value;
-                            localStorage.setItem('name2', name2);
-                            record5=record4;
-                            localStorage.setItem('top5', record5);
-                            record4=record3;
-                            localStorage.setItem('top4', record4);
-                            record3=record2
-                            localStorage.setItem('top3', record3);
-                            record2=score;
-                            localStorage.setItem('top2', record2);
+                            records[4].name=records[3].name;
+                            localStorage.setItem('name5', records[4].name);
+                            records[3].name=records[2].name;
+                            localStorage.setItem('name4', records[3].name);
+                            records[2].name= document.getElementById('IName').value;
+                            localStorage.setItem('name3', records[2].name);
+                            records[4].record=records[3].record;
+                            localStorage.setItem('top5', records[4].record);
+                            records[3].record=records[2].record;
+                            localStorage.setItem('top4', records[3].record);
+                            records[2].record=score;
+                            localStorage.setItem('top3', records[2].record);
                         }
-                    } else {
-                        name5=name4;
-                        localStorage.setItem('name5', name5);
-                        name4=name3;
-                        localStorage.setItem('name4', name4);
-                        name3 = document.getElementById('IName').value;
-                        localStorage.setItem('name3', name3);
-                        record5=record4;
-                        localStorage.setItem('top5', record5);
-                        record4=record3;
-                        localStorage.setItem('top4', record4);
-                        record3=score;
-                        localStorage.setItem('top3', record3);
+                    }else {
+                        records[4].name= records[3].name;
+                        localStorage.setItem('name5',  records[4].name);
+                        records[3].name = document.getElementById('IName').value;
+                        localStorage.setItem('name4',  records[3].name);
+                        records[4].record=records[3].record;
+                        localStorage.setItem('top5', records[4].record);
+                        records[3].record=score;
+                        localStorage.setItem('top4', records[3].record);
                     }
                 }else {
-                    name5=name4;
-                    localStorage.setItem('name5', name5);
-                    name4 = document.getElementById('IName').value;
-                    localStorage.setItem('name4', name4);
-                    record5=record4;
-                    localStorage.setItem('top5', record5);
-                    record4=score;
-                    localStorage.setItem('top4', record4);
-                }
-            }else {
-                name5 = document.getElementById('IName').value;
-                localStorage.setItem('name5', name5);
-                record5=score;
-                localStorage.setItem('top5', record5);
-            }  
+                    records[4].name = document.getElementById('IName').value;
+                    localStorage.setItem('name5',  records[4].name);
+                    records[4].record=score;
+                    localStorage.setItem('top5', records[4].record);
+                }  
+            }
         }
+        //localStorageSort(); //если нужно сохранять данные в локальном хранилище, то вызываем эту функцию
+        
+        userName = document.getElementById('IName').value;
         //удаляется ненужное окно
         document.body.removeChild(document.getElementsByClassName('chempionWindow')[0]);
         //и появляется нужное
         pageHTML=buttonsDraw();
         document.getElementById('app').innerHTML=pageHTML;
+        return userName;
     }
 
     //функция для отрисовки окна с вводом имени победителя
-    function getChempionsName () {
+    function getChempionsWindow () {
         let chempionWindow = document.createElement('div');
         document.body.appendChild(chempionWindow).classList = "chempionWindow";
 
@@ -608,7 +616,7 @@ function gamePageLoading (){
         let button = document.createElement('a');
         chempionWindow.appendChild(button).classList = 'fciA navItem';
         //при нажатии на кнопку осуществляется проверка позиции игрока в таблице рекордов
-        button.addEventListener('click',  recordsCheck); 
+        button.addEventListener('click',  getUserName); 
 
         let buttonName = document.createElement('span');
         button.appendChild(buttonName).classList = 'fciSpan';
@@ -702,21 +710,31 @@ function gamePageLoading (){
         goUp=false;
         goLeft=false;
     }
-
     //функция для отрисовки игры
     function render(){
         //для того, чтобы при старте новой игры исчезали кнопки
         document.getElementById('app').innerHTML='';
         //проверяем, если gameOver ==true, то останавливаем функцию render
         if(gameOver===true){
-            if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
-                getChempionsName();
-                return;
-            } else {
-                pageHTML=buttonsDraw();
-                document.getElementById('app').innerHTML=pageHTML;
-                return;
-            }
+            //получаем данные с сервера
+            readInfo();
+            //проверяем, является ли полученный результат больше наименьшего значения в таблице рекордов (если да, то заменяем его новым значением) 
+            for (let i = records.length; i > 0; i--) {
+                if (records[i].record < score) {
+                    getChempionsWindow();
+                    records[i].record = score;
+                    records[i].name = userName;
+                    lockgetAndUpdateInfo();
+                    return;
+                /*} if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
+                    getChempionsName();
+                    return;*/
+                } else {
+                    pageHTML=buttonsDraw();
+                    document.getElementById('app').innerHTML=pageHTML;
+                    return;
+                }
+            }   
         }
 
         ctx.clearRect(0,0,w,h);
