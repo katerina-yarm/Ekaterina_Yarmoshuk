@@ -44,7 +44,7 @@ function recordsPageLoading (){
             for (let i = 0; i < result.length; i++) {
                 recordsHtml += 
                     `<tr>
-                        <td>${i}</td>
+                        <td>${i+1}</td>
                         <td>${result[i].name}</td>
                         <td>${result[i].record}</td>
                     </tr>`

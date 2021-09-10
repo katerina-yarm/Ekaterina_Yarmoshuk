@@ -504,7 +504,7 @@ function gamePageLoading (){
     }
     
     //функция для получения имени игрока
-    function getUserName (){
+    function saveNewRecords (){
         //пропишем условия для сохранения рекордов игры в локальном хранилище
         function localStorageSort () {
             if(score>localStorage.getItem('top5')){
@@ -582,8 +582,8 @@ function gamePageLoading (){
                 }  
             }
         }
-        //localStorageSort(); //если нужно сохранять данные в локальном хранилище, то вызываем эту функцию
         
+        //записываем новые данные
         userName = document.getElementById('IName').value;
         result[result.length-1].record = score;
         result[result.length-1].name = userName;
@@ -623,7 +623,7 @@ function gamePageLoading (){
         let button = document.createElement('a');
         chempionWindow.appendChild(button).classList = 'fciA navItem';
         //при нажатии на кнопку осуществляется проверка позиции игрока в таблице рекордов
-        button.addEventListener('click',  getUserName); 
+        button.addEventListener('click', saveNewRecords); 
 
         let buttonName = document.createElement('span');
         button.appendChild(buttonName).classList = 'fciSpan';
