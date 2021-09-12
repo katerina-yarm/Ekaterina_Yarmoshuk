@@ -51,7 +51,7 @@ function gamePageLoading (){
     let rocket=new Image();
     rocket.src='assets/rocket.png';
     rocket.Y=h/2;
-    rocket.X=0;
+    rocket.X=w/2;
 
     //параметры пули
     let bullets = [];
