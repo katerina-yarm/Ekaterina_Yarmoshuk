@@ -399,6 +399,8 @@ function gamePageLoading (){
         //пропишем условие столкновения ракеты с препятствием
         if((obstacles[num].X+obstacles[num].w>(rocket.X+rocket.w/4)) && obstacles[num].X<(rocket.X+rocket.w-rocket.w/4) && (obstacles[num].Y+obstacles[num].h)>rocket.Y && obstacles[num].Y<(rocket.Y+rocket.h)){
             crash=true;
+            //установим вибрацию при столкновении ракеты с препятствием
+            window.navigator.vibrate(1000);
             if(soundOn==true){
                 boomAudio.play();
             }
