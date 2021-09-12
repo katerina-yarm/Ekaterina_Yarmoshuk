@@ -1,7 +1,7 @@
 let soundOn=false;
 
 //переменная для фоновой музыки и зациклим ее воспроизведение
-let fonAudio = new Audio("assets/audio/fon2.mp3");
+let fonAudio = new Audio("assets/audio/fon4.mp3");
 fonAudio.addEventListener('ended', function() {
     this.currentTime = 0;
     this.play();
