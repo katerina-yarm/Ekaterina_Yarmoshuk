@@ -33,6 +33,9 @@ function gamePageLoading (){
     //объявим переменную кнопки паузы
     let pauseButton=new Image();
     pauseButton.src='assets/pause.png';
+    //объявим переменную кнопки "Home page"
+    let homePageButton=new Image();
+    homePageButton.src='assets/home.png';
 
     //объявим переменную кнопки стрельбы
     let shootingButton=new Image();
@@ -160,6 +163,7 @@ function gamePageLoading (){
         ctx.drawImage(pauseButton, 0,0, 388,390,80,5, 388*0.16,390*0.16);
         ctx.restore();
     }
+
     //навесим слушатель событий на кнопку Паузы(чтобы при нажатии ставить игру на паузу)
     canvas.addEventListener( "click", e => {
         if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY > 10 && e.offsetY < 60) {
@@ -174,6 +178,33 @@ function gamePageLoading (){
                 }
                 pauseOn=false;
             }
+        }
+    });
+
+    //функция для отрисовки кнопки "home page"
+    function drawHomePageButton (){
+        if (window.innerWidth<560){
+            ctx.drawImage(homePageButton, 0,0, 150,150,w-w/5 ,10, 150*0.4,150*0.4);
+        }
+        if (window.innerWidth>=560){
+            ctx.drawImage(homePageButton, 0,0, 150,150,w-w/8 ,10, 150*0.5,150*0.5);
+        }
+    }
+
+    //навесим слушатель событий на кнопку "home page"
+    canvas.addEventListener( "click", e => {
+        if(e.offsetX < w-10 && e.offsetX > w-w/8 && e.offsetY > 10 && e.offsetY < 100) {
+            if (pauseOn==false){
+                if(soundOn==true){
+                    buttonClick.play();
+                }
+            }else if (pauseOn==true){
+                if(soundOn==true){
+                    buttonClick.play();
+                }
+            }
+            cancelAnimationFrame(timer);
+            switchToMainPage();
         }
     });
 
@@ -218,11 +249,11 @@ function gamePageLoading (){
         if (window.innerWidth<560){
             ctx.font ='18px Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Time:'+getGameTime(),w-130,35);     
+            ctx.fillText('Time:'+getGameTime(),w-200,35);     
         } else if (window.innerWidth>=560){
             ctx.font ='2.5vw Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Time:'+getGameTime(),w/2,h/12);
+            ctx.fillText('Time:'+getGameTime(),w/3,h/12);
         }
     }
 
@@ -231,11 +262,11 @@ function gamePageLoading (){
         if (window.innerWidth<560){
             ctx.font ='18px Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Lives:'+lives,w-130,60);     
+            ctx.fillText('Lives:'+lives,w-160,60);     
         } else if (window.innerWidth>=560){
             ctx.font ='2.5vw Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Lives:'+lives,w-w/6.5,h/12);
+            ctx.fillText('Lives:'+lives,w-w/3.2,h/12);
         }
     }
 
@@ -244,11 +275,11 @@ function gamePageLoading (){
         if (window.innerWidth<560){
             ctx.font ='18px Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Scores:'+score,w-130,85);     
+            ctx.fillText('Scores:'+score,w-160,85);     
         } else if (window.innerWidth>=560){
             ctx.font ='2.5vw Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Scores:'+score,w-w/3.5,h/12);
+            ctx.fillText('Scores:'+score,w-w/2.2,h/12);
         }
     }
 
@@ -765,6 +796,8 @@ function gamePageLoading (){
         livesCounting();
 
         scoreCounting ();
+
+        drawHomePageButton ();
 
         if(pauseOn==true){
             pauseDraw();
