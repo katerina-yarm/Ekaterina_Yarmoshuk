@@ -761,7 +761,7 @@ function gamePageLoading (){
             //получаем данные с сервера
             readInfo();
             //проверяем, является ли полученный результат больше наименьшего значения в таблице рекордов (если да, то заменяем его новым значением) 
-            if (records[records.length-1].record < score) {
+            if (result[result.length-1].record < score) {
                 getChempionsWindow();
                 return;
             /*} if(score>parseInt(localStorage.getItem('top5')) || isNaN(parseInt(localStorage.getItem('top5')))){
