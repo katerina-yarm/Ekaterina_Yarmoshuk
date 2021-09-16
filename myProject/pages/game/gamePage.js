@@ -132,19 +132,16 @@ function gamePageLoading (){
     canvas.addEventListener( "click", e => {
         if(e.offsetX > 10 && e.offsetX < 60 && e.offsetY > 10 && e.offsetY < 60) {
             if (soundOn==true){
-                if(soundOn==true){
-                    buttonClick.play();
-                }
+                buttonClick.play();
                 fonAudio.pause();
                 fonAudio.currentTime = 0;
-                return soundOn=false;
+                soundOn=false;
+                return soundOn;
             }
             if (soundOn==false){
-                if(soundOn==true){
-                    buttonClick.play();
-                }
                 fonAudio.play();
-                return soundOn=true;
+                soundOn=true;
+                return soundOn;
             }
         }
     });

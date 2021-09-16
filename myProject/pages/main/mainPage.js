@@ -5,19 +5,16 @@ function mainPageLoading (){
 
     function sound(){
         if (soundOn==true){
-            if(soundOn==true){
-                buttonClick.play();
-            }
+            buttonClick.play();
             fonAudio.pause();
             fonAudio.currentTime = 0;
-            return soundOn=false;
+            soundOn=false;
+            return soundOn;
         }
         if (soundOn==false){
-            if(soundOn==true){
-                buttonClick.play();
-            }
             fonAudio.play();
-            return soundOn=true;
+            soundOn=true;
+            return soundOn;
         }
     }
     let MainHtml = `   
