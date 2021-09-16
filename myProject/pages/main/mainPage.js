@@ -26,7 +26,7 @@ function mainPageLoading (){
             <a href="#Game" class="fciA navItem" onclick="switchToGamePage()"><span class="fciSpan">New Game</span></a>
             <a href="#Rules" class="fciA navItem" onclick="switchToRulesPage()"><span class="fciSpan">Rules</span></a>
             <a href="#Records" class="fciA navItem" onclick="switchToRecordsPage()"><span class="fciSpan">Scores</span></a>
-            <a href="#Records" class="fciA navItem" onclick="sound()"><span class="fciSpan">On/Off sound</span></a>
+            <a href="" class="fciA navItem" onclick="sound()"><span class="fciSpan">On/Off sound</span></a>
         </div>`;
     return MainHtml;
 }
