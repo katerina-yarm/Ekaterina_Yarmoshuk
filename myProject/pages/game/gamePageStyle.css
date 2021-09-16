@@ -1,4 +1,6 @@
-
+#app{
+    z-index: 50;
+}
 .gameButtons a{
     margin-top: 13vh;
 }
@@ -73,6 +75,15 @@ input:focus {
 }
 a.fciA.navItem{
     cursor: pointer;
+}
+.leaveWindow{
+    padding-top: 20vh;
+    margin: auto;
+    height: 50vh;
+    width: 50vw;
+    background-color: rgba(7, 7, 7, 0.4);
+    animation-duration: 3s;
+    animation-name: scaleTransform;
 }
 @media (max-width: 1200px) {
     .div{

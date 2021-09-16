@@ -30,6 +30,8 @@ function gamePageLoading (){
     //объявим переменную кнопки со звуком
     let soundButton=new Image();
     soundButton.src='assets/buttonOn.png';
+    //soundOn=true;
+   // fonAudio.play();
     //объявим переменную кнопки паузы
     let pauseButton=new Image();
     pauseButton.src='assets/pause.png';
@@ -203,11 +205,58 @@ function gamePageLoading (){
                     buttonClick.play();
                 }
             }
-            cancelAnimationFrame(timer);
-            switchToMainPage();
+            pageHTML=leaveTheGame (); 
         }
     });
 
+    //функция отображения окна выхода из игры
+    function leaveTheGame (){
+        pauseOn=true;
+        let button2,button1;
+        let leaveWindow = document.getElementsByClassName('leaveWindow');
+        function notLeaveTheGame (){
+            leaveWindow[0].parentNode.removeChild(leaveWindow[0]);
+        }
+        function yesLeaveTheGame (){
+            leaveWindow[0].parentNode.removeChild(leaveWindow[0]);
+            pauseOn=false;
+            cancelAnimationFrame(timer);
+            gameOver = true;
+            pageHTML = buttonsDraw();
+            document.getElementById('app').innerHTML=pageHTML;
+        }
+        
+        function appendLeaveWindow () {
+            let leaveWindow = document.createElement('div');
+            document.body.appendChild(leaveWindow).classList = "leaveWindow";
+
+            let div = document.createElement('div');
+            leaveWindow.appendChild(div).classList = 'div';
+            let divText = document.createTextNode('Do you want to leave the game?');
+            div.appendChild(divText);
+
+            button1 = document.createElement('a');
+            leaveWindow.appendChild(button1).classList = 'fciA navItem yes';
+            let buttonName1 = document.createElement('span');
+            button1.appendChild(buttonName1).classList = 'fciSpan';
+            let buttonText1 = document.createTextNode('Yes');
+            buttonName1.appendChild(buttonText1);
+
+            button2 = document.createElement('a');
+            leaveWindow.appendChild(button2).classList = 'fciA navItem no';
+            let buttonName2 = document.createElement('span');
+            button2.appendChild(buttonName2).classList = 'fciSpan';
+            let buttonText2 = document.createTextNode('No');
+            buttonName2.appendChild(buttonText2);
+        }
+        if(document.body.children.length==4){
+            appendLeaveWindow () ;
+        }
+        
+        document.getElementsByClassName('no')[0].addEventListener('click', notLeaveTheGame); 
+        document.getElementsByClassName('yes')[0].addEventListener('click', yesLeaveTheGame);
+    }
+    
     //функция для отрисовки надписи во время паузы
     function pauseDraw (){
         ctx.font ='10vw Gowun Batang';
