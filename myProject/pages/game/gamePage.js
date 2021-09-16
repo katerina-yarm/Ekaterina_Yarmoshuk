@@ -129,7 +129,7 @@ function gamePageLoading (){
         ctx.restore();
     }
     //навесим слушатель событий на кнопку Звука(чтобы при нажатии включать/отключать звук)
-    canvas.addEventListener( "click", e => {
+    /*canvas.addEventListener( "click", e => {
         if(e.offsetX > 10 && e.offsetX < 60 && e.offsetY > 10 && e.offsetY < 60) {
             if (soundOn==true){
                 buttonClick.play();
@@ -144,7 +144,7 @@ function gamePageLoading (){
                 return soundOn;
             }
         }
-    });
+    });*/
 
     //функция для отрисовки кнопки паузы
     function drawPauseButton (){
@@ -159,13 +159,13 @@ function gamePageLoading (){
         }
         ctx.save();
         ctx.scale(x,y);
-        ctx.drawImage(pauseButton, 0,0, 388,390,80,5, 388*0.16,390*0.16);
+        ctx.drawImage(pauseButton, 0,0, 500,500,100,5, 500*0.15,500*0.15);
         ctx.restore();
     }
 
     //навесим слушатель событий на кнопку Паузы(чтобы при нажатии ставить игру на паузу)
     canvas.addEventListener( "click", e => {
-        if(e.offsetX > 60 && e.offsetX < 140 && e.offsetY > 10 && e.offsetY < 60) {
+        if(e.offsetX > 70 && e.offsetX < 145 && e.offsetY > 10 && e.offsetY < 60) {
             if (pauseOn==false){
                 if(soundOn==true){
                     buttonClick.play();
@@ -182,17 +182,24 @@ function gamePageLoading (){
 
     //функция для отрисовки кнопки "home page"
     function drawHomePageButton (){
-        if (window.innerWidth<560){
-            ctx.drawImage(homePageButton, 0,0, 150,150,w-w/5 ,10, 150*0.4,150*0.4);
-        }
-        if (window.innerWidth>=560){
-            ctx.drawImage(homePageButton, 0,0, 150,150,w-w/8 ,10, 150*0.5,150*0.5);
-        }
+       //для адаптива кнопок
+       let x,y;
+       if (window.innerWidth<=812){
+           x=0.6;y=0.6;
+       } else if (812<window.innerWidth && window.innerWidth<1050) {
+           x=0.75;y=0.75; 
+       } else if (window.innerWidth>=1050){
+           x=1;y=1;
+       }
+       ctx.save();
+       ctx.scale(x,y);
+       ctx.drawImage(homePageButton, 0,0, 500,500,10,5, 500*0.15,500*0.15);
+       ctx.restore();
     }
 
     //навесим слушатель событий на кнопку "home page"
     canvas.addEventListener( "click", e => {
-        if(e.offsetX < w-10 && e.offsetX > w-w/8 && e.offsetY > 10 && e.offsetY < 100) {
+        if(e.offsetX > 0 && e.offsetX < 70 && e.offsetY > 10 && e.offsetY < 100) {
             if (pauseOn==false){
                 if(soundOn==true){
                     buttonClick.play();
@@ -295,11 +302,11 @@ function gamePageLoading (){
         if (window.innerWidth<560){
             ctx.font ='18px Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Time:'+getGameTime(),w-200,35);     
+            ctx.fillText('Time:'+getGameTime(),w-130,35);     
         } else if (window.innerWidth>=560){
             ctx.font ='2.5vw Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Time:'+getGameTime(),w/3,h/12);
+            ctx.fillText('Time:'+getGameTime(),w/2,h/12);
         }
     }
 
@@ -308,11 +315,11 @@ function gamePageLoading (){
         if (window.innerWidth<560){
             ctx.font ='18px Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Lives:'+lives,w-160,60);     
+            ctx.fillText('Lives:'+lives,w-130,60);     
         } else if (window.innerWidth>=560){
             ctx.font ='2.5vw Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Lives:'+lives,w-w/3.2,h/12);
+            ctx.fillText('Lives:'+lives,w-w/6,h/12);
         }
     }
 
@@ -321,11 +328,11 @@ function gamePageLoading (){
         if (window.innerWidth<560){
             ctx.font ='18px Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Scores:'+score,w-160,85);     
+            ctx.fillText('Scores:'+score,w-130,85);     
         } else if (window.innerWidth>=560){
             ctx.font ='2.5vw Gowun Batang';
             ctx.fillStyle ='#a09e9e';
-            ctx.fillText('Scores:'+score,w-w/2.2,h/12);
+            ctx.fillText('Scores:'+score,w-w/3.3,h/12);
         }
     }
 
@@ -834,8 +841,6 @@ function gamePageLoading (){
         shooting();
 
         drawPauseButton();
-
-        playStopSound();
 
         gameTimeDraw ()
 

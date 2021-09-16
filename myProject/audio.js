@@ -1,5 +1,21 @@
 let soundOn=false;
 
+//функция включения/отключения звука
+function sound(){
+    if (soundOn==true){
+        buttonClick.play();
+        fonAudio.pause();
+        fonAudio.currentTime = 0;
+        soundOn=false;
+        return soundOn;
+    }
+    if (soundOn==false){
+        fonAudio.play();
+        soundOn=true;
+        return soundOn;
+    }
+}
+
 //переменная для фоновой музыки и зациклим ее воспроизведение
 let fonAudio = new Audio("assets/audio/fon4.mp3");
 fonAudio.addEventListener('ended', function() {
