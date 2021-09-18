@@ -16,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="backgroundAnimation.js"></script>
     <script src="audio.js"></script>
+    <script src="pages/about/aboutPage.js"></script>
     <script src="pages/main/mainPage.js"></script>
     <script src="pages/rules/rulesPage.js"></script>
     <script src="pages/records/recordsPage.js"></script>
@@ -154,6 +155,10 @@
                 location.hash={pagename:'Records'}.pagename;
             }
 
+            function switchToAboutPage() {
+                location.hash={pagename:'About'}.pagename;
+            }
+
     
             let SPAState={};
             function switchToStateFromURLHash()  {
@@ -165,6 +170,7 @@
                 if ( stateStr == "Records" ) SPAState={ pagename: 'Records' };
                 else if ( stateStr == "Rules" ) SPAState={ pagename: 'Rules' };
                 else if ( stateStr == "Game" ) SPAState={ pagename: 'Game' };
+                else if ( stateStr == "About" ) SPAState={ pagename: 'About' };
                 else SPAState={pagename:'Main'};
     
                 //прописываем варианты разметки для каждой станицы
@@ -181,6 +187,9 @@
                     break;
                 case 'Records':
                     pageHTML+= recordsPageLoading ();  
+                    break;
+                case 'About':
+                    pageHTML+= aboutPageLoading ();  
                     break;
                 }
                 document.getElementById('app').innerHTML=pageHTML;
