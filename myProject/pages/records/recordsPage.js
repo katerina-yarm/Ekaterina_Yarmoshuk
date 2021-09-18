@@ -33,6 +33,7 @@ function recordsPageLoading (){
             <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Main page</span></a>
             <a href="#Game" class="fciA navItem" onclick="switchToGamePage()"><span class="fciSpan">New Game</span></a>
             <a href="#Rules" class="fciA navItem" onclick="switchToRecordsPage()"><span class="fciSpan">Rules</span></a>
+            <a href="#About" class="fciA navItem" onclick="switchToAboutPage()"><span class="fciSpan">About</span></a>
         </div>
         <table>
             <tr>

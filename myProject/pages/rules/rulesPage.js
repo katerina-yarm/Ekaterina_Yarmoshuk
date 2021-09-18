@@ -20,6 +20,7 @@ function rulesPageLoading (){
             <a href="#Main" class="fciA navItem" onclick="switchToMainPage()"><span class="fciSpan">Main page</span></a>
             <a href="#Game" class="fciA navItem" onclick="switchToGamePage()"><span class="fciSpan">New Game</span></a>
             <a href="#Records" class="fciA navItem" onclick="switchToRecordsPage()"><span class="fciSpan">Scores</span></a>
+            <a href="#About" class="fciA navItem" onclick="switchToAboutPage()"><span class="fciSpan">About</span></a>
         </div>
         <div class="rules">
             <h3>The rules of the game</h3>
