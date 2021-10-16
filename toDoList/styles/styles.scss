@@ -1,0 +1,124 @@
+* { margin:0; padding:0; }
+header{
+    background-color: rgba(3, 3, 3, 0.658);
+    display: flex;
+    color:#fff;
+    height: 80px;
+    h1{
+        margin: 20px;
+    }
+    button{
+        margin: 20px;
+    }
+}
+button {
+    min-width: 150px;
+    font-family: inherit;
+    height: 40px;
+    border: 0;
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 5px;
+    background: #38393b;
+    color: #fff;
+    padding: 8px 16px;
+    cursor: pointer;
+    
+    &:hover {
+    background: #272729;
+    }
+    
+    &:focus {
+    box-shadow: 0 0 0 2px #7c7c7e;
+    }      
+}
+.list{
+    display: flex;
+    height: 80px;
+    font-size: 20px;
+    &:nth-child(even){
+        background-color: rgb(151, 150, 150);
+    }
+    &:nth-child(odd){
+        background: #4c4c4d;
+    }
+    .card-number{
+        width: 10vw;
+        height: 80px;
+        padding-left: 20px;
+        margin: 30px 0;
+    }
+    .card-title{
+        margin: 30px 0;
+        width: 15vw;
+    }
+    .card-text{
+        margin: 30px 0;
+        width: 15vw;
+    }
+    button{
+        float: right;
+        margin: 20px;
+    }
+}
+.formStyle{
+    height: 50vh;
+    width: 50vw;
+    background-color: rgba(3, 3, 3, 0.658);
+    position: absolute;
+    left: 25vw;
+    top: 25vh;
+    border-radius:20px;
+    text-align: center;
+    padding: 2vw;
+    font-family: 'Gowun Batang', serif;
+    color:#070707;
+    font-size: 20px;
+    line-height: 5vh;
+    font-weight: 400;
+    animation-duration: 3s;
+    animation-name: scaleTransform;
+    h5{
+        text-align: center;
+        color:#f5f1f1;
+        font-family: 'Gowun Batang', serif;
+        font-size: 25px;
+        font-weight: 400;
+        letter-spacing: 2px;
+    }
+    div{
+        margin-top: 20px;
+        div{
+            clear:both; 
+            text-align:right;
+            label {
+                margin-left: 5vw;
+                float: left;
+            }
+            input{
+                border-radius: 5px;
+                padding: 5px;
+                box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+                width: 25vw;
+                margin-right: 5vw;
+                float: right;
+            }
+        }
+    }
+    button {
+        float: right;
+        margin-top: 10px;
+        margin-right: 5vw;
+    }
+
+}
+
+@keyframes scaleTransform {
+    from {
+      transform: scale(0.1);
+    }
+  
+    to {
+        transform: scale(1);
+    }
+}

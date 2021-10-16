@@ -1,0 +1,165 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: rgba(3, 3, 3, 0.658);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  height: 80px;
+}
+
+header h1 {
+  margin: 20px;
+}
+
+header button {
+  margin: 20px;
+}
+
+button {
+  min-width: 150px;
+  font-family: inherit;
+  height: 40px;
+  border: 0;
+  font-size: 20px;
+  font-weight: 400;
+  border-radius: 5px;
+  background: #38393b;
+  color: #fff;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #272729;
+}
+
+button:focus {
+  -webkit-box-shadow: 0 0 0 2px #7c7c7e;
+          box-shadow: 0 0 0 2px #7c7c7e;
+}
+
+.list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 80px;
+  font-size: 20px;
+}
+
+.list:nth-child(even) {
+  background-color: #979696;
+}
+
+.list:nth-child(odd) {
+  background: #4c4c4d;
+}
+
+.list .card-number {
+  width: 10vw;
+  height: 80px;
+  padding-left: 20px;
+  margin: 30px 0;
+}
+
+.list .card-title {
+  margin: 30px 0;
+  width: 15vw;
+}
+
+.list .card-text {
+  margin: 30px 0;
+  width: 15vw;
+}
+
+.list button {
+  float: right;
+  margin: 20px;
+}
+
+.formStyle {
+  height: 50vh;
+  width: 50vw;
+  background-color: rgba(3, 3, 3, 0.658);
+  position: absolute;
+  left: 25vw;
+  top: 25vh;
+  border-radius: 20px;
+  text-align: center;
+  padding: 2vw;
+  font-family: 'Gowun Batang', serif;
+  color: #070707;
+  font-size: 20px;
+  line-height: 5vh;
+  font-weight: 400;
+  -webkit-animation-duration: 3s;
+          animation-duration: 3s;
+  -webkit-animation-name: scaleTransform;
+          animation-name: scaleTransform;
+}
+
+.formStyle h5 {
+  text-align: center;
+  color: #f5f1f1;
+  font-family: 'Gowun Batang', serif;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.formStyle div {
+  margin-top: 20px;
+}
+
+.formStyle div div {
+  clear: both;
+  text-align: right;
+}
+
+.formStyle div div label {
+  margin-left: 5vw;
+  float: left;
+}
+
+.formStyle div div input {
+  border-radius: 5px;
+  padding: 5px;
+  -webkit-box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  width: 25vw;
+  margin-right: 5vw;
+  float: right;
+}
+
+.formStyle button {
+  float: right;
+  margin-top: 10px;
+  margin-right: 5vw;
+}
+
+@-webkit-keyframes scaleTransform {
+  from {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes scaleTransform {
+  from {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+/*# sourceMappingURL=styles.css.map */
