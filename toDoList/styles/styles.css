@@ -4,11 +4,9 @@
 }
 
 header {
-  background-color: rgba(3, 3, 3, 0.658);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  color: #fff;
   height: 80px;
 }
 
@@ -28,19 +26,8 @@ button {
   font-size: 20px;
   font-weight: 400;
   border-radius: 5px;
-  background: #38393b;
-  color: #fff;
   padding: 8px 16px;
   cursor: pointer;
-}
-
-button:hover {
-  background: #272729;
-}
-
-button:focus {
-  -webkit-box-shadow: 0 0 0 2px #7c7c7e;
-          box-shadow: 0 0 0 2px #7c7c7e;
 }
 
 .list {
@@ -49,14 +36,6 @@ button:focus {
   display: flex;
   height: 80px;
   font-size: 20px;
-}
-
-.list:nth-child(even) {
-  background-color: #979696;
-}
-
-.list:nth-child(odd) {
-  background: #4c4c4d;
 }
 
 .list .card-number {
@@ -84,7 +63,6 @@ button:focus {
 .formStyle {
   height: 50vh;
   width: 50vw;
-  background-color: rgba(3, 3, 3, 0.658);
   position: absolute;
   left: 25vw;
   top: 25vh;
@@ -92,7 +70,6 @@ button:focus {
   text-align: center;
   padding: 2vw;
   font-family: 'Gowun Batang', serif;
-  color: #070707;
   font-size: 20px;
   line-height: 5vh;
   font-weight: 400;
@@ -104,7 +81,6 @@ button:focus {
 
 .formStyle h5 {
   text-align: center;
-  color: #f5f1f1;
   font-family: 'Gowun Batang', serif;
   font-size: 25px;
   font-weight: 400;
@@ -128,8 +104,6 @@ button:focus {
 .formStyle div div input {
   border-radius: 5px;
   padding: 5px;
-  -webkit-box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
-          box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
   width: 25vw;
   margin-right: 5vw;
   float: right;

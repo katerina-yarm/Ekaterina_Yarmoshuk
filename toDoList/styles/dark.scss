@@ -1,0 +1,41 @@
+body{
+    background-color:#111111;
+}
+header{
+    background-color: rgba(3, 3, 3, 0.658);
+    color: #f4f4f4;
+}
+button {
+    background: #38393b;
+    color: #f4f4f4;
+    
+    &:hover {
+    background: #272729;
+    }
+    
+    &:focus {
+    box-shadow: 0 0 0 2px #7c7c7e;
+    }      
+}
+.list{
+    &:nth-child(even){
+        background-color: rgb(151, 150, 150);
+    }
+    &:nth-child(odd){
+        background: #4c4c4d;
+    }
+}
+.formStyle{
+    background-color: rgba(53, 52, 52, 0.658);
+    color:#f4f4f4;
+    h5{
+        color:#f4f4f4;
+    }
+    div{
+        div{
+            input{
+                box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+            }
+        }
+    }
+}

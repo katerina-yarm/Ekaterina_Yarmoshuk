@@ -1,0 +1,45 @@
+body {
+  background-color: #111111;
+}
+
+header {
+  background-color: rgba(3, 3, 3, 0.658);
+  color: #f4f4f4;
+}
+
+button {
+  background: #38393b;
+  color: #f4f4f4;
+}
+
+button:hover {
+  background: #272729;
+}
+
+button:focus {
+  -webkit-box-shadow: 0 0 0 2px #7c7c7e;
+          box-shadow: 0 0 0 2px #7c7c7e;
+}
+
+.list:nth-child(even) {
+  background-color: #979696;
+}
+
+.list:nth-child(odd) {
+  background: #4c4c4d;
+}
+
+.formStyle {
+  background-color: rgba(53, 52, 52, 0.658);
+  color: #f4f4f4;
+}
+
+.formStyle h5 {
+  color: #f4f4f4;
+}
+
+.formStyle div div input {
+  -webkit-box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+/*# sourceMappingURL=dark.css.map */
