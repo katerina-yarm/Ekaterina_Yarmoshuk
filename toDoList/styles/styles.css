@@ -105,8 +105,16 @@ button {
   border-radius: 5px;
   padding: 5px;
   width: 25vw;
+  height: 20px;
   margin-right: 5vw;
-  float: right;
+}
+
+.formStyle div div select {
+  border-radius: 5px;
+  padding: 5px;
+  width: 26vw;
+  margin-right: 5vw;
+  height: 30px;
 }
 
 .formStyle button {

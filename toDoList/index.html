@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="styles/styles.css" rel="stylesheet" >
-    <link href="styles/light.css" rel="stylesheet" id='theme'>
+    <link href="styles/styles.css" rel="stylesheet"  type="text/css" >
+    <link href="styles/light.css" rel="stylesheet"  type="text/css" id='theme'>
     <title>Todo List</title>
 </head>
 <body>
-    <div id=app></div>    
+    <header id="todo">
+        <h1>Мои списки дел</h1>
+        <button onclick='newToDoForm()'>Добавить новую запись</button>
+        <button id='switchTheme'>Изменить тему</button>
+    </header>
+    <button onclick='dateSort()'>Сортировать по дате</button>
+    <button onclick='prioritySort()'>Сортировать по приоритету</button>
+    <div id=app></div>
+
     <script src="script.js"></script> 
-    <script>
-        //скрипт для переключения тем
-        let switchTheme=document.getElementById('switchTheme');
-        switchTheme.addEventListener('click',function(){
-            let theme=document.getElementById('theme');
-            if(theme.getAttribute('href')=='styles/light.css'){
-                theme.href='styles/dark.css';
-            } else {
-                theme.href='styles/light.css';
-            }
-        });
-    </script> 
+
 </body>
 </html>
