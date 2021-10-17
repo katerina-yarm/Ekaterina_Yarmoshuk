@@ -1,1 +1,46 @@
-/* No CSS *//*# sourceMappingURL=light.css.map */
+body {
+  background-color: #5a5a5e;
+}
+
+header {
+  background-color: #272729;
+  color: #FFD600;
+}
+
+button {
+  background: #38393b;
+  color: #f4f4f4;
+}
+
+button:hover {
+  background: #272729;
+}
+
+button:focus {
+  -webkit-box-shadow: 0 0 0 2px #7c7c7e;
+          box-shadow: 0 0 0 2px #7c7c7e;
+}
+
+.list:nth-child(even) {
+  background-color: #aaaaaf;
+}
+
+.list:nth-child(odd) {
+  background: #5a5a5e;
+  color: #FFD600;
+}
+
+.formStyle {
+  background-color: #5a5a5ede;
+  color: #f4f4f4;
+}
+
+.formStyle h5 {
+  color: #FFD600;
+}
+
+.formStyle div div input {
+  -webkit-box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+/*# sourceMappingURL=light.css.map */

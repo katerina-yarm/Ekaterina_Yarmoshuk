@@ -1,4 +1,7 @@
 * { margin:0; padding:0; }
+body{
+    font-family: 'Cormorant Infant', serif;
+}
 header{
     display: flex;
     height: 80px;
@@ -9,38 +12,56 @@ header{
         margin: 20px;
     }
 }
+.sort{
+    margin: 20px;
+    font-size: 20px;
+}
 button {
-    min-width: 150px;
     font-family: inherit;
     height: 40px;
     border: 0;
     font-size: 20px;
     font-weight: 400;
     border-radius: 5px;
-    padding: 8px 16px;
-    cursor: pointer;     
+    padding: 5px;
+    cursor: pointer; 
+    overflow: hidden;    
 }
 .list{
     display: flex;
-    height: 80px;
+    flex-wrap: wrap;
+    min-height: 80px;
     font-size: 20px;
     .card-number{
-        width: 10vw;
-        height: 80px;
+        width: 2vw;
         padding-left: 20px;
         margin: 30px 0;
     }
     .card-title{
+        font-size: 20px;
+        font-weight: 400;
         margin: 30px 0;
-        width: 15vw;
+        width: 13vw;
+        overflow: hidden; 
     }
-    .card-text{
+    .card-date{
         margin: 30px 0;
-        width: 15vw;
+        width: 10vw;
+        overflow: hidden; 
+    }
+    .card-priority{
+        margin: 30px 0;
+        width: 10vw;
+        overflow: hidden; 
+    }
+    .card-description{
+        margin-top: 30px;
+        width: 35vw;
+        overflow: hidden; 
     }
     button{
-        float: right;
         margin: 20px;
+        width: 10vw;
     }
 }
 .formStyle{
@@ -52,7 +73,6 @@ button {
     border-radius:20px;
     text-align: center;
     padding: 2vw;
-    font-family: 'Gowun Batang', serif;
     font-size: 20px;
     line-height: 5vh;
     font-weight: 400;
@@ -60,7 +80,6 @@ button {
     animation-name: scaleTransform;
     h5{
         text-align: center;
-        font-family: 'Gowun Batang', serif;
         font-size: 25px;
         font-weight: 400;
         letter-spacing: 2px;
@@ -92,7 +111,6 @@ button {
     }
     button {
         float: right;
-        margin-top: 10px;
         margin-right: 5vw;
     }
 
@@ -106,4 +124,135 @@ button {
     to {
         transform: scale(1);
     }
+}
+
+@media (max-width: 1050px) {
+   
+    .list{
+        .card-number{
+            margin: 10px;
+            width: 5vw;
+        }
+        .card-title{
+            margin: 10px;
+            width: 25vw;
+        }
+        .card-date{
+            margin: 10px;
+            width: 25vw;
+        }
+        .card-priority{
+            margin: 10px;
+            width: 25vw;
+        }
+        .card-description{
+            margin: 10px;
+            flex-basis: 100%;
+        }
+        button{
+            margin: 20px;
+            width: 40vw;
+        }
+    }
+   
+}
+
+@media (max-width: 690px) {
+    button{
+        font-size: 15px;
+    }
+    header{
+        height: 60px;
+        h1{
+            font-size: 22px;
+            margin: 10px;
+        }
+        button{
+            margin: 10px;
+        }
+    }
+    .list{
+        min-height: 80px;
+        font-size: 16px;
+        .card-number{
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        .card-title{
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .card-date{
+            margin: 10px 0;
+        }
+        .card-priority{
+            margin: 10px 0;
+        }
+        .card-description{
+            margin-top: 10px; 
+        }
+    }
+    
+}
+@media (max-width: 475px) {
+    header{
+        height: 60px;
+        h1{
+            width: 100%;
+        }
+        button{
+            margin: 10px;
+        }
+    }
+    .sort{
+        margin: 5px;
+    }
+    .list{
+        .card-number{
+            padding-left: 10px;
+            margin: 0;
+        }
+        .card-title{
+            margin: 0;
+        }
+        .card-date{
+            margin: 0;
+        }
+        .card-priority{
+            margin: 0;
+        }
+        .card-description{
+            margin-top: 5px; 
+        }
+        button{
+            margin: 2px;
+        }
+    }
+    .formStyle{
+        height: 90vh;
+        width: 90vw;
+        left: 2vw;
+        top: 2vh;
+        font-size: 16px;
+        line-height: 16px;
+        h5{
+            padding: 5px;
+            font-size: 20px;
+        }
+        div{
+            margin-top: 10px;
+            div{
+                label {
+                    margin: 5px;
+                }
+                input{
+                    padding: 5px;
+                    width: 80vw;
+                }
+            }
+        }
+        button {
+            margin-top: 5px;
+        }
+    }  
 }

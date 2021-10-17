@@ -1,8 +1,11 @@
 body{
-    background-color:#111111;
+    background-color:#272729;
 }
 header{
     background-color: rgba(3, 3, 3, 0.658);
+    color: #FFD600;
+}
+.sort{
     color: #f4f4f4;
 }
 button {
@@ -19,17 +22,18 @@ button {
 }
 .list{
     &:nth-child(even){
-        background-color: rgb(151, 150, 150);
+        background-color: #5a5a5e;
     }
     &:nth-child(odd){
-        background: #4c4c4d;
+        background: #272729;
+        color: #FFD600;
     }
 }
 .formStyle{
-    background-color: rgba(53, 52, 52, 0.658);
+    background-color: rgba(53, 52, 52, 0.911);
     color:#f4f4f4;
     h5{
-        color:#f4f4f4;
+        color:#FFD600;
     }
     div{
         div{

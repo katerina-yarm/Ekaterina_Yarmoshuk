@@ -37,9 +37,9 @@
             <div class='list' id="${todos[i].id}">
                 <div class='card-number'>${toDoNum}</div>
                 <h5 class="card-title">${todos[i].name}</h5>
-                <p class="card-text">${todos[i].endDate}</p>
-                <p class="card-text">${todos[i].priority}</p>
-                <p class="card-text">${todos[i].description}</p>
+                <p class="card-date">${todos[i].endDate}</p>
+                <p class="card-priority">${todos[i].priority}</p>
+                <p class="card-description">${todos[i].description}</p>
                 <button data-todoid=${todos[i].id} type="button" class='btn-del'>Удалить</button>
                 <button type="button" onclick='showChangesForm(${todos[i].id})'>Изменить</button> 
             </div>`

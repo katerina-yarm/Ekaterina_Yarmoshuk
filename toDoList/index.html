@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet"  type="text/css" >
     <link href="styles/light.css" rel="stylesheet"  type="text/css" id='theme'>
     <title>Todo List</title>
@@ -14,8 +16,11 @@
         <button onclick='newToDoForm()'>Добавить новую запись</button>
         <button id='switchTheme'>Изменить тему</button>
     </header>
-    <button onclick='dateSort()'>Сортировать по дате</button>
-    <button onclick='prioritySort()'>Сортировать по приоритету</button>
+    <div class="sort"> Сортировать 
+        <button onclick='dateSort()'>по дате</button>
+        <button onclick='prioritySort()'>по приоритету</button>
+    </div>
+    
     <div id=app></div>
 
     <script src="script.js"></script> 
