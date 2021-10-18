@@ -22,6 +22,23 @@ header button {
   margin: 20px;
 }
 
+header div {
+  width: 100px;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+header div button {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+header div button img {
+  width: 30px;
+  height: 20px;
+  background-color: transparent;
+}
+
 .sort {
   margin: 20px;
   font-size: 20px;

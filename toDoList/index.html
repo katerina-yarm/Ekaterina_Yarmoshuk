@@ -8,17 +8,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet"  type="text/css" >
     <link href="styles/light.css" rel="stylesheet"  type="text/css" id='theme'>
+    <script src='lang.js'></script>
     <title>Todo List</title>
 </head>
 <body>
     <header id="todo">
-        <h1>Мои списки дел</h1>
-        <button onclick='newToDoForm()'>Добавить новую запись</button>
-        <button id='switchTheme'>Изменить тему</button>
+        <h1 class='lng-header'>Мои списки дел</h1>
+        <button onclick='newToDoForm()' class='lng-add'>Добавить новую запись</button>
+        <button id='switchTheme' class='lng-theme'>Изменить тему</button>
+        <div>
+            <button onclick="languageChangeButton('en')"><img src="assets/en.png"></button>
+            <button onclick="languageChangeButton('ru')"><img src="assets/ru.png"></button>
+        </div>
+        
     </header>
-    <div class="sort"> Сортировать 
-        <button onclick='dateSort()'>по дате</button>
-        <button onclick='prioritySort()'>по приоритету</button>
+    <div class="sort"><span class="lng-sort">Сортировать </span>
+        <button class="lng-date" onclick='dateSort()'>по дате</button>
+        <button class="lng-prior" onclick='prioritySort()'>по приоритету</button>
     </div>
     
     <div id=app></div>

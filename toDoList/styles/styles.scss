@@ -11,6 +11,20 @@ header{
     button{
         margin: 20px;
     }
+    div{
+        width: 100px;
+        margin-left: auto;
+        margin-right: 0;
+        button{
+            margin-left: 0;
+            margin-right: 5px;
+            img{
+                width: 30px;
+                height: 20px;
+                background-color: transparent;
+            }
+        }
+    }
 }
 .sort{
     margin: 20px;
@@ -125,7 +139,6 @@ button {
         transform: scale(1);
     }
 }
-
 @media (max-width: 1050px) {
    
     .list{
@@ -156,7 +169,6 @@ button {
     }
    
 }
-
 @media (max-width: 690px) {
     button{
         font-size: 15px;
