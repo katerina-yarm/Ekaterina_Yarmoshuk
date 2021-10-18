@@ -155,6 +155,7 @@
 
     //функция render для отображения полей для заполнения данных по новой заметке
     function newToDoRender(){
+        let id= parseInt(Math.random()*1000);
         let modalHTML ="";
             modalHTML += `  
                     <h5 class="lng-newNoteTitle">Внесите новую заметку в ваш список дел</h5>
@@ -165,7 +166,7 @@
                         </div>
                         <div>
                             <label>Id</label>
-                            <input id="newId" value="${parseInt(Math.random()*1000)}" readonly>
+                            <input id="newId" value="${id}" readonly>
                         </div>
                         <div>
                             <label class="lng-priority">Приоритет</label>
