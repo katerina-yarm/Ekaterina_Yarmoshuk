@@ -165,7 +165,7 @@
                         </div>
                         <div>
                             <label>Id</label>
-                            <input id="newId" placeholder='5'>
+                            <input id="newId" value="${parseInt(Math.random()*1000)}" readonly>
                         </div>
                         <div>
                             <label class="lng-priority">Приоритет</label>
