@@ -8,8 +8,8 @@ const langArr = {
         'en':'Change theme'
     },
     'add':{
-        'ru':'Добавить новую запись',
-        'en':'Add new todo'
+        'ru':'Новая запись',
+        'en':'Add new to-do'
     },
     'sort':{
         'ru':'Сортировать',
@@ -37,7 +37,7 @@ const langArr = {
     },
     'newNoteTitle':{
         'ru':'Внесите новую заметку в ваш список дел',
-        'en':'Add a new note to your todo list'
+        'en':'Add a new note to your to-do list'
     },
     'title':{
         'ru':'Название',

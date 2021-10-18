@@ -22,11 +22,12 @@ button {
 }
 .list{
     &:nth-child(even){
-        background-color: #5a5a5e;
-    }
-    &:nth-child(odd){
         background: #272729;
         color: #FFD600;
+    }
+    &:nth-child(odd){
+        background-color: #37373a;
+        color:#f4f4f4;
     }
 }
 .formStyle{

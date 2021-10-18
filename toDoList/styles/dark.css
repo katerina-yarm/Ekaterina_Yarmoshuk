@@ -26,12 +26,13 @@ button:focus {
 }
 
 .list:nth-child(even) {
-  background-color: #5a5a5e;
+  background: #272729;
+  color: #FFD600;
 }
 
 .list:nth-child(odd) {
-  background: #272729;
-  color: #FFD600;
+  background-color: #37373a;
+  color: #f4f4f4;
 }
 
 .formStyle {

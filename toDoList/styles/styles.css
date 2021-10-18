@@ -23,19 +23,20 @@ header button {
 }
 
 header div {
-  width: 100px;
+  width: 110px;
   margin-left: auto;
   margin-right: 0;
 }
 
 header div button {
-  margin-left: 0;
-  margin-right: 5px;
+  height: 30px;
+  padding: 0;
+  margin: 25px 5px 25px;
 }
 
 header div button img {
-  width: 30px;
-  height: 20px;
+  width: 40px;
+  height: 30px;
   background-color: transparent;
 }
 
@@ -98,9 +99,14 @@ button {
   overflow: hidden;
 }
 
-.list button {
+.list div {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.list div button {
+  width: 100px;
   margin: 20px;
-  width: 10vw;
 }
 
 .formStyle {
@@ -207,9 +213,14 @@ button {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;
   }
-  .list button {
-    margin: 20px;
-    width: 40vw;
+  .list div {
+    margin: 0;
+    margin-left: auto;
+    margin-right: 5px;
+  }
+  .list div button {
+    margin: 0;
+    margin-bottom: 5px;
   }
 }
 
@@ -226,6 +237,14 @@ button {
   }
   header button {
     margin: 10px;
+  }
+  header div button {
+    height: 25px;
+    margin: 15px 5px 15px;
+  }
+  header div button img {
+    width: 35px;
+    height: 25px;
   }
   .list {
     min-height: 80px;
@@ -260,6 +279,17 @@ button {
   header button {
     margin: 10px;
   }
+  header div {
+    width: 90px;
+  }
+  header div button {
+    height: 20px;
+    margin: 5px 5px 5px;
+  }
+  header div button img {
+    width: 30px;
+    height: 20px;
+  }
   .sort {
     margin: 5px;
   }
@@ -279,8 +309,12 @@ button {
   .list .card-description {
     margin-top: 5px;
   }
-  .list button {
-    margin: 2px;
+  .list div {
+    margin-left: auto;
+    margin-right: 5px;
+  }
+  .list div button {
+    height: 30px;
   }
   .formStyle {
     height: 90vh;

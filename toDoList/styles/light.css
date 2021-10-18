@@ -1,19 +1,19 @@
 body {
-  background-color: #5a5a5e;
+  background-color: #aaaaaf;
 }
 
 header {
-  background-color: #272729;
+  background-color: #5a5a5e;
   color: #FFD600;
 }
 
 button {
-  background: #38393b;
+  background: #777779;
   color: #f4f4f4;
 }
 
 button:hover {
-  background: #272729;
+  background: #464649;
 }
 
 button:focus {
@@ -26,7 +26,7 @@ button:focus {
 }
 
 .list:nth-child(odd) {
-  background: #5a5a5e;
+  background: #89898d;
   color: #FFD600;
 }
 

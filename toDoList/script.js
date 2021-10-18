@@ -36,7 +36,7 @@
         } else {
             todos=JSON.parse(localStorage.getItem('todos'));
         }
-        
+       
         let html = '';
         for (let i=0; i<todos.length; i++){
             html+= `
@@ -46,8 +46,10 @@
                 <p class="card-date">${todos[i].endDate}</p>
                 <p class="card-priority">${todos[i].priority}</p>
                 <p class="card-description">${todos[i].description}</p>
-                <button data-todoid=${todos[i].id} type="button" class='btn-del lng-delete'>Удалить</button>
-                <button type="button" onclick='showChangesForm(${todos[i].id})' class='lng-change'>Изменить</button> 
+                <div>
+                    <button data-todoid=${todos[i].id} type="button" class='btn-del lng-delete'>Удалить</button>
+                    <button type="button" onclick='showChangesForm(${todos[i].id})' class='lng-change'>Изменить</button>
+                </div> 
             </div>`
             toDoNum++;
         }
